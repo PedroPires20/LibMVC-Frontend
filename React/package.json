@@ -1,0 +1,38 @@
+{
+  "name": "libmvc-react",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "This package contains the implementation of the frontend for the LibMVC project based on the React framework. This package is responsible for the build/debugging of the frontend code and depends on the \"libmvc-backend\" package to provide the REST API it expects as the backend.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PedroPires20/LibMVC-Frontend.git"
+  },
+  "keywords": [
+    "LibMVC",
+    "frontend",
+    "POC",
+    "Final",
+    "Project",
+    "frameworks"
+  ],
+  "author": "Pedro Dias Pires",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PedroPires20/LibMVC-Frontend/issues"
+  },
+  "homepage": "https://github.com/PedroPires20/LibMVC-Frontend#readme",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "vite": "^4.3.2",
+    "@vitejs/plugin-react": "^4.0.0"
+  }
+}

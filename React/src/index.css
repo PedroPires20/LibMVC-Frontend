@@ -14,3 +14,19 @@ html {
     outline: 0;
     font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+
+.click-ripple-effect {
+    background-color: rgba(255, 255, 255, 0);
+    background-position: center;
+    transition: background 0.5s;
+}
+
+.click-ripple-effect:hover {
+    background: rgba(255, 255, 255, 0.1) radial-gradient(circle, transparent 1%, rgba(255, 255, 255, 0.1) 1%) center/15000%;
+}
+
+.click-ripple-effect:active {
+    background-color: rgba(255, 255, 255, 0.2);
+    background-size: 100%;
+    transition: background 0s;
+}

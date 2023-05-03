@@ -7,12 +7,12 @@ export default function Header() {
     return (
         <>
             <header className="header-container">
-                <button className="header-menu-button">
+                <button className="header-menu-button click-ripple-effect">
                     <img src={menuIcon} alt="menu"/>
                 </button>
                 <h1>LibMVC</h1>
             </header>
-            <Menu activePage={"Acervo"}/>
+            <Menu/>
         </>
     )
 }

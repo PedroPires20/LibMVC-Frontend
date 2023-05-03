@@ -11,7 +11,7 @@ export default function Menu({ activePage, onPageChange }) {
                     PAGE_NAMES.map(
                         (pageName, index) => <li
                         key={index}
-                        className={"side-menu-item" + ((activePage === pageName) ? " side-menu-item-selected" : "")}
+                        className={"side-menu-item click-ripple-effect" + ((activePage === pageName) ? " side-menu-item-selected" : "")}
                         onClick={() => onPageChange(pageName)}
                         >
                             {pageName}

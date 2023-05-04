@@ -15,8 +15,11 @@
 .side-menu-item {
     color: #eae1d9;
     line-height: 1.25em;
-    padding: 0.8em 2rem;
     cursor: pointer;
+}
+
+.side-menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .side-menu-item:not(:last-child) {
@@ -31,4 +34,16 @@
 
 .side-menu-item-selected:hover {
     background-color: #4e4539;
+}
+
+.side-menu-item a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0.8em 2rem;
+    text-decoration: none;
+}
+
+.side-menu-item a:visited {
+    color: inherit;
 }

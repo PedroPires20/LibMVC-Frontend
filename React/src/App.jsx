@@ -8,8 +8,8 @@ function App() {
 
     return (
         <>
-            <Header/>
             <BrowserRouter>
+                <Header/>
                 <Routes>
                     <Route path="/" element={<Navigate to="/collection" push/>}/>
                     <Route path="/collection" element={<Collection/>}/>

@@ -1,23 +1,30 @@
-import { React } from "react";
+import { React, useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Menu.css";
 
-const PAGE_NAMES = ["Acervo", "Empréstimos"]
 
-export default function Menu({ activePage, onPageChange }) {
+export default function Menu({ onPageChange }) {
+    let [activePage, setActivePage] = useState("");
+    let location = useLocation();
+    
+    useEffect(() => {
+        setActivePage(location.pathname);
+        onPageChange && onPageChange();
+    }, [location.pathname]);
+
     return (
         <nav className="side-menu-container">
             <ul>
-                {
-                    PAGE_NAMES.map(
-                        (pageName, index) => <li
-                        key={index}
-                        className={"side-menu-item click-ripple-effect" + ((activePage === pageName) ? " side-menu-item-selected" : "")}
-                        onClick={() => onPageChange(pageName)}
-                        >
-                            {pageName}
-                        </li>
-                    )
-                }
+                <li
+                    className={"side-menu-item " + ((activePage === "/collection") ? " side-menu-item-selected" : "")}
+                >
+                    <Link to="/collection">Acervo</Link>
+                </li>
+                <li
+                    className={"side-menu-item " + ((activePage === "/loans") ? " side-menu-item-selected" : "")}
+                >
+                    <Link to="/loans">Empréstimos</Link>
+                </li>
             </ul>
         </nav>
     )

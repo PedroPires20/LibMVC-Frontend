@@ -6,6 +6,15 @@
     z-index: 1;
     background: linear-gradient(0deg, rgba(251, 187, 73, 0.08), rgba(251, 187, 73, 0.08)), #1f1b16;
     font-size: 2rem;
+    transition: transform 0.3s ease-out;
+}
+
+.side-menu-hidden {
+    transform: translate(-100%);
+}
+
+.side-menu-visible {
+    transform: translate(0);
 }
 
 .side-menu-container ul {
@@ -32,8 +41,9 @@
     cursor: default;
 }
 
-.side-menu-item-selected:hover {
+.side-menu-item-selected a:hover {
     background-color: #4e4539;
+    cursor: default;
 }
 
 .side-menu-item a {

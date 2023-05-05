@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/header/Header";
 import Collection from "./pages/Collection";
 import Loans from "./pages/Loans";
-import './App.css'
 
 function App() {
 

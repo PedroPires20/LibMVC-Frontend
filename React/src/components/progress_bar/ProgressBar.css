@@ -1,0 +1,32 @@
+.progress-bar {
+    height: 0.3rem;
+    background-color: #efe0cf;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--filled-width);
+    height: 100%;
+    background-color: #7e5700;
+
+}
+
+.progress-bar-indefinite::before {
+    width: 100%;
+    animation: move-indefinite-progress-bar 1.5s ease-in-out infinite;
+}
+
+@keyframes move-indefinite-progress-bar {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }

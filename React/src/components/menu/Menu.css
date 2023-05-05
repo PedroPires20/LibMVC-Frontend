@@ -1,6 +1,5 @@
 .side-menu-container {
     height: 100%;
-    padding-top: 5rem;
     position: fixed;
     z-index: 1;
     background: linear-gradient(0deg, rgba(251, 187, 73, 0.08), rgba(251, 187, 73, 0.08)), #1f1b16;

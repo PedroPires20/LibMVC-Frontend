@@ -38,7 +38,12 @@ export default function TextInput({
                     onFocus={() => setIsActive(true)}
                     onBlur={() => setIsActive(false)}
                 />
-                <button>
+                <button
+                    onClick={(e) => {
+                        onChange(defaultValue);
+                        e.preventDefault();
+                    }}
+                >
                     <img src={clearIcon} alt="limpar"/>
                 </button>
             </div>

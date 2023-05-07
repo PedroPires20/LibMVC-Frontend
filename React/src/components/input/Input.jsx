@@ -24,10 +24,10 @@ export default function Input({
 
     return (
         <div
-            className={`text-input-container${(isActive) ? " text-input-container-active" : ""}${(error) ? " text-input-container-error" : ""}`}
+            className={`input-container${(isActive) ? " input-container-active" : ""}${(error) ? " input-container-error" : ""}`}
         >
-            <label className={(isActive || value) ? "text-input-small-label" : ""}>{label}</label>
-            <div className={`text-input-control${(error) ? " text-input-control-error" : ""}`}>
+            <label className={(isActive || value) ? "input-small-label" : ""}>{label}</label>
+            <div className={`input-control${(error) ? " input-control-error" : ""}`}>
                 <input
                     type={type}
                     value={value}
@@ -51,8 +51,8 @@ export default function Input({
                     <img src={clearIcon} alt="limpar"/>
                 </button>
             </div>
-            {(!error && supportingText) && <span className="text-input-support">{supportingText}</span>}
-            {(error && errorMessage) && <span className="text-input-error-message">{errorMessage}</span>}
+            {(!error && supportingText) && <span className="input-support">{supportingText}</span>}
+            {(error && errorMessage) && <span className="input-error-message">{errorMessage}</span>}
         </div>
     )
 }

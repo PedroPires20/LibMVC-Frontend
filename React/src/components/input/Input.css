@@ -1,11 +1,11 @@
-.text-input-container {
+.input-container {
     display: flex;
     flex-flow: column nowrap;
     font-size: 1rem;
     position: relative;
 }
 
-.text-input-container label {
+.input-container label {
     position: absolute;
     top: 0em;
     left: 0em;
@@ -15,23 +15,23 @@
     transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
 }
 
-.text-input-container-active label {
+.input-container-active label {
     color: #4e4539;
 }
 
-.text-input-container-error label {
+.input-container-error label {
     color: #ba1a1a;
 }
 
-.text-input-container-active .text-input-container-error label {
+.input-container-active .input-container-error label {
     color: #ba1a1a;
 }
 
-.text-input-container label.text-input-small-label {
+.input-container label.input-small-label {
     transform: translate(0.8em, 0.3em) scale(0.8);
 }
 
-.text-input-control {
+.input-control {
     display: flex;
     flex-flow: row nowrap;
     background-color: #EFE0CF;
@@ -40,7 +40,7 @@
     padding-right: 0.75em;
 }
 
-.text-input-control input {
+.input-control input {
     border: none;
     outline: none;
     background: none;
@@ -49,11 +49,11 @@
     flex: 1 1;
 }
 
-.text-input-control-error input {
+.input-control-error input {
     color: #ba1a1a;
 }
 
-.text-input-control::before {
+.input-control::before {
     content: "";
     position: absolute;
     left: 0px;
@@ -64,15 +64,15 @@
     transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 
-.text-input-control-error::before {
+.input-control-error::before {
     border-bottom: 1px solid rgba(186, 26, 26, 0.42);
 }
 
-.text-input-container-active .text-input-control::before {
+.input-container-active .input-control::before {
     border-bottom: 1px solid rgba(0, 0, 0, 0.87);
 }
 
-.text-input-control::after {
+.input-control::after {
     content: "";
     position: absolute;
     left: 0px;
@@ -84,46 +84,46 @@
     transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
 }
 
-.text-input-control-error::after {
+.input-control-error::after {
     border-bottom: 2px solid rgba(186, 26, 26, 0.8);
 }
 
-.text-input-container-active .text-input-control::after {
+.input-container-active .input-control::after {
     transform: scaleX(1);
 }
 
-.text-input-control button {
+.input-control button {
     border: none;
     outline: none;
     background: none;
     cursor: pointer;
 }
 
-.text-input-control button:hover {
+.input-control button:hover {
     filter: brightness(125%);
 }
 
-.text-input-control button:focus {
+.input-control button:focus {
     filter: brightness(150%);
 }
 
-.text-input-control button:active {
+.input-control button:active {
     filter: brightness(80%);
 }
 
-.text-input-control img {
+.input-control img {
     width: 1.5em;
     height: auto;
     flex: 0;
 }
 
-.text-input-support {
+.input-support {
     padding: 0.5em 1em 0 1em;
     font-size: 0.75em;
     color: #4e4539;
 }
 
-.text-input-error-message {
+.input-error-message {
     padding: 0.5em 1em 0 1em;
     font-size: 0.75em;
     color: #ba1a1a;

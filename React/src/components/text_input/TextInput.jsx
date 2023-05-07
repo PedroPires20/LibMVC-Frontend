@@ -15,15 +15,19 @@ export default function TextInput({
     validationPattern,
     required,
     defaultValue = "",
+    error,
+    errorMessage,
     value,
     onChange
 }) {
     let [isActive, setIsActive] = useState(false);
 
     return (
-        <div className={`text-input-container${(isActive) ? " text-input-container-active" : ""}`}>
+        <div
+            className={`text-input-container${(isActive) ? " text-input-container-active" : ""}${(error) ? " text-input-container-error" : ""}`}
+        >
             <label className={(isActive || value) ? "text-input-small-label" : ""}>{label}</label>
-            <div className="text-input-control">
+            <div className={`text-input-control${(error) ? " text-input-control-error" : ""}`}>
                 <input
                     type={type}
                     value={value}
@@ -47,7 +51,8 @@ export default function TextInput({
                     <img src={clearIcon} alt="limpar"/>
                 </button>
             </div>
-            {supportingText && <span className="text-input-support">{supportingText}</span>}
+            {(!error && supportingText) && <span className="text-input-support">{supportingText}</span>}
+            {(error && errorMessage) && <span className="text-input-error-message">{errorMessage}</span>}
         </div>
     )
 }

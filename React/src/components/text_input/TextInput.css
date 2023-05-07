@@ -1,0 +1,104 @@
+.text-input-container {
+    display: flex;
+    flex-flow: column nowrap;
+    font-size: 1rem;
+    position: relative;
+}
+
+.text-input-container label {
+    position: absolute;
+    top: 0em;
+    left: 0em;
+    z-index: 1;
+    color: #1F1B16;
+    transform: translate(1.5em, 1.5em) scale(1);
+    transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+}
+
+.text-input-container-active label {
+    color: #4e4539;
+}
+
+.text-input-container label.text-input-small-label {
+    transform: translate(0.8em, 0.3em) scale(0.8);
+}
+
+.text-input-control {
+    display: flex;
+    flex-flow: row nowrap;
+    background-color: #EFE0CF;
+    border-radius: 0.25rem 0.25rem 0 0;
+    position: relative;
+    padding-right: 0.75em;
+}
+
+.text-input-control input {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1em;
+    padding: 1.5em 1em 0.5em 1em;
+    flex: 1 1;
+}
+
+.text-input-control::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+    pointer-events: none;
+    transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.text-input-container-active .text-input-control::before {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.87);
+}
+
+.text-input-control::after {
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    border-bottom: 2px solid rgba(78, 69, 57, 0.8);
+    transform: scaleX(0);
+    pointer-events: none;
+    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+}
+
+.text-input-container-active .text-input-control::after {
+    transform: scaleX(1);
+}
+
+.text-input-control button {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+}
+
+.text-input-control button:hover {
+    filter: brightness(125%);
+}
+
+.text-input-control button:focus {
+    filter: brightness(150%);
+}
+
+.text-input-control button:active {
+    filter: brightness(80%);
+}
+
+.text-input-control img {
+    width: 1.5em;
+    height: auto;
+    flex: 0;
+}
+
+.text-input-support {
+    padding: 0.5em 1em 0 1em;
+    font-size: 0.75em;
+    color: #4E4539;
+}

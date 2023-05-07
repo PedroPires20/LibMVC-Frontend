@@ -4,8 +4,9 @@ import "./Select.css";
 
 
 export default function Select({
-    name,
+    label,
     options = [],
+    placeholder,
     multiple,
     value,
     onChange
@@ -38,10 +39,10 @@ export default function Select({
             <div className="select-input">
                 <div className="select-header">
                     <div className="select-name">
-                        {name}
+                        {label}
                     </div>
                     <div className="select-selected-option">
-                        {(multiple && Array.isArray(value)) ? value.join("; ") : value}
+                        {(Array.isArray(value)) ? ((value.length > 0) ? value.join("; ") : value) : (value || placeholder)}
                     </div>
                 </div>
                 <button

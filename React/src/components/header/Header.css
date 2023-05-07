@@ -8,7 +8,7 @@
     background-color: #432c00;
     position: fixed;
     top: 0;
-    z-index: 2;
+    z-index: 20;
 }
 
 .header-menu-button {

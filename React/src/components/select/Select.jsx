@@ -3,7 +3,13 @@ import resetIcon from "./assets/cancel_icon.svg";
 import "./Select.css";
 
 
-export default function Select({ name, options = [], value, onChange, defaultValue = "" }) {
+export default function Select({
+    name,
+    options = [],
+    multiple,
+    value,
+    onChange
+}) {
     let [active, setActive] = useState(false);
     let selectElementRef = useRef(null);
 
@@ -35,12 +41,12 @@ export default function Select({ name, options = [], value, onChange, defaultVal
                         {name}
                     </div>
                     <div className="select-selected-option">
-                        {value || defaultValue}
+                        {(multiple && Array.isArray(value)) ? value.join("; ") : value}
                     </div>
                 </div>
                 <button
                     onClick={(e) => {
-                        onChange(defaultValue);
+                        onChange((multiple) ? [] : "");
                         e.stopPropagation();
                     }}
                 >
@@ -56,7 +62,13 @@ export default function Select({ name, options = [], value, onChange, defaultVal
                             <li
                                 key={index}
                                 className={`click-ripple-effect-light ${(optionValue === value) ? "select-item-selected" : ""}`}
-                                onClick={() => onChange(optionValue)}
+                                onClick={() => {
+                                    if(multiple) {
+                                        onChange([optionValue, ...value]);
+                                    }else {
+                                        onChange(optionValue);
+                                    }
+                                }}
                             >
                                 {optionValue}
                             </li>

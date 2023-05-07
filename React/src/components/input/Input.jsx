@@ -1,9 +1,9 @@
 import { React, useState } from "react";
 import clearIcon from "./assets/cancel_icon.svg";
-import "./TextInput.css";
+import "./Input.css";
 
 
-export default function TextInput({
+export default function Input({
     label = "",
     supportingText = "",
     type = "text",

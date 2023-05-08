@@ -9,6 +9,7 @@ export default function Select({
     placeholder,
     multiple,
     value,
+    formVariant,
     onChange
 }) {
     let [active, setActive] = useState(false);
@@ -30,7 +31,7 @@ export default function Select({
 
     return (
         <div
-            className={`select-container ${(active) ? "select-container-active": ""}`}
+            className={`select-container${(formVariant) ? " select-container-form" : ""}${(active) ? " select-container-active": ""}`}
             onClick={() => setActive(true)}
             onKeyDown={(e) => e.key === "Enter" && setActive(false)} 
             ref={selectElementRef}

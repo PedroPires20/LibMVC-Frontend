@@ -18,6 +18,15 @@
     border-radius: 0.25rem;
 }
 
+.select-container-form {
+    box-shadow: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42)
+}
+
+.select-container.select-container-form:hover {
+    box-shadow: none;
+}
+
 .select-input {
     display: flex;
     flex-flow: row nowrap;

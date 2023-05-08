@@ -1,0 +1,44 @@
+.loan-dialog-container {
+    width: 25rem;
+    height: calc(70vh);
+    overflow-y: auto;
+    font-size: 1rem;
+}
+
+.loan-dialog-container h3 {
+    font-size: 1.5em;
+    font-weight: 500;
+    line-height: 2em;
+    color: #1f1b16;
+}
+
+.loan-dialog-container p {
+    font-size: 0.85em;
+    font-weight: 400;
+    line-height: 1.25em;
+    color: #4e4539;
+}
+
+.loan-dialog-container form {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.85em;
+    padding: 0.8em 0.5em 0.8em 0;
+    position: relative;
+}
+
+.loan-dialog-buttons {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    gap: 0.6em;
+    padding-right: 0.5em;
+}
+.loan-dialog-buttons button {
+    border: none;
+    border-radius: 1em;
+    font-size: 0.8em;
+    font-weight: 500;
+    color: #8d4f00;
+    padding: 0.5em;
+}

@@ -7,11 +7,30 @@
     height: calc(100vh - 5rem);
 }
 
-.collection-page h2 {
+.collection-header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.collection-header h2 {
     font-size: 2.8rem;
     font-weight: 500;
     color: #372F24;
     flex: 0;
+}
+
+.collection-add-button {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.collection-add-button img {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .collection-input-card {

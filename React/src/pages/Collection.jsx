@@ -1,15 +1,24 @@
-import { React} from "react";
+import { React } from "react";
 import SearchBox from "../components/search_box/SearchBox";
 import Select from "../components/select/Select";
 import Button from "../components/button/Button";
 import { TableCard, TableHeader, TableRow, TableCell } from "../components/table_card/TableCard";
+import addIcon from "../assets/add_icon.svg";
 import "./Collection.css";
 
 
 export default function Collection() {
     return (
         <div className="collection-page">
-            <h2>Acervo</h2>
+            <div className="collection-header">
+                <h2>Acervo</h2>
+                <Button variant="primary">
+                    <div className="collection-add-button">
+                        <img src={addIcon} alt="adicionar"/>
+                        <span>Novo livro</span>
+                    </div>
+                </Button>
+            </div>
             <div className="collection-input-card">
                 <div className="collection-input-titles">
                     <h3>Pesquisa no acervo:</h3>

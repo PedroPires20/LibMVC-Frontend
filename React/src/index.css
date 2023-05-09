@@ -11,6 +11,10 @@ html {
     scrollbar-color: #888 transparent;
 }
 
+body {
+    min-width: 800px;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;

@@ -4,7 +4,6 @@
     align-items: center;
     justify-content: flex-start;
     gap: 0.5rem;
-    width: 20rem;
     height: 3rem;
     background-color: #efe0cf;
     border-radius: 28px;
@@ -20,6 +19,7 @@
     border: none;
     outline: none;
     color: #4e4539;
+    text-overflow: ellipsis;
 }
 
 .search-box img {

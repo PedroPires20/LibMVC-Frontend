@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import SearchBox from "../components/search_box/SearchBox";
 import Select from "../components/select/Select";
 import Button from "../components/button/Button";
@@ -8,6 +8,10 @@ import "./Collection.css";
 
 
 export default function Collection() {
+    useEffect(() => {
+        document.title = "LibMVC - Acervo"
+    }, []);
+
     return (
         <div className="collection-page">
             <div className="collection-header">

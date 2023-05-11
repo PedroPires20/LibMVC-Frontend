@@ -2,7 +2,7 @@ import { React, useEffect } from "react";
 import Select from "../components/select/Select";
 import Button from "../components/button/Button";
 import { TableCard, TableHeader, TableRow, TableCell } from "../components/table_card/TableCard";
-import addIcon from "../assets/add_icon.svg";
+import addIcon from "./assets/add_icon.svg";
 import "./Loans.css";
 
 

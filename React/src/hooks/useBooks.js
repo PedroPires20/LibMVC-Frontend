@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import DataFetcher from "../utils/data_fetcher";
+import NetworkClient from "../utils/network_client";
 import Book from "../models/book";
 
 
 export function useBooks() {
     const [books, setBooks] = useState([]);
-    const dataFetcher = new DataFetcher("http://localhost:3000");
+    const network = new NetworkClient("http://localhost:3000");
 
     useEffect(() => {
-        dataFetcher.fetchBooks()
+        network.fetchBooks()
         .then((booksData) => setBooks(booksData.map(
             (bookData, index) => new Book(bookData, index)
         )))

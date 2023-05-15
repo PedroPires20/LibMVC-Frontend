@@ -7,7 +7,7 @@ const BASE_REQUEST_HEADERS = {
 }
 
 
-export default class DataFetcher {
+export default class NetworkClient {
     constructor(baseUrl, booksPath = "/books", loansPath = "/loans") {
         this._baseUrl = baseUrl;
         this._booksPath = booksPath;

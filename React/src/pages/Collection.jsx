@@ -1,22 +1,32 @@
-import { React, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { useBooks } from "../hooks/useBooks";
 import SearchBox from "../components/search_box/SearchBox";
 import Select from "../components/select/Select";
 import Button from "../components/button/Button";
 import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../components/table_card/TableCard";
+import ContextMenu from "../components/context_menu/ContextMenu";
 import addIcon from "./assets/add_icon.svg";
 import "./Collection.css";
 
 
 export default function Collection() {
+    const [showContextMenu, setShowContextMenu] = useState(false);
+    const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
     const { books } = useBooks(0);
 
     useEffect(() => {
         document.title = "LibMVC - Acervo"
     }, []);
 
+    function handleRowClick(event) {
+        const { top, left, width, height } = event.target.getBoundingClientRect();
+        setContextMenuPosition({ x: left, y: top + height });
+        setShowContextMenu(true);
+        event.stopPropagation();
+    }
+
     return (
-        <div className="collection-page">
+        <div className={`collection-page${(showContextMenu) ? " collection-page-menu" : ""}`}>
             <div className="collection-header">
                 <h2>Acervo</h2>
                 <Button variant="primary">
@@ -71,7 +81,7 @@ export default function Collection() {
                 </TableHeader>
                 <TableData>
                     {books.map((book) => (
-                        <TableRow key={book.id}>
+                        <TableRow key={book.id} onClick={handleRowClick}>
                             <TableCell>
                                 {book.isbn}
                             </TableCell>
@@ -111,6 +121,12 @@ export default function Collection() {
                     ))}
                 </TableData>
             </TableCard>
+            {showContextMenu && (
+                <ContextMenu
+                    position={contextMenuPosition}
+                    onMenuClose={() => setShowContextMenu(false)}
+                />
+            )}
         </div>
     )
 }

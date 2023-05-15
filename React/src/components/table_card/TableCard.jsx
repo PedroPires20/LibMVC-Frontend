@@ -37,9 +37,9 @@ export function TableData({ children }) {
 }
 
 
-export function TableRow({ children }) {
+export function TableRow({ children, onClick }) {
     return (
-        <tr>
+        <tr onClick={onClick}>
             {children}
         </tr>
     )

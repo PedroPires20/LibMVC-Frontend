@@ -18,6 +18,7 @@
 .table-container th, .table-container td {
     text-align: center;
     vertical-align: middle;
+    white-space: nowrap;
     padding: 1em 0.8em;
     cursor: default;
 }
@@ -50,4 +51,9 @@
 
 .table-data tr:last-child td {
     border-bottom: none;
+}
+
+.table-data td.table-cell-wrap {
+    white-space: normal;
+    min-width: 1em;
 }

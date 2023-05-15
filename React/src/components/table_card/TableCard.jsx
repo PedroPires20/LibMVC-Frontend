@@ -46,14 +46,22 @@ export function TableRow({ children }) {
 }
 
 
-export function TableCell({ children, align = "center", valign = "center" }) {
+export function TableCell({
+    children,
+    align = "center",
+    valign = "center",
+    wrap = false,
+    minWidth = "10rem"
+}) {
     const isHeader = useContext(HeaderContext);
     let elementStyles = {
         textAlign: (align && align !== "center") ? align : undefined,
-        verticalAlign: (valign && valign !== "center") ? valign : undefined
+        verticalAlign: (valign && valign !== "center") ? valign : undefined,
+        whiteSpace: (wrap) ? "normal" : undefined,
+        minWidth: (wrap) ? minWidth : undefined
     };
 
     return (isHeader) ?
-    <th style={elementStyles} >{children}</th> :
+    <th style={elementStyles}>{children}</th> :
     <td style={elementStyles}>{children}</td>;
 }

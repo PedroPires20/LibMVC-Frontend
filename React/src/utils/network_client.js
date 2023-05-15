@@ -42,6 +42,43 @@ export default class NetworkClient {
         return response.json();
     }
 
+    async searchBooks(query, filters, sortBy, page, booksPerPage) {
+        let requestUrl = new URL(`${this._booksPath}/search`, this._baseUrl);
+        let requestParameters = new URLSearchParams();
+        let response;
+        if(query) {
+            requestParameters.set("query", query);
+        }
+        if(filters) {
+            requestParameters.set("filter", encodeURI(JSON.stringify(filters)));
+        }
+        if(sortBy) {
+            requestParameters.set("sort", encodeURI(JSON.stringify(sortBy)));
+        }
+        if(page) {
+            requestParameters.set("page", page);
+        }
+        if(booksPerPage) {
+            requestParameters.set("ipp", booksPerPage);
+        }
+        requestUrl.search = requestParameters.toString();
+        try {
+            response = await fetch(
+                requestUrl,
+                {
+                    method: "GET",
+                    headers: BASE_REQUEST_HEADERS
+                }
+            )
+        }catch(exception) {
+            throw new NetworkError(exception.message);
+        }
+        if(!response.ok) {
+            throw new HTTPError(response.status, response.statusText, `Failed to run a search on books!\nSearch params: ${requestParameters}`);
+        }
+        return response.json();
+    }
+
     async fetchLoans(filters, sortBy, page, loansPerPage) {
         let requestUrl = new URL(this._loansPath, this._baseUrl);
         let requestParameters = new URLSearchParams();

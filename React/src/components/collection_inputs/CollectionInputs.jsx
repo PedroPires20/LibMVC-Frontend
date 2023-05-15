@@ -1,4 +1,5 @@
 import { React } from "react";
+import { useBookFilters } from "../../hooks/useBookFilters";
 import SearchBox from "../search_box/SearchBox";
 import Select from "../select/Select";
 import Button from "../button/Button";
@@ -6,6 +7,8 @@ import "./CollectionInputs.css";
 
 
 export default function CollectionInputs() {
+    const { authors, categories, publishers, formats } = useBookFilters();
+
     return (
         <div className="collection-input-card">
             <div className="collection-input-titles">
@@ -17,16 +20,32 @@ export default function CollectionInputs() {
                     <SearchBox/>
                 </div>
                 <div className="cinputs-select-container">
-                    <Select label="Autor" placeholder="Todos"/>
+                    <Select
+                        label="Autor"
+                        options={authors}
+                        placeholder="Todos"
+                    />
                 </div>
                 <div className="cinputs-select-container">
-                    <Select label="Categoria" placeholder="Todos"/>
+                    <Select
+                        label="Categoria"
+                        options={categories}
+                        placeholder="Todos"
+                    />
                 </div>
                 <div className="cinputs-select-container">
-                    <Select label="Editora" placeholder="Todos"/>
+                    <Select
+                        label="Editora"
+                        options={publishers}
+                        placeholder="Todos"
+                    />
                 </div>
                 <div className="cinputs-select-container">
-                    <Select label="Formato" placeholder="Todos"/>
+                    <Select
+                        label="Formato"
+                        options={formats}
+                        placeholder="Todos"
+                    />
                 </div>
                 <div className="cinputs-button-container">
                     <Button variant="secondary">Pesquisar</Button>

@@ -49,23 +49,24 @@ export default function Collection() {
                     </div>
                 </div>
             </div>
-            <div className="collection-table-container">
-                <TableCard>
-                    <TableHeader>
-                        <TableRow>
-                            <TableCell>ISBN</TableCell>
-                            <TableCell>Autor(es)</TableCell>
-                            <TableCell>Categorias</TableCell>
-                            <TableCell>Editora</TableCell>
-                            <TableCell>Edição</TableCell>
-                            <TableCell>Formato</TableCell>
-                            <TableCell>Páginas</TableCell>
-                            <TableCell>Cópias</TableCell>
-                            <TableCell>Localização</TableCell>
-                        </TableRow>
-                    </TableHeader>
-                </TableCard>
-            </div>
+            <TableCard>
+                <TableHeader>
+                    <TableRow>
+                        <TableCell>ISBN</TableCell>
+                        <TableCell>Título</TableCell>
+                        <TableCell>Autor(es)</TableCell>
+                        <TableCell>Categorias</TableCell>
+                        <TableCell>Editora</TableCell>
+                        <TableCell>Edição</TableCell>
+                        <TableCell>Formato</TableCell>
+                        <TableCell>Data</TableCell>
+                        <TableCell>Páginas</TableCell>
+                        <TableCell>Cópias</TableCell>
+                        <TableCell>Descrição</TableCell>
+                        <TableCell>Localização</TableCell>
+                    </TableRow>
+                </TableHeader>
+            </TableCard>
         </div>
     )
 }

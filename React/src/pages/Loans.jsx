@@ -1,21 +1,31 @@
-import { React, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { useLoans } from "../hooks/useLoans";
 import Select from "../components/select/Select";
 import Button from "../components/button/Button";
 import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../components/table_card/TableCard";
+import ContextMenu from "../components/context_menu/ContextMenu";
 import addIcon from "./assets/add_icon.svg";
 import "./Loans.css";
 
 
 export default function Loans() {
+    const [showContextMenu, setShowContextMenu] = useState(false);
+    const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
     const { loans } = useLoans();
 
     useEffect(() => {
         document.title = "LibMVC - Empréstimos"
     }, []);
+
+    function handleRowClick(event) {
+        const { top, left, width, height } = event.target.getBoundingClientRect();
+        setContextMenuPosition({ x: left, y: top + height });
+        setShowContextMenu(true);
+        event.stopPropagation();
+    }
     
     return (
-        <div className="loans-page">
+        <div className={`loans-page${(showContextMenu) ? " loans-page-menu" : ""}`}>
             <div className="loans-header">
                 <h2>Empréstimos</h2>
                 <Button variant="primary">
@@ -67,7 +77,7 @@ export default function Loans() {
                 </TableHeader>
                 <TableData>
                     {loans.map((loan) => (
-                        <TableRow key={loan.id}>
+                        <TableRow key={loan.id} onClick={handleRowClick}>
                             <TableCell>
                                 {loan.reader}
                             </TableCell>
@@ -99,6 +109,13 @@ export default function Loans() {
                     ))}
                 </TableData>
             </TableCard>
+            {showContextMenu && (
+                <ContextMenu
+                    position={contextMenuPosition}
+                    onMenuClose={() => setShowContextMenu(false)}
+                    loanVariant
+                />
+            )}
         </div>
     )
 }

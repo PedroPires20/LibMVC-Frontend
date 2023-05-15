@@ -7,7 +7,7 @@ import "./ContextMenu.css";
 
 export default function ContextMenu({
     position,
-    loan,
+    loanVariant,
     onMenuClick,
     onMenuClose
 }) {
@@ -58,10 +58,10 @@ export default function ContextMenu({
                         }}
                         className="click-ripple-effect"
                     >
-                        <img src={(loan) ? finalizeIcon : eraseIcon} alt={(loan) ? "editar" : "apagar"}/>
+                        <img src={(loanVariant) ? finalizeIcon : eraseIcon} alt={(loanVariant) ? "editar" : "apagar"}/>
                     </button>
                 </div>
-                <label>{(loan) ? "Finalizar" : "Apagar"}</label>
+                <label>{(loanVariant) ? "Finalizar" : "Apagar"}</label>
             </div>
         </div>
     )

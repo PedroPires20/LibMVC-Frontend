@@ -3,6 +3,7 @@ import "./DatePicker.css";
 
 
 export default function DatePicker({
+    name = "",
     label = "",
     supportingText = "",
     minDate,
@@ -27,7 +28,7 @@ export default function DatePicker({
                     min={minDate}
                     max={maxDate}
                     required={required}
-                    onChange={(e) => onChange(e.target.value)}
+                    onChange={(e) => onChange(name, e.target.value)}
                     onFocus={() => setIsActive(true)}
                     onBlur={() => setIsActive(false)}
                 />

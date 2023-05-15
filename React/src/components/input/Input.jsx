@@ -4,6 +4,7 @@ import "./Input.css";
 
 
 export default function Input({
+    name = "",
     label = "",
     supportingText = "",
     type = "text",
@@ -29,6 +30,7 @@ export default function Input({
             <label className={(isActive || value) ? "input-small-label" : ""}>{label}</label>
             <div className={`input-control${(error) ? " input-control-error" : ""}`}>
                 <input
+                    name={name}
                     type={type}
                     value={value}
                     minLength={minLength}
@@ -38,13 +40,13 @@ export default function Input({
                     step={step}
                     pattern={validationPattern}
                     required={required}
-                    onChange={(e) => onChange(e.target.value)}
+                    onChange={(e) => onChange(name, e.target.value)}
                     onFocus={() => setIsActive(true)}
                     onBlur={() => setIsActive(false)}
                 />
                 <button
                     onClick={(e) => {
-                        onChange(defaultValue);
+                        onChange(name, defaultValue);
                         e.preventDefault();
                     }}
                 >

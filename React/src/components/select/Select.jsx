@@ -4,6 +4,7 @@ import "./Select.css";
 
 
 export default function Select({
+    name = "",
     label,
     options = [],
     placeholder,
@@ -47,7 +48,7 @@ export default function Select({
                 </div>
                 <button
                     onClick={(e) => {
-                        onChange((multiple) ? [] : "");
+                        onChange(name, (multiple) ? [] : "");
                         e.stopPropagation();
                     }}
                 >
@@ -63,11 +64,13 @@ export default function Select({
                             <li
                                 key={index}
                                 className={`click-ripple-effect-light ${(optionValue === value) ? "select-item-selected" : ""}`}
-                                onClick={() => {
+                                onClick={(e) => {
                                     if(multiple) {
-                                        onChange([optionValue, ...value]);
+                                        onChange(name, [optionValue, ...value]);
                                     }else {
-                                        onChange(optionValue);
+                                        onChange(name, optionValue);
+                                        setActive(false);
+                                        e.stopPropagation()
                                     }
                                 }}
                             >

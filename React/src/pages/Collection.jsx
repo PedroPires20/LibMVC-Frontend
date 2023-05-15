@@ -1,13 +1,16 @@
 import { React, useEffect } from "react";
+import { useBooks } from "../hooks/useBooks";
 import SearchBox from "../components/search_box/SearchBox";
 import Select from "../components/select/Select";
 import Button from "../components/button/Button";
-import { TableCard, TableHeader, TableRow, TableCell } from "../components/table_card/TableCard";
+import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../components/table_card/TableCard";
 import addIcon from "./assets/add_icon.svg";
 import "./Collection.css";
 
 
 export default function Collection() {
+    const { books } = useBooks(0);
+
     useEffect(() => {
         document.title = "LibMVC - Acervo"
     }, []);
@@ -66,6 +69,47 @@ export default function Collection() {
                         <TableCell>Localização</TableCell>
                     </TableRow>
                 </TableHeader>
+                <TableData>
+                    {books.map((book) => (
+                        <TableRow key={book.id}>
+                            <TableCell>
+                                {book.isbn}
+                            </TableCell>
+                            <TableCell minWidth="15rem" wrap>
+                                {book.title}
+                            </TableCell>
+                            <TableCell wrap>
+                                {book.author}
+                            </TableCell>
+                            <TableCell minWidth="12rem" wrap>
+                                {book.categories}
+                            </TableCell>
+                            <TableCell>
+                                {book.publisher}
+                            </TableCell>
+                            <TableCell>
+                                {book.edition}</TableCell>
+                            <TableCell>
+                                {book.format}
+                            </TableCell>
+                            <TableCell>
+                                {book.date}
+                            </TableCell>
+                            <TableCell>
+                                {book.pages}
+                            </TableCell>
+                            <TableCell>
+                                {book.copies}
+                            </TableCell>
+                            <TableCell minWidth="20rem" wrap>
+                                {book.description}
+                            </TableCell>
+                            <TableCell>
+                                {book.location}
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableData>
             </TableCard>
         </div>
     )

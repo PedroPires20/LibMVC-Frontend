@@ -1,12 +1,15 @@
 import { React, useEffect } from "react";
+import { useLoans } from "../hooks/useLoans";
 import Select from "../components/select/Select";
 import Button from "../components/button/Button";
-import { TableCard, TableHeader, TableRow, TableCell } from "../components/table_card/TableCard";
+import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../components/table_card/TableCard";
 import addIcon from "./assets/add_icon.svg";
 import "./Loans.css";
 
 
 export default function Loans() {
+    const { loans } = useLoans();
+
     useEffect(() => {
         document.title = "LibMVC - Empréstimos"
     }, []);
@@ -48,23 +51,54 @@ export default function Loans() {
                     </div>
                 </div>
             </div>
-            <div className="loans-table-container">
-                <TableCard>
-                    <TableHeader>
-                        <TableRow>
-                            <TableCell>Leitor</TableCell>
-                            <TableCell>Tel Contato</TableCell>
-                            <TableCell>Obra</TableCell>
-                            <TableCell>Data empréstimo</TableCell>
-                            <TableCell>Duração</TableCell>
-                            <TableCell>Data devolução</TableCell>
-                            <TableCell>Dias restantes</TableCell>
-                            <TableCell>Atrasado (S/N)</TableCell>
-                            <TableCell>Renovação (S/N)</TableCell>
+            <TableCard>
+                <TableHeader>
+                    <TableRow>
+                        <TableCell>Leitor</TableCell>
+                        <TableCell>Tel Contato</TableCell>
+                        <TableCell>Obra</TableCell>
+                        <TableCell>Data empréstimo</TableCell>
+                        <TableCell>Duração</TableCell>
+                        <TableCell>Data devolução</TableCell>
+                        <TableCell>Dias restantes</TableCell>
+                        <TableCell>Atrasado</TableCell>
+                        <TableCell>Renovação</TableCell>
+                    </TableRow>
+                </TableHeader>
+                <TableData>
+                    {loans.map((loan) => (
+                        <TableRow key={loan.id}>
+                            <TableCell>
+                                {loan.reader}
+                            </TableCell>
+                            <TableCell>
+                                {loan.phone}
+                            </TableCell>
+                            <TableCell minWidth="15rem" wrap>
+                                {loan.bookTitle}
+                            </TableCell>
+                            <TableCell>
+                                {loan.startDate}
+                            </TableCell>
+                            <TableCell>
+                                {loan.duration}
+                            </TableCell>
+                            <TableCell>
+                                {loan.endDate}
+                            </TableCell>
+                            <TableCell>
+                                {loan.daysRemaining}
+                            </TableCell>
+                            <TableCell>
+                                {loan.late}
+                            </TableCell>
+                            <TableCell>
+                                {loan.renew}
+                            </TableCell>
                         </TableRow>
-                    </TableHeader>
-                </TableCard>
-            </div>
+                    ))}
+                </TableData>
+            </TableCard>
         </div>
     )
 }

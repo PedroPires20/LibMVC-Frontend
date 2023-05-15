@@ -5,7 +5,7 @@ import Book from "../models/book";
 
 export function useBooks() {
     const [books, setBooks] = useState([]);
-    const network = new NetworkClient("http://localhost:3000");
+    const network = new NetworkClient(API_BASE_URL);
 
     useEffect(() => {
         network.fetchBooks()

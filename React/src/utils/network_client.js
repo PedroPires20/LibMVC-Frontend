@@ -118,7 +118,7 @@ export default class NetworkClient {
     }
 
     async fetchLoanFieldValues(fieldName) {
-        return this._fetchFieldValues(this._booksPath, fieldName);
+        return this._fetchFieldValues(this._loansPath, fieldName);
     }
 
     async _fetchFieldValues(basePath, fieldName) {

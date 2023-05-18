@@ -27,7 +27,7 @@ export default function CollectionInputs() {
                 <h3>Refine sua busca:</h3>
             </div>
             <div className="collection-inputs">
-                <div className="collection-search-box-container">
+                <div className="cinputs-search-box-container">
                     <SearchBox
                         searchQuery={searchQuery}
                         onQueryChange={setSearchQuery}

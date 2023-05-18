@@ -17,6 +17,7 @@
     border-radius: 50%;
     outline: none;
     cursor: pointer;
+    user-select: none;
 }
   
 .header-container h1 {

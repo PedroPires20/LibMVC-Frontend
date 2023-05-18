@@ -4,7 +4,7 @@ import menuIcon from "./assets/menu_icon.svg";
 import "./Header.css";
 
 export default function Header() {
-    let [menuExpanded, setMenuExpanded] = useState(false);
+    const [menuExpanded, setMenuExpanded] = useState(false);
 
     return (
         <>

@@ -13,8 +13,8 @@ export default function Select({
     formVariant,
     onChange
 }) {
-    let [active, setActive] = useState(false);
-    let selectElementRef = useRef(null);
+    const [active, setActive] = useState(false);
+    const selectElementRef = useRef(null);
 
     useEffect(() => {
         const checkClickOutsideList = (e) => {

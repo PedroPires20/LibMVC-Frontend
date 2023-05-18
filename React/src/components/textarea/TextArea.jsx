@@ -15,7 +15,7 @@ export default function TextArea({
     value,
     onChange
 }) {
-    let [isActive, setIsActive] = useState(false);
+    const [isActive, setIsActive] = useState(false);
 
     return (
         <div

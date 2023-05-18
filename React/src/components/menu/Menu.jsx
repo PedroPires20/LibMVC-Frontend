@@ -4,8 +4,8 @@ import "./Menu.css";
 
 
 export default function Menu({ visible, onPageChange }) {
-    let [activePage, setActivePage] = useState("");
-    let location = useLocation();
+    const [activePage, setActivePage] = useState("");
+    const location = useLocation();
     
     useEffect(() => {
         setActivePage(location.pathname);

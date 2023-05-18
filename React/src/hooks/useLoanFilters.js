@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
+import { parseDate } from "../utils/utils";
 import NetworkClient from "../utils/network_client";
 
 
 function formatDate(dateStr) {
-    return new Date(dateStr).toLocaleDateString();
+    return parseDate(dateStr).toLocaleDateString();
 }
 
 export function useLoanFilters() {

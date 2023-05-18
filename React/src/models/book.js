@@ -1,3 +1,6 @@
+import { parseDate } from "../utils/utils";
+
+
 export default class Book {
     constructor(bookData, index = null) {
         this._id = bookData._id;
@@ -8,17 +11,12 @@ export default class Book {
         this._publisher = bookData.publisher;
         this._edition = bookData.edition;
         this._format = bookData.format;
-        this._date = Book._parseDate(bookData.date);
+        this._date = parseDate(bookData.date);
         this._pages = bookData.pages;
         this._copies = bookData.copies;
         this._description = bookData.description;
         this._location = bookData.location;
         this._index = index;
-    }
-
-    static _parseDate(dateStr) {
-        let [year, month, day] = dateStr.split('-');
-        return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
     }
 
     get id() {

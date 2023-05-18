@@ -1,3 +1,6 @@
+import { parseDate } from "../utils/utils";
+
+
 export default class Loan {
     constructor(loanData, index = null) {
         this._id = loanData._id;
@@ -5,18 +8,13 @@ export default class Loan {
         this._phone = loanData.phone;
         this._bookId = loanData.bookId;
         this._bookTitle = loanData.bookTitle;
-        this._startDate = Loan._parseDate(loanData.startDate);
-        this._endDate = Loan._parseDate(loanData.endDate);
+        this._startDate = parseDate(loanData.startDate);
+        this._endDate = parseDate(loanData.endDate);
         this._duration = loanData.duration;
         this._daysRemaining = loanData.daysRemaining;
         this._renew = loanData.renew;
         this._late = loanData.late;
         this._index = index;
-    }
-
-    static _parseDate(dateStr) {
-        let [year, month, day] = dateStr.split('-');
-        return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
     }
 
     get id() {

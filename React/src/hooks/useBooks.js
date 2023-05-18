@@ -1,14 +1,8 @@
 import { useState, useEffect } from "react";
+import { removeEmptyFilters } from "../utils/utils";
 import NetworkClient from "../utils/network_client";
 import Book from "../models/book";
 
-
-function removeEmptyFilters([filterEntry, value]) {
-    if(Array.isArray(value)) {
-        return value.length > 0;
-    }
-    return value && value !== "";
-}
 
 export function useBooks() {
     const [query, setQuery] = useState({});
@@ -36,4 +30,3 @@ export function useBooks() {
 
     return { books, handleQuery };
 }
-

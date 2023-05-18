@@ -11,7 +11,7 @@ import "./Collection.css";
 export default function Collection() {
     const [showContextMenu, setShowContextMenu] = useState(false);
     const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
-    const { books } = useBooks(0);
+    const { books, handleQuery } = useBooks(0);
 
     useEffect(() => {
         document.title = "LibMVC - Acervo"
@@ -35,7 +35,7 @@ export default function Collection() {
                     </div>
                 </Button>
             </div>
-            <CollectionInputs/>
+            <CollectionInputs onSubmit={handleQuery}/>
             <TableCard>
                 <TableHeader>
                     <TableRow>

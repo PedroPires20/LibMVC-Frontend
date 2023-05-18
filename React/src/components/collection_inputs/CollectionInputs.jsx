@@ -6,7 +6,7 @@ import Button from "../button/Button";
 import "./CollectionInputs.css";
 
 
-export default function CollectionInputs() {
+export default function CollectionInputs({ onSubmit }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [filters, setFilters] = useState({
         author: "",
@@ -51,6 +51,7 @@ export default function CollectionInputs() {
                         placeholder="Todos"
                         value={filters.categories}
                         onChange={handleSelectChange}
+                        multiple
                     />
                 </div>
                 <div className="cinputs-select-container">
@@ -74,7 +75,12 @@ export default function CollectionInputs() {
                     />
                 </div>
                 <div className="cinputs-button-container">
-                    <Button variant="secondary">Pesquisar</Button>
+                    <Button
+                        variant="secondary"
+                        onClick={() => onSubmit(searchQuery, filters)}
+                    >
+                        Pesquisar
+                    </Button>
                 </div>
             </div>
         </div>

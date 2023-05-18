@@ -1,0 +1,35 @@
+.loans-filters-card {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 1.5rem;
+    background: linear-gradient(0deg, rgba(126, 87, 0, 0.05), rgba(126, 87, 0, 0.05)), #fffbff;
+    box-shadow: 0px 2.32778px 4.65556px rgba(0, 0, 0, 0.3), 0px 4.65556px 13.9667px 4.65556px rgba(0, 0, 0, 0.15);
+    border-radius: 1.75rem;
+    flex: 0;
+}
+
+.loans-filters-card h3 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #1f1b16;
+    line-height: 1.75rem;
+}
+
+.loans-filters-inputs {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1.2rem;
+    padding: 1rem;
+}
+
+.lfilters-select-container {
+    flex: 1 1;
+    min-width: fit-content;
+    max-width: 20rem;
+}
+
+.lfilters-button-container {
+    flex: 0;
+}

@@ -43,7 +43,7 @@ export default function Select({
                         {label}
                     </div>
                     <div className="select-selected-option">
-                        {(Array.isArray(value)) ? ((value.length > 0) ? value.join("; ") : value) : (value || placeholder)}
+                        {(Array.isArray(value)) ? ((value.length > 0) ? value.join("; ") : placeholder) : (value || placeholder)}
                     </div>
                 </div>
                 <button

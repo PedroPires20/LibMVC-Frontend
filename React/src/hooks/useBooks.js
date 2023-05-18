@@ -14,9 +14,7 @@ export function useBooks() {
         if(queryText) {
             newQuery.text = queryText;
         }
-        newQuery.filters = Object.fromEntries(
-            Object.entries(filters).filter(removeEmptyFilters)
-        );
+        newQuery.filters = removeEmptyFilters(filters);
         setQuery(newQuery);
     }
 

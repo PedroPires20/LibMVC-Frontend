@@ -11,7 +11,7 @@ import "./Loans.css";
 export default function Loans() {
     const [showContextMenu, setShowContextMenu] = useState(false);
     const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
-    const { loans } = useLoans();
+    const { loans, handleFilters } = useLoans();
 
     useEffect(() => {
         document.title = "LibMVC - Empréstimos"
@@ -35,7 +35,7 @@ export default function Loans() {
                     </div>
                 </Button>
             </div>
-            <LoanInputs/>
+            <LoanInputs onSubmit={handleFilters}/>
             <TableCard>
                 <TableHeader>
                     <TableRow>

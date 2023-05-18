@@ -5,7 +5,7 @@ import Button from "../button/Button";
 import "./LoanInputs.css";
 
 
-export default function LoanInputs() {
+export default function LoanInputs({ onSubmit }) {
     const [filters, setFilters] = useState({
         "reader": "",
         "bookTitle": "",
@@ -85,7 +85,12 @@ export default function LoanInputs() {
                     />
                 </div>
                 <div className="loan-button-container">
-                    <Button variant="secondary">Aplicar</Button>
+                    <Button
+                        variant="secondary"
+                        onClick={() => onSubmit(filters)}
+                    >
+                        Aplicar
+                    </Button>
                 </div>
             </div>
         </div>

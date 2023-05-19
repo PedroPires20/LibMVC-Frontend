@@ -5,15 +5,17 @@ import Select from "../select/Select";
 import Button from "../button/Button";
 import "./CollectionInputs.css";
 
+const DEFAULT_FILTER_VALUES = {
+    author: "",
+    categories: "",
+    publisher: "",
+    format: ""
+};
+
 
 export default function CollectionInputs({ onSubmit }) {
     const [searchQuery, setSearchQuery] = useState("");
-    const [filters, setFilters] = useState({
-        author: "",
-        categories: "",
-        publisher: "",
-        format: ""
-    });
+    const [filters, setFilters] = useState(DEFAULT_FILTER_VALUES);
     const { authors, categories, publishers, formats } = useBookFilters();
 
     function handleSelectChange(name, option) {
@@ -75,6 +77,15 @@ export default function CollectionInputs({ onSubmit }) {
                     />
                 </div>
                 <div className="cinputs-button-container">
+                    <Button
+                        variant="secondary"
+                        onClick={() => {
+                            setFilters(DEFAULT_FILTER_VALUES);
+                            setSearchQuery("");
+                        }}
+                    >
+                        Redefinir
+                    </Button>
                     <Button
                         variant="secondary"
                         onClick={() => onSubmit(searchQuery, filters)}

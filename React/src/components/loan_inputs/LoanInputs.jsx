@@ -5,16 +5,18 @@ import DatePicker from "../date_picker/DatePicker";
 import Button from "../button/Button";
 import "./LoanInputs.css";
 
+const DEFAULT_FILTER_VALUES = {
+    "reader": "",
+    "bookTitle": "",
+    "startDate": "",
+    "endDate": "",
+    "renew": "",
+    "late": ""
+};
+
 
 export default function LoanInputs({ onSubmit }) {
-    const [filters, setFilters] = useState({
-        "reader": "",
-        "bookTitle": "",
-        "startDate": "",
-        "endDate": "",
-        "renew": "",
-        "late": ""
-    });
+    const [filters, setFilters] = useState(DEFAULT_FILTER_VALUES);
     const { readers, bookTitles } = useLoanFilters();
 
     function handleSelectChange(name, value) {
@@ -83,7 +85,13 @@ export default function LoanInputs({ onSubmit }) {
                         onChange={handleSelectChange}
                     />
                 </div>
-                <div className="loan-button-container">
+                <div className="lfilters-buttons-container">
+                    <Button
+                        variant="secondary"
+                        onClick={() => setFilters(DEFAULT_FILTER_VALUES)}
+                    >
+                        Redefinir
+                    </Button>
                     <Button
                         variant="secondary"
                         onClick={() => onSubmit(filters)}

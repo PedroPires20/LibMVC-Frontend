@@ -16,10 +16,14 @@ export function useLoanFilters() {
 
     useEffect(() => {
         network.fetchLoanFieldValues("reader")
-        .then((readers) => setReaders(readers))
+        .then((readers) => setReaders(
+            readers.filter((value) => value && value !== "")
+        ))
         .catch((error) => setReaders(error));
         network.fetchLoanFieldValues("bookTitle")
-        .then((titles) => setBookTitles(titles))
+        .then((titles) => setBookTitles(
+            titles.filter((value) => value && value !== "")
+        ))
         .catch((error) => setBookTitles(error));
     }, []);
 

@@ -11,16 +11,24 @@ export function useBookFilters() {
 
     useEffect(() => {
         network.fetchBookFieldValues("author")
-        .then((authors) => setAuthors(authors))
+        .then((authors) => setAuthors(
+            authors.filter((value) => value && value !== "")
+        ))
         .catch((error) => setAuthors(error));
         network.fetchBookFieldValues("categories")
-        .then((categories) => setCategories(categories))
+        .then((categories) => setCategories(
+            categories.filter((value) => value && value !== "")
+        ))
         .catch((error) => setCategories(error));
         network.fetchBookFieldValues("publisher")
-        .then((publishers) => setPublishers(publishers))
+        .then((publishers) => setPublishers(
+            publishers.filter((value) => value && value !== "")
+        ))
         .catch((error) => setPublishers(error));
         network.fetchBookFieldValues("format")
-        .then((formats) => setFormats(formats))
+        .then((formats) => setFormats(
+            formats.filter((value) => value && value !== "")
+        ))
         .catch((error) => setFormats(error));
     }, []);
 

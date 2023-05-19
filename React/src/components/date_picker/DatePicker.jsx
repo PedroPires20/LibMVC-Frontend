@@ -10,6 +10,7 @@ export default function DatePicker({
     maxDate,
     required,
     errorMessage,
+    formVariant,
     value,
     onChange
 }) {
@@ -18,7 +19,7 @@ export default function DatePicker({
 
     return (
         <div
-            className={`date-picker-container${(isActive) ? " date-picker-container-active" : ""}${(!!error) ? " date-picker-container-error" : ""}`}
+            className={`date-picker-container ${formVariant && "date-picker-container-form"}${(isActive) ? " date-picker-container-active" : ""}${(!!error) ? " date-picker-container-error" : ""}`}
         >
             <label className={(isActive || value) ? "date-picker-small-label" : ""}>{label}</label>
             <div className={`date-picker-control${(!!error) ? " date-picker-control-error" : ""}`}>

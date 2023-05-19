@@ -26,7 +26,6 @@
 
 .lfilters-select-container {
     flex: 1 1;
-    min-width: fit-content;
     max-width: 20rem;
 }
 

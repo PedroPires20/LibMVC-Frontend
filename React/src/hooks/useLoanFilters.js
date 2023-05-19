@@ -21,12 +21,6 @@ export function useLoanFilters() {
         network.fetchLoanFieldValues("bookTitle")
         .then((titles) => setBookTitles(titles))
         .catch((error) => setBookTitles(error));
-        network.fetchLoanFieldValues("startDate")
-        .then((startDates) => setStartDates(startDates.map(formatDate)))
-        .catch((error) => setStartDates(error));
-        network.fetchLoanFieldValues("endDate")
-        .then((dates) => setEndDates(dates.map(formatDate)))
-        .catch((error) => setEndDates(error));
     }, []);
 
     return { readers, bookTitles, startDates, endDates };

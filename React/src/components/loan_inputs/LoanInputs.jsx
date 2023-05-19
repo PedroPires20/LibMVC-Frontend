@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { useLoanFilters } from "../../hooks/useLoanFilters";
 import Select from "../select/Select";
+import DatePicker from "../date_picker/DatePicker";
 import Button from "../button/Button";
 import "./LoanInputs.css";
 
@@ -14,7 +15,7 @@ export default function LoanInputs({ onSubmit }) {
         "renew": "",
         "late": ""
     });
-    const { readers, bookTitles, startDates, endDates } = useLoanFilters();
+    const { readers, bookTitles } = useLoanFilters();
 
     function handleSelectChange(name, value) {
         setFilters({ ...filters, [name]: value });
@@ -24,7 +25,7 @@ export default function LoanInputs({ onSubmit }) {
         <div className="loans-filters-card">
             <h3>Filtros</h3>
             <div className="loans-filters-inputs">
-                <div className="lfilters-select-container">
+                <div className="lfilters-input-container">
                     <Select
                         name="reader"
                         label="Leitor"
@@ -34,7 +35,7 @@ export default function LoanInputs({ onSubmit }) {
                         onChange={handleSelectChange}
                     />
                 </div>
-                <div className="lfilters-select-container">
+                <div className="lfilters-input-container">
                     <Select
                         name="bookTitle"
                         label="Obra"
@@ -44,27 +45,25 @@ export default function LoanInputs({ onSubmit }) {
                         onChange={handleSelectChange}
                     />
                 </div>
-                <div className="lfilters-select-container">
-                    <Select
+                <div className="lfilters-input-container">
+                    <DatePicker
                         name="startDate"
                         label="Data empréstimo"
                         placeholder="Todos"
-                        options={startDates}
                         value={filters.startDate}
                         onChange={handleSelectChange}
                     />
                 </div>
-                <div className="lfilters-select-container">
-                    <Select
+                <div className="lfilters-input-container">
+                    <DatePicker
                         name="endDate"
                         label="Data devolução"
                         placeholder="Todos"
-                        options={endDates}
                         value={filters.endDate}
                         onChange={handleSelectChange}
                     />
                 </div>
-                <div className="lfilters-select-container">
+                <div className="lfilters-input-container">
                     <Select
                         name="renew"
                         label="Atrasado"
@@ -74,7 +73,7 @@ export default function LoanInputs({ onSubmit }) {
                         onChange={handleSelectChange}
                     />
                 </div>
-                <div className="lfilters-select-container">
+                <div className="lfilters-input-container">
                     <Select
                         name="late"
                         label="Renovação"

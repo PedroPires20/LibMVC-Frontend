@@ -112,6 +112,7 @@ export default function BookDialog({ onClose, onSubmit }) {
                         supportingText="Selecione a data de publicação do livro"
                         value={bookData.date}
                         onChange={handleInputChange}
+                        formVariant
                     />
                     <Input
                         name="pages"

@@ -19,7 +19,7 @@ export default function LoanDialog() {
                     <Input type="text" label="Telefone" supportingText="Entre o telefone de contato do leitor"/>
                     <Input type="text" label="Leitor" supportingText="Entre o nome do leitor"/>
                     <Select label="Livro" placeholder="Selecione o livro a ser emprestado" formVariant/>
-                    <DatePicker label="Data de início"/>
+                    <DatePicker label="Data de início" formVariant/>
                     <Input type="number" label="Duração" supportingText="Entre a duração do empréstimo (em dias)"/>
                     <Checkbox label="Renovação" supportingText="Marque essa opção se estiver registrando a renovação de um empréstimo anterior"/>
                 </form>

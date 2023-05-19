@@ -7,6 +7,7 @@ export default function Select({
     name = "",
     label,
     options = [],
+    optionValues = [],
     placeholder,
     multiple,
     value,
@@ -15,6 +16,7 @@ export default function Select({
 }) {
     const [active, setActive] = useState(false);
     const selectElementRef = useRef(null);
+    const values = (optionValues.length > 0) ? optionValues : options;
 
     useEffect(() => {
         const checkClickOutsideList = (e) => {
@@ -48,6 +50,7 @@ export default function Select({
                 </div>
                 <button
                     onClick={(e) => {
+                        e.preventDefault()
                         onChange(name, (multiple) ? [] : "");
                         e.stopPropagation();
                     }}
@@ -60,21 +63,21 @@ export default function Select({
                     <ul
                         className="select-item-list"
                     >
-                        {options.map((optionValue, index) => (
+                        {options.map((optionLabel, index) => (
                             <li
                                 key={index}
-                                className={`click-ripple-effect-light ${(optionValue === value) ? "select-item-selected" : ""}`}
+                                className={`click-ripple-effect-light ${(values[index] === value) ? "select-item-selected" : ""}`}
                                 onClick={(e) => {
                                     if(multiple) {
-                                        onChange(name, [optionValue, ...value]);
+                                        onChange(name, [...value, values[index]]);
                                     }else {
-                                        onChange(name, optionValue);
+                                        onChange(name, values[index]);
                                         setActive(false);
                                         e.stopPropagation()
                                     }
                                 }}
                             >
-                                {optionValue}
+                                {optionLabel}
                             </li>
                         ))}
                     </ul>

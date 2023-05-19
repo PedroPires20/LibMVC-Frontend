@@ -7,6 +7,9 @@ export function removeEmptyFilters(filters) {
 }
 
 export function parseDate(dateStr) {
+    if(!dateStr || dateStr === "") {
+        return null;
+    }
     let [year, month, day] = dateStr.split('-');
     return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
 }

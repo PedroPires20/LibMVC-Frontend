@@ -16,12 +16,12 @@ export default function Input({
     validationPattern,
     required,
     defaultValue = "",
-    error,
     errorMessage,
     value,
     onChange
 }) {
     const [isActive, setIsActive] = useState(false);
+    const [error, setError] = useState("");
 
     return (
         <div
@@ -40,21 +40,28 @@ export default function Input({
                     step={step}
                     pattern={validationPattern}
                     required={required}
-                    onChange={(e) => onChange(name, e.target.value)}
+                    onChange={(e) => onChange && onChange(name, e.target.value)}
                     onFocus={() => setIsActive(true)}
-                    onBlur={() => setIsActive(false)}
+                    onBlur={(e) => {
+                        setError(e.target.validationMessage);
+                        setIsActive(false);
+                    }}
+                    onInvalid={(e) => setError(e.target.validationMessage)}
                 />
                 <button
                     onClick={(e) => {
                         e.preventDefault();
-                        onChange(name, defaultValue);
+                        onChange && onChange(name, defaultValue);
                     }}
                 >
                     <img src={clearIcon} alt="limpar"/>
                 </button>
             </div>
-            {(!error && supportingText) && <span className="input-support">{supportingText}</span>}
-            {(error && errorMessage) && <span className="input-error-message">{errorMessage}</span>}
+            {(!!error) ? (
+                <span className="input-error-message">{errorMessage || error}</span>
+            ) : (
+                supportingText && <span className="input-support">{supportingText}</span>
+            )}
         </div>
     )
 }

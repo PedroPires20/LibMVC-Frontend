@@ -9,19 +9,19 @@ export default function DatePicker({
     minDate,
     maxDate,
     required,
-    error,
     errorMessage,
     value,
     onChange
 }) {
     const [isActive, setIsActive] = useState(false);
+    const [error, setError] = useState("");
 
     return (
         <div
-            className={`date-picker-container${(isActive) ? " date-picker-container-active" : ""}${(error) ? " date-picker-container-error" : ""}`}
+            className={`date-picker-container${(isActive) ? " date-picker-container-active" : ""}${(!!error) ? " date-picker-container-error" : ""}`}
         >
             <label className={(isActive || value) ? "date-picker-small-label" : ""}>{label}</label>
-            <div className={`date-picker-control${(error) ? " date-picker-control-error" : ""}`}>
+            <div className={`date-picker-control${(!!error) ? " date-picker-control-error" : ""}`}>
                 <input
                     type="date"
                     value={value}
@@ -30,11 +30,18 @@ export default function DatePicker({
                     required={required}
                     onChange={(e) => onChange(name, e.target.value)}
                     onFocus={() => setIsActive(true)}
-                    onBlur={() => setIsActive(false)}
+                    onBlur={(e) => {
+                        setError(e.target.validationMessage);
+                        setIsActive(false);
+                    }}
+                    onInvalid={(e) => setError(e.target.validationMessage)}
                 />
             </div>
-            {(!error && supportingText) && <span className="date-picker-support">{supportingText}</span>}
-            {(error && errorMessage) && <span className="date-picker-error-message">{errorMessage}</span>}
+            {(!!error) ? (
+                <span className="date-picker-error-message">{errorMessage || error}</span>
+            ) : (
+                supportingText && <span className="date-picker-support">{supportingText}</span>
+            )}
         </div>
     )
 }

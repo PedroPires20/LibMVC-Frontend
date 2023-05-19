@@ -25,10 +25,10 @@ export default function Input({
 
     return (
         <div
-            className={`input-container${(isActive) ? " input-container-active" : ""}${(error) ? " input-container-error" : ""}`}
+            className={`input-container${(isActive) ? " input-container-active" : ""}${(!!error) ? " input-container-error" : ""}`}
         >
             <label className={(isActive || value) ? "input-small-label" : ""}>{label}</label>
-            <div className={`input-control${(error) ? " input-control-error" : ""}`}>
+            <div className={`input-control${(!!error) ? " input-control-error" : ""}`}>
                 <input
                     name={name}
                     type={type}

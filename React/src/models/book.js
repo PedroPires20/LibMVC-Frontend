@@ -19,6 +19,42 @@ export default class Book {
         this._index = index;
     }
 
+    static fromFormData(formData) {
+        return new Book({
+            _id: null,
+            isbn: formData.isbn || "",
+            title: formData.title,
+            author: formData.author,
+            categories: formData.categories || [],
+            publisher: formData.publisher || "",
+            edition: formData.edition || "",
+            format: formData.format || "",
+            date: (formData.date && formData.date !== "") ? formData.date : undefined,
+            pages: parseInt(formData.pages),
+            copies: parseInt(formData.copies),
+            description: formData.description || "",
+            location: formData.location || ""
+        });
+    }
+
+    toRequestBody() {
+        let requestData = {
+            isbn: this._isbn,
+            title: this._title,
+            author: this._author,
+            categories: this._categories,
+            publisher: this._publisher,
+            edition: this._edition,
+            format: this._format,
+            date: (this._date && this.date !== "") ? this._date.toISOString() : this._date,
+            pages: this._pages,
+            copies: this._copies,
+            description: this._description,
+            location: this._location
+        };
+        return requestData;
+    }
+
     get id() {
         return this._id;
     }

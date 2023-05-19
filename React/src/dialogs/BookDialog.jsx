@@ -52,6 +52,7 @@ export default function BookDialog({ onClose, onSubmit }) {
                         supportingText="Entre o ISBN do livro"
                         value={bookData.isbn}
                         onChange={handleInputChange}
+                        required
                     />
                     <Input
                         name="title"

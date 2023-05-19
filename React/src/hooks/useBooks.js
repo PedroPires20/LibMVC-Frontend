@@ -7,7 +7,7 @@ import Book from "../models/book";
 export function useBooks() {
     const [query, setQuery] = useState({});
     const [books, setBooks] = useState([]);
-    const network = new NetworkClient(API_BASE_URL);
+    const api = new NetworkClient(API_BASE_URL);
 
     function handleQuery(queryText, filters) {
         let newQuery = {};
@@ -18,13 +18,23 @@ export function useBooks() {
         setQuery(newQuery);
     }
 
+    async function createBook(formData) {
+        let newBook = Book.fromFormData(formData);
+        try {
+            await api.createBook(newBook.toRequestBody());
+            setBooks([...books, newBook]);
+        }catch(exception) {
+            console.log("Error creating book: " + exception.message);
+        }
+    }
+
     useEffect(() => {
-        network.searchBooks(query.text, query.filters)
+        api.searchBooks(query.text, query.filters)
         .then((booksData) => setBooks(booksData.map(
             (bookData, index) => new Book(bookData, index)
         )))
         .catch((error) => setBooks(error));
     }, [query]);
 
-    return { books, handleQuery };
+    return { books, handleQuery, createBook };
 }

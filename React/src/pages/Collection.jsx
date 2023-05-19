@@ -4,6 +4,7 @@ import Button from "../components/button/Button";
 import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../components/table_card/TableCard";
 import CollectionInputs from "../components/collection_inputs/CollectionInputs";
 import ContextMenu from "../components/context_menu/ContextMenu";
+import BookDialog from "../dialogs/BookDialog";
 import addIcon from "./assets/add_icon.svg";
 import "./Collection.css";
 
@@ -11,7 +12,8 @@ import "./Collection.css";
 export default function Collection() {
     const [showContextMenu, setShowContextMenu] = useState(false);
     const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
-    const { books, handleQuery } = useBooks(0);
+    const [showBookDialog, setShowBookDialog] = useState(false);
+    const { books, handleQuery, createBook } = useBooks(0);
 
     useEffect(() => {
         document.title = "LibMVC - Acervo"
@@ -28,7 +30,7 @@ export default function Collection() {
         <div className={`collection-page${(showContextMenu) ? " collection-page-menu" : ""}`}>
             <div className="collection-header">
                 <h2>Acervo</h2>
-                <Button variant="primary">
+                <Button variant="primary" onClick={() => setShowBookDialog(true)}>
                     <div className="collection-add-button">
                         <img src={addIcon} alt="adicionar"/>
                         <span>Novo livro</span>
@@ -99,6 +101,12 @@ export default function Collection() {
                 <ContextMenu
                     position={contextMenuPosition}
                     onMenuClose={() => setShowContextMenu(false)}
+                />
+            )}
+            {showBookDialog && (
+                <BookDialog
+                    onClose={() => setShowBookDialog(false)}
+                    onSubmit={createBook}
                 />
             )}
         </div>

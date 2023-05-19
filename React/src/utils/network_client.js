@@ -79,6 +79,28 @@ export default class NetworkClient {
         return response.json();
     }
 
+    async createBook(bookData) {
+        let requestUrl = new URL(this._booksPath, this._baseUrl);
+        let requestBody = JSON.stringify(bookData);
+        let response;
+        try {
+            response = await fetch(
+                requestUrl,
+                {
+                    method: "POST",
+                    headers: BASE_REQUEST_HEADERS,
+                    body: requestBody
+                }
+            );
+        }catch(exception) {
+            throw new NetworkError(exception.message);
+        }
+        if(!response.ok) {
+            let l = await response.text();
+            throw new HTTPError(response.status, response.statusText, l, `Failed to create a new book: the server returned and error.\nBook data: ${requestBody}`);
+        }
+    }
+
     async fetchLoans(filters, sortBy, page, loansPerPage) {
         let requestUrl = new URL(this._loansPath, this._baseUrl);
         let requestParameters = new URLSearchParams();

@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { useBookFilters } from "../../hooks/useBookFilters";
+import { useBookFields } from "../../hooks/useBookFields";
 import SearchBox from "../search_box/SearchBox";
 import Select from "../select/Select";
 import Button from "../button/Button";
@@ -16,7 +16,7 @@ const DEFAULT_FILTER_VALUES = {
 export default function CollectionInputs({ onSubmit }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [filters, setFilters] = useState(DEFAULT_FILTER_VALUES);
-    const { authors, categories, publishers, formats } = useBookFilters();
+    const { authors, categories, publishers, formats } = useBookFields();
 
     function handleSelectChange(name, option) {
         setFilters({ ...filters, [name]: option });

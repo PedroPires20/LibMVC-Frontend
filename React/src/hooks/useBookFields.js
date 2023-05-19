@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import NetworkClient from "../utils/network_client";
 
 
-export function useBookFilters() {
+export function useBookFields() {
     const [authors, setAuthors] = useState([]);
     const [categories, setCategories] = useState([]);
     const [publishers, setPublishers] = useState([]);

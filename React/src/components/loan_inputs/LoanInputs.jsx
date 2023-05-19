@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { useLoanFilters } from "../../hooks/useLoanFilters";
+import { useLoanFields } from "../../hooks/useLoanFields";
 import Select from "../select/Select";
 import DatePicker from "../date_picker/DatePicker";
 import Button from "../button/Button";
@@ -17,7 +17,7 @@ const DEFAULT_FILTER_VALUES = {
 
 export default function LoanInputs({ onSubmit }) {
     const [filters, setFilters] = useState(DEFAULT_FILTER_VALUES);
-    const { readers, bookTitles } = useLoanFilters();
+    const { readers, bookTitles } = useLoanFields();
 
     function handleSelectChange(name, value) {
         setFilters({ ...filters, [name]: value });

@@ -32,7 +32,6 @@
     flex-flow: row nowrap;
     justify-content: flex-end;
     gap: 0.6em;
-    padding-right: 0.5em;
 }
 .book-dialog-buttons button {
     border: none;

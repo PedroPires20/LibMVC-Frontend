@@ -7,7 +7,7 @@ import DatePicker from "../components/date_picker/DatePicker";
 import "./BookDialog.css";
 
 
-export default function BookDialog() {
+export default function BookDialog({ onClose }) {
     return (
         <DialogBox>
             <div className="book-dialog-container">
@@ -32,11 +32,24 @@ export default function BookDialog() {
                     <Input type="number" label="Cópias" supportingText="Entre o número de cópias disponíveis do livro"/>
                     <TextArea label="Descrição" supportingText="Entre uma breve descrição para o livro"/>
                     <Input type="text" label="Localização" supportingText="Entre a localização do livro no acervo"/>
+                    <div className="book-dialog-buttons">
+                        <button
+                            className="click-ripple-effect-light"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                onClose();
+                            }}
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            className="click-ripple-effect-light"
+                            
+                        >
+                            Confirmar
+                        </button>
+                    </div>
                 </form>
-                <div className="book-dialog-buttons">
-                    <button className="click-ripple-effect-light">Cancelar</button>
-                    <button className="click-ripple-effect-light">Confirmar</button>
-                </div>
             </div>
         </DialogBox>
     )

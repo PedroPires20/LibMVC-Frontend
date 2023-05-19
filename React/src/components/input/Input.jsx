@@ -46,8 +46,8 @@ export default function Input({
                 />
                 <button
                     onClick={(e) => {
-                        onChange(name, defaultValue);
                         e.preventDefault();
+                        onChange(name, defaultValue);
                     }}
                 >
                     <img src={clearIcon} alt="limpar"/>

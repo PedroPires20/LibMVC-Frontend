@@ -7,7 +7,7 @@ import DatePicker from "../components/date_picker/DatePicker";
 import "./BookDialog.css";
 
 
-export default function BookDialog({ onClose }) {
+export default function BookDialog({ onClose, onSubmit }) {
     const [bookData, setBookData] = useState({
         isbn: "",
         title: "",
@@ -29,11 +29,13 @@ export default function BookDialog({ onClose }) {
 
     function handleFormSubmit(event) {
         event.preventDefault();
-
-        if(event.target.checkValidity()) {
-            console.log("valid");
+        const formElement = event.target;
+        if(!formElement.checkValidity()) {
+            const firstInvalidInput = formElement.querySelector(":invalid");
+            firstInvalidInput && firstInvalidInput.focus();
         }else {
-            console.log("invalid!");
+            onSubmit(bookData);
+            onClose();
         }
     }
 
@@ -118,6 +120,7 @@ export default function BookDialog({ onClose }) {
                         minValue={1}
                         value={bookData.pages}
                         onChange={handleInputChange}
+                        required
                     />
                     <Input
                         name="copies"
@@ -156,7 +159,6 @@ export default function BookDialog({ onClose }) {
                         </button>
                         <button
                             className="click-ripple-effect-light"
-                            
                         >
                             Confirmar
                         </button>

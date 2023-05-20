@@ -5,6 +5,8 @@ import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../compo
 import CollectionInputs from "../components/collection_inputs/CollectionInputs";
 import ContextMenu from "../components/context_menu/ContextMenu";
 import BookDialog from "../dialogs/BookDialog";
+import DialogBox from "../components/dialog_box/DialogBox";
+import StateDialog from "../dialogs/StateDialog";
 import addIcon from "./assets/add_icon.svg";
 import "./Collection.css";
 
@@ -12,9 +14,10 @@ import "./Collection.css";
 export default function Collection() {
     const [showContextMenu, setShowContextMenu] = useState(false);
     const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0, targetIndex: 0 });
-    const [updateTargetIndex, setUpdateTargetIndex] = useState(null);
+    const [targetBookIndex, setTargetBookIndex] = useState(null);
     const [showBookDialog, setShowBookDialog] = useState(false);
-    const { books, handleQuery, createBook, updateBook } = useBooks(0);
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+    const { books, handleQuery, createBook, updateBook, deleteBook } = useBooks(0);
 
     useEffect(() => {
         document.title = "LibMVC - Acervo"
@@ -28,23 +31,30 @@ export default function Collection() {
     }
 
     function handleContextMenuClick(action) {
-        switch(action) {
-            case 0: {
-                setUpdateTargetIndex(contextMenuPosition.targetIndex);
-                setShowContextMenu(false);
-                setShowBookDialog(true);
-                break;
-            }
+        setTargetBookIndex(contextMenuPosition.targetIndex);
+        setShowContextMenu(false);
+        if(action === 0) {
+            setShowBookDialog(true);
+        }else if(action === 1) {
+            setShowDeleteDialog(true);
         }
     }
 
     function handleBookDialogSubmit(bookData) {
-        if(updateTargetIndex !== null) {
-            updateBook(updateTargetIndex, bookData);
-            setUpdateTargetIndex(null);
+        if(targetBookIndex !== null) {
+            updateBook(targetBookIndex, bookData);
+            setTargetBookIndex(null);
         }else {
             createBook(bookData);
         }
+    }
+
+    function handleDeleteDialog(option) {
+        if(option === 0) {
+            deleteBook(targetBookIndex);
+            setTargetBookIndex(null);
+        }
+        setShowDeleteDialog(false);
     }
 
     return (
@@ -130,10 +140,21 @@ export default function Collection() {
             )}
             {showBookDialog && (
                 <BookDialog
-                    updateTarget={(updateTargetIndex !== null) && books[updateTargetIndex]}
+                    updateTarget={(targetBookIndex !== null) && books[targetBookIndex]}
                     onClose={() => setShowBookDialog(false)}
                     onSubmit={handleBookDialogSubmit}
                 />
+            )}
+            {showDeleteDialog && (
+                <DialogBox>
+                    <StateDialog
+                        variant="delete"
+                        heading="Apagar Livro?"
+                        message={`Deseja remover o livro "${books[targetBookIndex].title}" do acervo?\nUma vez excluído, as informações desse livro não poderão ser recuperadas!`}
+                        buttonLabels={["Sim", "Não"]}
+                        onClose={handleDeleteDialog}
+                    />   
+                </DialogBox>
             )}
         </div>
     )

@@ -45,6 +45,15 @@ export function useBooks() {
         }
     }
 
+    async function deleteBook(index) {
+        try {
+            await api.deleteBook(books[index].id);
+            setBooks([...books.slice(0, index), ...books.slice(index + 1)]);
+        }catch(exception) {
+            console.log("Error deleting book: " + exception);
+        }
+    }
+
     useEffect(() => {
         api.searchBooks(query.text, query.filters)
         .then((booksData) => setBooks(booksData.map(
@@ -53,5 +62,5 @@ export function useBooks() {
         .catch((error) => setBooks(error));
     }, [query]);
 
-    return { books, handleQuery, createBook, updateBook };
+    return { books, handleQuery, createBook, updateBook, deleteBook };
 }

@@ -120,6 +120,23 @@ export default class NetworkClient {
         }
     }
 
+    async deleteBook(bookId) {
+        let requestUrl = new URL(`${this._booksPath}/${bookId}`, this._baseUrl);
+        let response;
+        try {
+            response = await fetch(requestUrl, {
+                method: "DELETE",
+                headers: BASE_REQUEST_HEADERS
+            });
+        }catch(exception) {
+            throw new NetworkError(exception.message);
+        }
+        if(!response.ok) {
+            let responseBody = await response.text();
+            throw new HTTPError(response.status, response.statusText, responseBody, `Failed to delete book (id = ${bookId}): the server returned an error.`);
+        }
+    }
+
     async fetchLoans(filters, sortBy, page, loansPerPage) {
         let requestUrl = new URL(this._loansPath, this._baseUrl);
         let requestParameters = new URLSearchParams();

@@ -11,19 +11,40 @@ import "./Collection.css";
 
 export default function Collection() {
     const [showContextMenu, setShowContextMenu] = useState(false);
-    const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
+    const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0, targetIndex: 0 });
+    const [updateTargetIndex, setUpdateTargetIndex] = useState(null);
     const [showBookDialog, setShowBookDialog] = useState(false);
-    const { books, handleQuery, createBook } = useBooks(0);
+    const { books, handleQuery, createBook, updateBook } = useBooks(0);
 
     useEffect(() => {
         document.title = "LibMVC - Acervo"
     }, []);
 
-    function handleRowClick(event) {
+    function handleRowClick(event, targetIndex) {
         const { top, left, width, height } = event.target.getBoundingClientRect();
-        setContextMenuPosition({ x: left, y: top + height });
+        setContextMenuPosition({ x: left, y: top + height, targetIndex });
         setShowContextMenu(true);
         event.stopPropagation();
+    }
+
+    function handleContextMenuClick(action) {
+        switch(action) {
+            case 0: {
+                setUpdateTargetIndex(contextMenuPosition.targetIndex);
+                setShowContextMenu(false);
+                setShowBookDialog(true);
+                break;
+            }
+        }
+    }
+
+    function handleBookDialogSubmit(bookData) {
+        if(updateTargetIndex !== null) {
+            updateBook(updateTargetIndex, bookData);
+            setUpdateTargetIndex(null);
+        }else {
+            createBook(bookData);
+        }
     }
 
     return (
@@ -56,8 +77,11 @@ export default function Collection() {
                     </TableRow>
                 </TableHeader>
                 <TableData>
-                    {books.map((book) => (
-                        <TableRow key={book.id} onClick={handleRowClick}>
+                    {books.map((book, index) => (
+                        <TableRow
+                            key={book.id}
+                            onClick={(e) => handleRowClick(e, index)}
+                        >
                             <TableCell>
                                 {book.isbn}
                             </TableCell>
@@ -101,12 +125,14 @@ export default function Collection() {
                 <ContextMenu
                     position={contextMenuPosition}
                     onMenuClose={() => setShowContextMenu(false)}
+                    onMenuClick={handleContextMenuClick}
                 />
             )}
             {showBookDialog && (
                 <BookDialog
+                    updateTarget={(updateTargetIndex !== null) && books[updateTargetIndex]}
                     onClose={() => setShowBookDialog(false)}
-                    onSubmit={createBook}
+                    onSubmit={handleBookDialogSubmit}
                 />
             )}
         </div>

@@ -6,22 +6,27 @@ import Select from "../components/select/Select";
 import DatePicker from "../components/date_picker/DatePicker";
 import "./BookDialog.css";
 
+const DEFAULT_BOOK_DATA = {
+    isbn: "",
+    title: "",
+    author: "",
+    categories: "",
+    publisher: "",
+    edition: "",
+    format: "",
+    date: "",
+    pages: "",
+    copies: "",
+    description: "",
+    location: ""
+};
 
-export default function BookDialog({ onClose, onSubmit }) {
-    const [bookData, setBookData] = useState({
-        isbn: "",
-        title: "",
-        author: "",
-        categories: "",
-        publisher: "",
-        edition: "",
-        format: "",
-        date: "",
-        pages: "",
-        copies: "",
-        description: "",
-        location: ""
-    });
+
+export default function BookDialog({ updateTarget, onClose, onSubmit }) {
+    const isUpdateDialog = !!updateTarget;
+    const [bookData, setBookData] = useState(
+        (isUpdateDialog) ? updateTarget.toFormData() : DEFAULT_BOOK_DATA
+    );
 
     function handleInputChange(name, value) {
         setBookData({ ...bookData, [name]: value });
@@ -42,8 +47,13 @@ export default function BookDialog({ onClose, onSubmit }) {
     return (
         <DialogBox>
             <div className="book-dialog-container">
-                <h3>Adicionar novo livro</h3>
-                <p>Preencha as informações abaixo para cadastrar um novo livro</p>
+                <h3>
+                    {(isUpdateDialog) ? "Editar livro" : "Adicionar novo livro"}
+                </h3>
+                <p>
+                    {(isUpdateDialog) ? "Edite, abaixo, as informações desejadas e confirme suas alterações"
+                        : "Preencha as informações abaixo para cadastrar um novo livro"}
+                </p>
                 <form name="book-dialog-form" noValidate onSubmit={handleFormSubmit}>
                     <Input
                         name="isbn"

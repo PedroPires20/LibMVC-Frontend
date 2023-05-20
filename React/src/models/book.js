@@ -19,9 +19,9 @@ export default class Book {
         this._index = index;
     }
 
-    static fromFormData(formData) {
+    static fromFormData(formData, id = null, index = null) {
         return new Book({
-            _id: null,
+            _id: id,
             isbn: formData.isbn || "",
             title: formData.title,
             author: formData.author,
@@ -34,7 +34,7 @@ export default class Book {
             copies: parseInt(formData.copies),
             description: formData.description || "",
             location: formData.location || ""
-        });
+        }, index);
     }
 
     toRequestBody() {
@@ -53,6 +53,17 @@ export default class Book {
             location: this._location
         };
         return requestData;
+    }
+
+    getFieldsDiff(targetBookData) {
+        let diff = {};
+        let currentBookData = this.toRequestBody();
+        for(const field in currentBookData) {
+            if(currentBookData[field] !== targetBookData[field]) {
+                diff[field] = targetBookData[field];
+            }
+        }
+        return diff;
     }
 
     get id() {

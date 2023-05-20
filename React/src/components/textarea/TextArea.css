@@ -34,6 +34,7 @@
     border-radius: 0.25rem 0.25rem 0 0;
     position: relative;
     padding-right: 0.75em;
+    padding-top: 1.25em;
 }
 
 .textarea-control textarea {
@@ -41,7 +42,7 @@
     outline: none;
     background: none;
     font-size: 1em;
-    padding: 1.5em 1em 0.5em 1em;
+    padding: 0.25em 1em 0.5em 1em;
     flex: 1 1;
     resize: none;
 }

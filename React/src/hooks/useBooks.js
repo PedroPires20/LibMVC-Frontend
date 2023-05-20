@@ -21,8 +21,8 @@ export function useBooks() {
     async function createBook(formData) {
         let newBook = Book.fromFormData(formData);
         try {
-            await api.createBook(newBook.toRequestBody());
-            setBooks([...books, newBook]);
+            let { createdId } = await api.createBook(newBook.toRequestBody());
+            setBooks([...books, Book.fromFormData(formData, createdId)]);
         }catch(exception) {
             console.log("Error creating book: " + exception.message);
         }

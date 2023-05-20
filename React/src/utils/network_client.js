@@ -99,6 +99,7 @@ export default class NetworkClient {
             let responseBody = await response.text();
             throw new HTTPError(response.status, response.statusText, responseBody, `Failed to create a new book: the server returned an error.\nBook data: ${requestBody}`);
         }
+        return response.json();
     }
 
     async updateBook(bookId, diffData) {

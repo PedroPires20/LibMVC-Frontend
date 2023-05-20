@@ -28,7 +28,9 @@ export default function StateDialog({
         <div className="state-dialog-container">
             {(variant !== "load") && <img src={iconPath} alt={altMessage}/>}
             <h3>{heading}</h3>
-            <p>{message}</p>
+            {message.split('\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+            ))}
             {detailsSummary && (
                 <details className="state-dialog-details">
                     <summary>{detailsSummary}</summary>

@@ -1,4 +1,4 @@
-import { parseDate } from "../utils/utils";
+import { parseDate, toFormDate } from "../utils/utils";
 
 
 export default class Book {
@@ -25,7 +25,7 @@ export default class Book {
             isbn: formData.isbn || "",
             title: formData.title,
             author: formData.author,
-            categories: formData.categories || [],
+            categories: Array.isArray(formData.categories) ? formData.categories : [],
             publisher: formData.publisher || "",
             edition: formData.edition || "",
             format: formData.format || "",
@@ -38,7 +38,7 @@ export default class Book {
     }
 
     toRequestBody() {
-        let requestData = {
+        return {
             isbn: this._isbn,
             title: this._title,
             author: this._author,
@@ -52,14 +52,31 @@ export default class Book {
             description: this._description,
             location: this._location
         };
-        return requestData;
     }
 
-    getFieldsDiff(targetBookData) {
+    toFormData() {
+        return {
+            isbn: this._isbn,
+            title: this._title,
+            author: this._author,
+            categories: this._categories,
+            publisher: this._publisher,
+            edition: this._edition,
+            format: this._format,
+            date: (this._date && this.date !== "") ? toFormDate(this._date) : "",
+            pages: this._pages.toString(),
+            copies: this._copies.toString(),
+            description: this._description,
+            location: this._location
+        };
+    }
+
+    getFieldsDiff(targetBook) {
         let diff = {};
         let currentBookData = this.toRequestBody();
+        let targetBookData = targetBook.toRequestBody();
         for(const field in currentBookData) {
-            if(currentBookData[field] !== targetBookData[field]) {
+            if(JSON.stringify(currentBookData[field]) !== JSON.stringify(targetBookData[field])) {
                 diff[field] = targetBookData[field];
             }
         }

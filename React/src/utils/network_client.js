@@ -96,8 +96,26 @@ export default class NetworkClient {
             throw new NetworkError(exception.message);
         }
         if(!response.ok) {
-            let l = await response.text();
-            throw new HTTPError(response.status, response.statusText, l, `Failed to create a new book: the server returned and error.\nBook data: ${requestBody}`);
+            let responseBody = await response.text();
+            throw new HTTPError(response.status, response.statusText, responseBody, `Failed to create a new book: the server returned and error.\nBook data: ${requestBody}`);
+        }
+    }
+
+    async updateBook(bookId, diffData) {
+        let requestUrl = new URL(`${this._booksPath}/${bookId}`, this._baseUrl);
+        let requestBody = JSON.stringify(diffData);
+        let response;
+        try {
+            response = await fetch(requestUrl, {
+                method: "PATCH",
+                headers: BASE_REQUEST_HEADERS,
+                body: requestBody
+            })
+        }catch(exception) {
+            throw new NetworkError(exception.message);
+        }
+        if(!response.ok) {
+            throw new HTTPError(response.status, response.statusText);
         }
     }
 

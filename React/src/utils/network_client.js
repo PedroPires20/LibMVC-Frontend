@@ -97,7 +97,7 @@ export default class NetworkClient {
         }
         if(!response.ok) {
             let responseBody = await response.text();
-            throw new HTTPError(response.status, response.statusText, responseBody, `Failed to create a new book: the server returned and error.\nBook data: ${requestBody}`);
+            throw new HTTPError(response.status, response.statusText, responseBody, `Failed to create a new book: the server returned an error.\nBook data: ${requestBody}`);
         }
     }
 
@@ -115,7 +115,8 @@ export default class NetworkClient {
             throw new NetworkError(exception.message);
         }
         if(!response.ok) {
-            throw new HTTPError(response.status, response.statusText);
+            let responseBody = await response.text();
+            throw new HTTPError(response.status, response.statusText, responseBody, `Failed to update a book: the server returned an error.\nRequest body: ${requestBody}`);
         }
     }
 

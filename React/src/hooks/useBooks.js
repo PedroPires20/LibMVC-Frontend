@@ -31,15 +31,17 @@ export function useBooks() {
     async function updateBook(index, newData) {
         let updatedBook = Book.fromFormData(newData, books[index].id, index);
         let diff = books[index].getFieldsDiff(updatedBook);
-        try {
-            await api.updateBook(books[index].id, diff);
-            setBooks([
-                ...books.slice(0, index),
-                updatedBook,
-                ...books.slice(index + 1)
-            ]);
-        }catch(exception) {
-            console.log("Error updating book: " + exception);
+        if(!!diff) {
+            try {
+                await api.updateBook(books[index].id, diff);
+                setBooks([
+                    ...books.slice(0, index),
+                    updatedBook,
+                    ...books.slice(index + 1)
+                ]);
+            }catch(exception) {
+                console.log("Error updating book: " + exception);
+            }
         }
     }
 

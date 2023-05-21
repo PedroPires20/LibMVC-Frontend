@@ -17,7 +17,7 @@ export default function Collection() {
     const [targetBookIndex, setTargetBookIndex] = useState(null);
     const [showBookDialog, setShowBookDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-    const { books, handleQuery, createBook, updateBook, deleteBook } = useBooks(0);
+    const { books, handleQuery, createBook, updateBook, deleteBook } = useBooks();
 
     useEffect(() => {
         document.title = "LibMVC - Acervo"

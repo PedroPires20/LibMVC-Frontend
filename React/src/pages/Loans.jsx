@@ -4,6 +4,7 @@ import Button from "../components/button/Button";
 import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../components/table_card/TableCard";
 import LoanInputs from "../components/loan_inputs/LoanInputs";
 import ContextMenu from "../components/context_menu/ContextMenu";
+import LoanDialog from "../dialogs/LoanDialog";
 import addIcon from "./assets/add_icon.svg";
 import "./Loans.css";
 
@@ -11,7 +12,8 @@ import "./Loans.css";
 export default function Loans() {
     const [showContextMenu, setShowContextMenu] = useState(false);
     const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
-    const { loans, handleFilters } = useLoans();
+    const [showLoanDialog, setShowLoanDialog] = useState(false);
+    const { loans, handleFilters, createLoan } = useLoans();
 
     useEffect(() => {
         document.title = "LibMVC - Empréstimos"
@@ -28,7 +30,7 @@ export default function Loans() {
         <div className={`loans-page${(showContextMenu) ? " loans-page-menu" : ""}`}>
             <div className="loans-header">
                 <h2>Empréstimos</h2>
-                <Button variant="primary">
+                <Button variant="primary" onClick={() => setShowLoanDialog(true)}>
                     <div className="loans-add-button">
                         <img src={addIcon} alt="novo"/>
                         <span>Novo empréstimo</span>
@@ -89,6 +91,12 @@ export default function Loans() {
                     position={contextMenuPosition}
                     onMenuClose={() => setShowContextMenu(false)}
                     loanVariant
+                />
+            )}
+            {showLoanDialog && (
+                <LoanDialog
+                    onSubmit={createLoan}
+                    onClose={() => setShowLoanDialog(false)}
                 />
             )}
         </div>

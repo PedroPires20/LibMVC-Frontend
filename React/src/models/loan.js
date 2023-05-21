@@ -1,9 +1,12 @@
 import Model from "./model";
-import { parseDate } from "../utils/utils";
+import { parseDate, toFormDate } from "../utils/utils";
+
+const DAY_MILLISECONDS = 86400000;
 
 
 export default class Loan extends Model {
     constructor(loanData, index = null) {
+        super();
         this._id = loanData._id;
         this._reader = loanData.reader;
         this._phone = loanData.phone;
@@ -16,6 +19,44 @@ export default class Loan extends Model {
         this._renew = loanData.renew;
         this._late = loanData.late;
         this._index = index;
+    }
+
+    static fromFormData(formData, id = null, index = null) {
+        let startDate = parseDate(formData.startDate);
+        let duration = parseInt(formData.duration);
+        let endDate = new Date(startDate.getTime());
+        endDate.setDate(startDate.getDate() + duration);
+        return new Loan({
+            _id: id,
+            reader: formData.reader,
+            phone: formData.phone,
+            bookId: formData.bookId,
+            startDate: toFormDate(startDate),
+            endDate: toFormDate(endDate),
+            duration:duration,
+            renew: formData.renew
+        }, index);
+    }
+
+    toRequestBody() {
+        return {
+            reader: this._reader,
+            phone: this._phone,
+            bookId: this._bookId,
+            startDate: this._startDate.toISOString(),
+            duration: this._duration,
+            renew: this._renew
+        };
+    }
+
+    toFormData() {
+        return {
+            reader: this._reader,
+            bookId: this._bookId,
+            startDate: toFormDate(this._startDate),
+            endDate: toFormDate(this._endDate),
+            renew: this._renew
+        };
     }
 
     get id() {

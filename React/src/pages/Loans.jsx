@@ -11,20 +11,38 @@ import "./Loans.css";
 
 export default function Loans() {
     const [showContextMenu, setShowContextMenu] = useState(false);
-    const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
+    const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0, targetIndex: 0 });
+    const [targetLoanIndex, setTargetLoanIndex] = useState(null);
     const [showLoanDialog, setShowLoanDialog] = useState(false);
-    const { loans, handleFilters, createLoan } = useLoans();
+    const { loans, handleFilters, createLoan, updateLoan } = useLoans();
 
     useEffect(() => {
         document.title = "LibMVC - Empréstimos"
     }, []);
 
-    function handleRowClick(event) {
+    function handleRowClick(event, targetIndex) {
         const { top, left, width, height } = event.target.getBoundingClientRect();
-        setContextMenuPosition({ x: left, y: top + height });
+        setContextMenuPosition({ x: left, y: top + height, targetIndex });
         setShowContextMenu(true);
         event.stopPropagation();
     }
+
+    function handleContextMenuClick(action) {
+        setTargetLoanIndex(contextMenuPosition.targetIndex);
+        setShowContextMenu(false);
+        if(action === 0) {
+            setShowLoanDialog(true);
+        }
+    }
+
+    function handleLoanDialogSubmit(loanData) {
+        if(targetLoanIndex !== null) {
+            updateLoan(targetLoanIndex, loanData);
+            setTargetLoanIndex(null);
+        }else {
+            createLoan(loanData);
+        }
+    } 
     
     return (
         <div className={`loans-page${(showContextMenu) ? " loans-page-menu" : ""}`}>
@@ -53,8 +71,8 @@ export default function Loans() {
                     </TableRow>
                 </TableHeader>
                 <TableData>
-                    {loans.map((loan) => (
-                        <TableRow key={loan.id} onClick={handleRowClick}>
+                    {loans.map((loan, index) => (
+                        <TableRow key={loan.id} onClick={(e) => handleRowClick(e, index)}>
                             <TableCell>
                                 {loan.reader}
                             </TableCell>
@@ -90,12 +108,14 @@ export default function Loans() {
                 <ContextMenu
                     position={contextMenuPosition}
                     onMenuClose={() => setShowContextMenu(false)}
+                    onMenuClick={handleContextMenuClick}
                     loanVariant
                 />
             )}
             {showLoanDialog && (
                 <LoanDialog
-                    onSubmit={createLoan}
+                    updateTarget={(targetLoanIndex !== null) && loans[targetLoanIndex]}
+                    onSubmit={handleLoanDialogSubmit}
                     onClose={() => setShowLoanDialog(false)}
                 />
             )}

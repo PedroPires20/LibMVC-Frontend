@@ -50,9 +50,10 @@ export default class Loan extends Model {
     toFormData() {
         return {
             reader: this._reader,
+            phone: this._phone,
             bookId: this._bookId,
             startDate: toFormDate(this._startDate),
-            endDate: toFormDate(this._endDate),
+            duration: this._duration,
             renew: this._renew
         };
     }

@@ -23,6 +23,21 @@ export function useLoans() {
         }
     }
 
+    async function updateLoan(index, formData) {
+        let updatedLoan = Loan.fromFormData(formData, loans[index].id, index);
+        let diff = loans[index].getFieldsDiff(updatedLoan);
+        try {
+            await api.updateLoan(updatedLoan.id, diff);
+            setLoans([
+                ...loans.slice(0, index),
+                updatedLoan,
+                ...loans.slice(index + 1)
+            ]);
+        }catch(exception) {
+            console.log("Error updating loan: " + exception.message);
+        }
+    }
+
     useEffect(() => {
         const fetchTransformLoans = async () => {
             try {
@@ -36,5 +51,5 @@ export function useLoans() {
         fetchTransformLoans();
     }, [filters]);
 
-    return { loans, handleFilters, createLoan };
+    return { loans, handleFilters, createLoan, updateLoan };
 }

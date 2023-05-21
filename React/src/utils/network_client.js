@@ -195,6 +195,28 @@ export default class NetworkClient {
         return response.json();
     }
 
+    async updateLoan(loanId, diffData) {
+        let requestUrl = new URL(`${this._loansPath}/${loanId}`, this._baseUrl);
+        let requestBody = JSON.stringify(diffData);
+        let response;
+        try {
+            response = await fetch(
+                requestUrl,
+                {
+                    method: "PATCH",
+                    headers: BASE_REQUEST_HEADERS,
+                    body: requestBody
+                }
+            );
+        }catch(exception) {
+            throw new NetworkError(exception.message);
+        }
+        if(!response.ok) {
+            let responseBody = await response.text();
+            throw new HTTPError(response.status, response.statusText, responseBody, `Failed to update loan: the server returned an error.\nRequest body: ${requestBody}`);
+        }
+    }
+
     async fetchBookFieldValues(fieldName) {
         return this._fetchFieldValues(this._booksPath, fieldName);
     }

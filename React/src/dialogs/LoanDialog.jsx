@@ -17,8 +17,11 @@ const DEFAULT_LOAN_DATA = {
 };
 
 
-export default function LoanDialog({ onClose, onSubmit }) {
-    const [loanData, setLoanData] = useState(DEFAULT_LOAN_DATA);
+export default function LoanDialog({ updateTarget, onClose, onSubmit }) {
+    const isUpdateDialog = !!updateTarget;
+    const [loanData, setLoanData] = useState(
+        (isUpdateDialog) ? updateTarget.toFormData() : DEFAULT_LOAN_DATA
+    );
     const { books } = useBooks();
 
     function handleInputChange(name, value) {
@@ -40,8 +43,13 @@ export default function LoanDialog({ onClose, onSubmit }) {
     return (
         <DialogBox>
             <div className="loan-dialog-container">
-                <h3>Novo empréstimo</h3>
-                <p>Preencha as informações abaixo para cadastrar um novo empréstimo no sistema</p>
+                <h3>
+                    {(isUpdateDialog) ? "Editar empréstimo" : "Novo empréstimo"}
+                </h3>
+                <p>
+                    {(isUpdateDialog) ? "Edite, abaixo, as informações desejadas e confirme suas alterações"
+                        : "Preencha as informações abaixo para cadastrar um novo empréstimo no sistema"}
+                </p>
                 <form name="loan-dialog-form" onSubmit={handleFormSubmit} noValidate>
                     <Input
                         name="reader"

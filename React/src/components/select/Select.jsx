@@ -11,7 +11,8 @@ export default function Select({
     placeholder,
     multiple,
     formVariant,
-    onChange
+    onChange,
+    value
 }) {
     const [active, setActive] = useState(false);
     const [selectedIndexes, setSelectedIndexes] = useState([]);
@@ -31,6 +32,15 @@ export default function Select({
             document.removeEventListener("click", checkClickOutsideList);
         }
     }, []);
+
+    useEffect(() => {
+        const values = (optionValues.length > 0) ? optionValues : options;
+        if(Array.isArray(value)) {
+            setSelectedIndexes(value.map((optionValue) => values.indexOf(optionValue)));
+        }else if(value && value !== "") {
+            setSelectedIndexes([values.indexOf(value)]);
+        }
+    }, [options, optionValues])
 
     return (
         <div

@@ -17,7 +17,7 @@ export default function Collection() {
     const [targetBookIndex, setTargetBookIndex] = useState(null);
     const [showBookDialog, setShowBookDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-    const { books, handleQuery, createBook, updateBook, deleteBook } = useBooks();
+    const { books, queryBooks, createBook, updateBook, deleteBook } = useBooks();
 
     useEffect(() => {
         document.title = "LibMVC - Acervo"
@@ -68,7 +68,7 @@ export default function Collection() {
                     </div>
                 </Button>
             </div>
-            <CollectionInputs onSubmit={handleQuery}/>
+            <CollectionInputs onSubmit={queryBooks}/>
             <TableCard>
                 <TableHeader>
                     <TableRow>

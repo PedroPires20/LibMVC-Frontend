@@ -9,7 +9,20 @@ export function useLoans() {
     const [loans, setLoans] = useState([]);
     const api = new NetworkClient(API_BASE_URL);
 
-    function handleFilters(filters) {
+    useEffect(() => {
+        const fetchTransformLoans = async () => {
+            try {
+                let loansData = await api.fetchLoans(filters, { reader: 1, bookTitle: 1, startDate: -1 });
+                setLoans(loansData.map((loanData, index) => new Loan(loanData, index)));
+            }catch(exception) {
+                setLoans(exception);
+            }
+        }
+
+        fetchTransformLoans();
+    }, [filters]);
+
+    function filterLoans(filters) {
         setFilters(removeEmptyFilters(filters));
     }
 
@@ -47,18 +60,5 @@ export function useLoans() {
         }
     }
 
-    useEffect(() => {
-        const fetchTransformLoans = async () => {
-            try {
-                let loansData = await api.fetchLoans(filters, { reader: 1, bookTitle: 1, startDate: -1 });
-                setLoans(loansData.map((loanData, index) => new Loan(loanData, index)));
-            }catch(exception) {
-                setLoans(exception);
-            }
-        }
-
-        fetchTransformLoans();
-    }, [filters]);
-
-    return { loans, handleFilters, createLoan, updateLoan, deleteLoan };
+    return { loans, filterLoans, createLoan, updateLoan, deleteLoan };
 }

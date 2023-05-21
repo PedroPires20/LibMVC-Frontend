@@ -9,7 +9,15 @@ export function useBooks() {
     const [books, setBooks] = useState([]);
     const api = new NetworkClient(API_BASE_URL);
 
-    function handleQuery(queryText, filters) {
+    useEffect(() => {
+        api.searchBooks(query.text, query.filters, { title: 1 })
+        .then((booksData) => setBooks(booksData.map(
+            (bookData, index) => new Book(bookData, index)
+        )))
+        .catch((error) => setBooks(error));
+    }, [query]);
+
+    function queryBooks(queryText, filters) {
         let newQuery = {};
         if(queryText) {
             newQuery.text = queryText;
@@ -54,13 +62,5 @@ export function useBooks() {
         }
     }
 
-    useEffect(() => {
-        api.searchBooks(query.text, query.filters, { title: 1 })
-        .then((booksData) => setBooks(booksData.map(
-            (bookData, index) => new Book(bookData, index)
-        )))
-        .catch((error) => setBooks(error));
-    }, [query]);
-
-    return { books, handleQuery, createBook, updateBook, deleteBook };
+    return { books, queryBooks, createBook, updateBook, deleteBook };
 }

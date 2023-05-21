@@ -17,7 +17,7 @@ export default function Loans() {
     const [targetLoanIndex, setTargetLoanIndex] = useState(null);
     const [showLoanDialog, setShowLoanDialog] = useState(false);
     const [showFinishDialog, setShowFinishDialog] = useState(false);
-    const { loans, handleFilters, createLoan, updateLoan, deleteLoan } = useLoans();
+    const { loans, filterLoans, createLoan, updateLoan, deleteLoan } = useLoans();
 
     useEffect(() => {
         document.title = "LibMVC - Empréstimos"
@@ -68,7 +68,7 @@ export default function Loans() {
                     </div>
                 </Button>
             </div>
-            <LoanInputs onSubmit={handleFilters}/>
+            <LoanInputs onSubmit={filterLoans}/>
             <TableCard>
                 <TableHeader>
                     <TableRow>

@@ -1,7 +1,8 @@
+import Model from "./model";
 import { parseDate } from "../utils/utils";
 
 
-export default class Loan {
+export default class Loan extends Model {
     constructor(loanData, index = null) {
         this._id = loanData._id;
         this._reader = loanData.reader;

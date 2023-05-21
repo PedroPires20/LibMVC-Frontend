@@ -172,6 +172,29 @@ export default class NetworkClient {
         return response.json();
     }
 
+    async createLoan(loanData) {
+        let requestUrl = new URL(this._loansPath, this._baseUrl);
+        let requestBody = JSON.stringify(loanData);
+        let response;
+        try {
+            response = await fetch(
+                requestUrl,
+                {
+                    method: "POST",
+                    headers: BASE_REQUEST_HEADERS,
+                    body: requestBody
+                }
+            );
+        }catch(exception) {
+            throw new NetworkError(exception.message);
+        }
+        if(!response.ok) {
+            let responseBody = await response.text();
+            throw new HTTPError(response.status, response.statusText, responseBody, `Failed to create a new loan: the server returned an error.\nLoan data: ${requestBody}`);
+        }
+        return response.json();
+    }
+
     async fetchBookFieldValues(fieldName) {
         return this._fetchFieldValues(this._booksPath, fieldName);
     }

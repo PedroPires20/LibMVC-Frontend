@@ -1,8 +1,10 @@
+import Model from "./model";
 import { parseDate, toFormDate } from "../utils/utils";
 
 
-export default class Book {
+export default class Book extends Model {
     constructor(bookData, index = null) {
+        super();
         this._id = bookData._id;
         this._isbn = bookData.isbn;
         this._title = bookData.title;
@@ -69,18 +71,6 @@ export default class Book {
             description: this._description,
             location: this._location
         };
-    }
-
-    getFieldsDiff(targetBook) {
-        let diff = {};
-        let currentBookData = this.toRequestBody();
-        let targetBookData = targetBook.toRequestBody();
-        for(const field in currentBookData) {
-            if(JSON.stringify(currentBookData[field]) !== JSON.stringify(targetBookData[field])) {
-                diff[field] = targetBookData[field];
-            }
-        }
-        return diff;
     }
 
     get id() {

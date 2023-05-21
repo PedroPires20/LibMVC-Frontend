@@ -10,11 +10,11 @@ export default function Select({
     optionValues = [],
     placeholder,
     multiple,
-    value,
     formVariant,
     onChange
 }) {
     const [active, setActive] = useState(false);
+    const [selectedIndexes, setSelectedIndexes] = useState([]);
     const selectElementRef = useRef(null);
     const values = (optionValues.length > 0) ? optionValues : options;
 
@@ -45,12 +45,13 @@ export default function Select({
                         {label}
                     </div>
                     <div className="select-selected-option">
-                        {(Array.isArray(value)) ? ((value.length > 0) ? value.join("; ") : placeholder) : (value || placeholder)}
+                        {(selectedIndexes.length > 0) ? selectedIndexes.map((index) => options[index]).join("; ") : placeholder}
                     </div>
                 </div>
                 <button
                     onClick={(e) => {
                         e.preventDefault()
+                        setSelectedIndexes([]);
                         onChange(name, (multiple) ? [] : "");
                         e.stopPropagation();
                     }}
@@ -66,11 +67,19 @@ export default function Select({
                         {options.map((optionLabel, index) => (
                             <li
                                 key={index}
-                                className={`click-ripple-effect-light ${(values[index] === value) ? "select-item-selected" : ""}`}
+                                className={`click-ripple-effect-light ${(selectedIndexes.includes(index)) ? "select-item-selected" : ""}`}
                                 onClick={(e) => {
                                     if(multiple) {
-                                        onChange(name, [...value, values[index]]);
+                                        let newSelectedIndexes;
+                                        if(selectedIndexes.includes(index)) {
+                                            newSelectedIndexes = selectedIndexes.filter((selectedIndex) => selectedIndex !== index);
+                                        }else {
+                                            newSelectedIndexes = [...selectedIndexes, index];
+                                        }
+                                        setSelectedIndexes(newSelectedIndexes);
+                                        onChange(name, newSelectedIndexes.map((selectedIndex) => values[selectedIndex]));
                                     }else {
+                                        setSelectedIndexes([index]);
                                         onChange(name, values[index]);
                                         setActive(false);
                                         e.stopPropagation()

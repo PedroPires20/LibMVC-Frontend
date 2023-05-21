@@ -50,7 +50,7 @@ export function useLoans() {
     useEffect(() => {
         const fetchTransformLoans = async () => {
             try {
-                let loansData = await api.fetchLoans(filters);
+                let loansData = await api.fetchLoans(filters, { reader: 1, bookTitle: 1, startDate: -1 });
                 setLoans(loansData.map((loanData, index) => new Loan(loanData, index)));
             }catch(exception) {
                 setLoans(exception);

@@ -55,7 +55,7 @@ export function useBooks() {
     }
 
     useEffect(() => {
-        api.searchBooks(query.text, query.filters)
+        api.searchBooks(query.text, query.filters, { title: 1 })
         .then((booksData) => setBooks(booksData.map(
             (bookData, index) => new Book(bookData, index)
         )))

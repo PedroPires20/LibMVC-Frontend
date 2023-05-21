@@ -38,6 +38,15 @@ export function useLoans() {
         }
     }
 
+    async function deleteLoan(index) {
+        try {
+            await api.deleteLoan(loans[index].id);
+            setLoans([...loans.slice(0, index), ...loans.slice(index + 1)]);
+        }catch(exception) {
+            console.log("Error deleting loan: " + exception.message);
+        }
+    }
+
     useEffect(() => {
         const fetchTransformLoans = async () => {
             try {
@@ -51,5 +60,5 @@ export function useLoans() {
         fetchTransformLoans();
     }, [filters]);
 
-    return { loans, handleFilters, createLoan, updateLoan };
+    return { loans, handleFilters, createLoan, updateLoan, deleteLoan };
 }

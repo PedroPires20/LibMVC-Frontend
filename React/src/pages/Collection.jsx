@@ -50,7 +50,7 @@ export default function Collection() {
     }
 
     function handleDeleteDialog(option) {
-        if(option === 0) {
+        if(option === 0  && targetBookIndex !== null) {
             deleteBook(targetBookIndex);
             setTargetBookIndex(null);
         }

@@ -5,6 +5,8 @@ import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../compo
 import LoanInputs from "../components/loan_inputs/LoanInputs";
 import ContextMenu from "../components/context_menu/ContextMenu";
 import LoanDialog from "../dialogs/LoanDialog";
+import DialogBox from "../components/dialog_box/DialogBox";
+import StateDialog from "../dialogs/StateDialog";
 import addIcon from "./assets/add_icon.svg";
 import "./Loans.css";
 
@@ -14,7 +16,8 @@ export default function Loans() {
     const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0, targetIndex: 0 });
     const [targetLoanIndex, setTargetLoanIndex] = useState(null);
     const [showLoanDialog, setShowLoanDialog] = useState(false);
-    const { loans, handleFilters, createLoan, updateLoan } = useLoans();
+    const [showFinishDialog, setShowFinishDialog] = useState(false);
+    const { loans, handleFilters, createLoan, updateLoan, deleteLoan } = useLoans();
 
     useEffect(() => {
         document.title = "LibMVC - Empréstimos"
@@ -32,6 +35,8 @@ export default function Loans() {
         setShowContextMenu(false);
         if(action === 0) {
             setShowLoanDialog(true);
+        }else if(action == 1) {
+            setShowFinishDialog(true);
         }
     }
 
@@ -42,7 +47,15 @@ export default function Loans() {
         }else {
             createLoan(loanData);
         }
-    } 
+    }
+    
+    function handleFinishDialog(action) {
+        if(action === 0 && targetLoanIndex !== null) {
+            deleteLoan(targetLoanIndex);
+            setTargetLoanIndex(null);
+        }
+        setShowFinishDialog(false);
+    }
     
     return (
         <div className={`loans-page${(showContextMenu) ? " loans-page-menu" : ""}`}>
@@ -118,6 +131,17 @@ export default function Loans() {
                     onSubmit={handleLoanDialogSubmit}
                     onClose={() => setShowLoanDialog(false)}
                 />
+            )}
+            {showFinishDialog && (
+                <DialogBox>
+                    <StateDialog
+                        variant="success"
+                        heading="Finalizar empréstimo?"
+                        message={"Deseja finalizar esse empréstimo?\nUma vez finalizado, o livro é considerado como devolvido e os dados relacionados ao empréstimo são excluídos"}
+                        buttonLabels={["Sim", "Não"]}
+                        onClose={handleFinishDialog}
+                    />
+                </DialogBox>
             )}
         </div>
     )

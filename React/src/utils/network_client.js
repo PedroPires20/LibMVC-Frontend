@@ -217,6 +217,26 @@ export default class NetworkClient {
         }
     }
 
+    async deleteLoan(loanId) {
+        let requestUrl = new URL(`${this._loansPath}/${loanId}`, this._baseUrl);
+        let response;
+        try {
+            response = await fetch(
+                requestUrl,
+                {
+                    method: "DELETE",
+                    headers: BASE_REQUEST_HEADERS
+                }
+            );
+        }catch(exception) {
+            throw new NetworkError(exception.message);
+        }
+        if(!response.ok) {
+            let responseBody = await response.text();
+            throw new HTTPError(response.status, response.statusText, responseBody, `Failed to delete loan (id = ${loanId}): the server returned an error.`);
+        }
+    }
+
     async fetchBookFieldValues(fieldName) {
         return this._fetchFieldValues(this._booksPath, fieldName);
     }

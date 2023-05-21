@@ -7,7 +7,13 @@ export default function Checkbox({ name, label, supportingText, value, onChange 
     return (
         <div className="checkbox-container">
             <div className={`checkbox-input${(value) ? " checkbox-input-checked" : ""}`}>
-                <button className="checkbox-checkmark" onClick={() => onChange(name, !value)}>
+                <button
+                    className="checkbox-checkmark"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        onChange(name, !value);
+                    }}
+                >
                     <div className="checkbox-checkmark-state click-ripple-effect-light">
                         <img src={checkIcon} alt="marcado"/>
                     </div>

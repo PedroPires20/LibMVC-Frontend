@@ -1,8 +1,6 @@
 import Model from "./model";
 import { parseDate, toFormDate } from "../utils/utils";
 
-const DAY_MILLISECONDS = 86400000;
-
 
 export default class Loan extends Model {
     constructor(loanData, index = null) {

@@ -17,7 +17,7 @@ export function useLoans() {
         let newLoan = Loan.fromFormData(formData);
         try {
             let { createdId } = await api.createLoan(newLoan.toRequestBody());
-            setLoans([...loans, Loan.fromFormData(newLoan, createdId)]);
+            setLoans([...loans, Loan.fromFormData(formData, createdId)]);
         }catch(exception) {
             console.log("Error creating loan: " + exception.message);
         }

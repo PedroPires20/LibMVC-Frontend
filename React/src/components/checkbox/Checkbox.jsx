@@ -3,11 +3,11 @@ import checkIcon from "./assets/check_icon_small.svg";
 import "./Checkbox.css";
 
 
-export default function Checkbox({ label, supportingText, checked, onChange }) {
+export default function Checkbox({ name, label, supportingText, value, onChange }) {
     return (
         <div className="checkbox-container">
-            <div className={`checkbox-input${(checked) ? " checkbox-input-checked" : ""}`}>
-                <button className="checkbox-checkmark" onClick={() => onChange(!checked)}>
+            <div className={`checkbox-input${(value) ? " checkbox-input-checked" : ""}`}>
+                <button className="checkbox-checkmark" onClick={() => onChange(name, !value)}>
                     <div className="checkbox-checkmark-state click-ripple-effect-light">
                         <img src={checkIcon} alt="marcado"/>
                     </div>

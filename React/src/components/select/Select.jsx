@@ -40,7 +40,7 @@ export default function Select({
         }else if(value && value !== "") {
             setSelectedIndexes([values.indexOf(value)]);
         }
-    }, [options, optionValues])
+    }, [options])
 
     return (
         <div

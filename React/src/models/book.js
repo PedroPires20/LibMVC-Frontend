@@ -33,7 +33,7 @@ export default class Book extends Model {
             format: formData.format || "",
             date: (formData.date && formData.date !== "") ? formData.date : undefined,
             pages: parseInt(formData.pages),
-            copies: parseInt(formData.copies),
+            copies: (formData.copies && formData !== "") ? parseInt(formData.copies) : null,
             description: formData.description || "",
             location: formData.location || ""
         }, index);
@@ -67,7 +67,7 @@ export default class Book extends Model {
             format: this._format,
             date: (this._date && this.date !== "") ? toFormDate(this._date) : "",
             pages: this._pages.toString(),
-            copies: this._copies.toString(),
+            copies: (this._copies) ? this._copies.toString() : "",
             description: this._description,
             location: this._location
         };
@@ -114,7 +114,7 @@ export default class Book extends Model {
     }
     
     get copies() {
-        return this._copies || "-";
+        return this._copies || "N/A";
     }
     
     get description() {

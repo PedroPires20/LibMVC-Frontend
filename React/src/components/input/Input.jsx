@@ -15,10 +15,12 @@ export default function Input({
     step,
     validationPattern,
     required,
+    autofocus,
     defaultValue = "",
     errorMessage,
     value,
-    onChange
+    onChange,
+    onKeyDown
 }) {
     const [isActive, setIsActive] = useState(false);
     const [error, setError] = useState("");
@@ -40,7 +42,9 @@ export default function Input({
                     step={step}
                     pattern={validationPattern}
                     required={required}
+                    autoFocus={autofocus}
                     onChange={(e) => onChange && onChange(name, e.target.value)}
+                    onKeyDown={onKeyDown}
                     onFocus={() => setIsActive(true)}
                     onBlur={(e) => {
                         setError(e.target.validationMessage);

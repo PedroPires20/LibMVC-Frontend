@@ -9,6 +9,12 @@ export function useBookFields() {
     const [formats, setFormats] = useState([]);
     const network = new NetworkClient(API_BASE_URL);
 
+    function appendCategory(newCategory) {
+        if(!categories.includes(newCategory)) {
+            setCategories([...categories, newCategory]);
+        }
+    }
+
     useEffect(() => {
         network.fetchBookFieldValues("author")
         .then((authors) => setAuthors(
@@ -32,5 +38,5 @@ export function useBookFields() {
         .catch((error) => setFormats(error));
     }, []);
 
-    return { authors, categories, publishers, formats };
+    return { authors, categories, appendCategory, publishers, formats };
 }

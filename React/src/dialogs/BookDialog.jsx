@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import { useBookFields } from "../hooks/useBookFields";
 import DialogBox from "../components/dialog_box/DialogBox";
 import Input from "../components/input/Input";
 import TextArea from "../components/textarea/TextArea";
@@ -20,6 +21,7 @@ const DEFAULT_BOOK_DATA = {
     description: "",
     location: ""
 };
+const NEW_CATEGORY_LABEL = "Nova categoria";
 
 
 export default function BookDialog({ updateTarget, onClose, onSubmit }) {
@@ -27,9 +29,32 @@ export default function BookDialog({ updateTarget, onClose, onSubmit }) {
     const [bookData, setBookData] = useState(
         (isUpdateDialog) ? updateTarget.toFormData() : DEFAULT_BOOK_DATA
     );
+    const [categoryAdd, setCategoryAdd] = useState(false);
+    const [newCategory, setNewCategory] = useState("");
+    const { categories, appendCategory } = useBookFields();
 
     function handleInputChange(name, value) {
+        if(name === "categories" && value.includes(NEW_CATEGORY_LABEL)) {
+            setCategoryAdd(true);
+            return;
+        }
         setBookData({ ...bookData, [name]: value });
+    }
+
+    
+    function handleCategoryAdd(event) {
+        if(event.key === "Enter") {
+            if(newCategory && newCategory !== "") {
+                appendCategory(newCategory);    
+                if(!categories.includes(newCategory)) {
+                    handleInputChange("categories", [...bookData.categories, newCategory]);
+                }
+            }
+            setNewCategory("");
+            setCategoryAdd(false);
+        }else if(event.key === "Escape") {
+            setCategoryAdd(false);
+        }
     }
 
     function handleFormSubmit(event) {
@@ -82,16 +107,29 @@ export default function BookDialog({ updateTarget, onClose, onSubmit }) {
                         onChange={handleInputChange}
                         required
                     />
-                    <Select
-                        name="categories"
-                        label="Categorias"
-                        options={["Nova categoria"]}
-                        placeholder="Entre a(s) categoria(s) do livro"
-                        value={bookData.categories}
-                        onChange={handleInputChange}
-                        multiple
-                        formVariant
-                    />
+                    {(categoryAdd) ? (
+                        <Input
+                            name="new-category"
+                            type="text"
+                            label="Nova categoria"
+                            supportingText="Entre o rótulo da nova categoria e pressione enter"
+                            onKeyDown={handleCategoryAdd}
+                            onChange={(name, value) => setNewCategory(value)}
+                            value={newCategory}
+                            autofocus
+                        />
+                    ) : (
+                        <Select
+                            name="categories"
+                            label="Categorias"
+                            options={[...categories, "Nova categoria"]}
+                            placeholder="Entre a(s) categoria(s) do livro"
+                            value={bookData.categories}
+                            onChange={handleInputChange}
+                            multiple
+                            formVariant
+                        />
+                    )}
                     <Input
                         name="publisher"
                         type="text"

@@ -48,7 +48,7 @@ export default class Book extends Model {
             publisher: this._publisher,
             edition: this._edition,
             format: this._format,
-            date: (this._date && this.date !== "") ? this._date.toISOString() : this._date,
+            date: (this._date && this.date !== "") ? this._date.toISOString() : null,
             pages: this._pages,
             copies: this._copies,
             description: this._description,

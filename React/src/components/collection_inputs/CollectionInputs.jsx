@@ -79,16 +79,20 @@ export default function CollectionInputs({ onSubmit }) {
                 <div className="cinputs-button-container">
                     <Button
                         variant="secondary"
-                        onClick={() => {
+                        onClick={(e) => {
                             setFilters(DEFAULT_FILTER_VALUES);
                             setSearchQuery("");
+                            e.target.blur();
                         }}
                     >
                         Redefinir
                     </Button>
                     <Button
                         variant="secondary"
-                        onClick={() => onSubmit(searchQuery, filters)}
+                        onClick={(e) => {
+                            onSubmit(searchQuery, filters);
+                            e.target.blur();
+                        }}
                     >
                         Pesquisar
                     </Button>

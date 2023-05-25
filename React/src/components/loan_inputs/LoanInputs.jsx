@@ -20,6 +20,7 @@ export default function LoanInputs({ onSubmit }) {
     const { readers, bookTitles } = useLoanFields();
 
     function handleSelectChange(name, value) {
+        console.log('test');
         setFilters({ ...filters, [name]: value });
     }
 
@@ -88,13 +89,20 @@ export default function LoanInputs({ onSubmit }) {
                 <div className="lfilters-buttons-container">
                     <Button
                         variant="secondary"
-                        onClick={() => setFilters(DEFAULT_FILTER_VALUES)}
+                        onClick={(e) => {
+                            setFilters(DEFAULT_FILTER_VALUES);
+                            onSubmit(DEFAULT_FILTER_VALUES);
+                            e.target.blur();
+                        }}
                     >
                         Redefinir
                     </Button>
                     <Button
                         variant="secondary"
-                        onClick={() => onSubmit(filters)}
+                        onClick={(e) => {
+                            onSubmit(filters);
+                            e.target.blur();
+                        }}
                     >
                         Aplicar
                     </Button>

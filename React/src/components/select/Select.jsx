@@ -39,8 +39,10 @@ export default function Select({
             setSelectedIndexes(value.map((optionValue) => values.indexOf(optionValue)));
         }else if(value && value !== "") {
             setSelectedIndexes([values.indexOf(value)]);
+        }else {
+            setSelectedIndexes([]);
         }
-    }, [options])
+    }, [options, value])
 
     return (
         <div
@@ -61,6 +63,7 @@ export default function Select({
                 <button
                     onClick={(e) => {
                         e.preventDefault()
+                        setActive(false);
                         setSelectedIndexes([]);
                         onChange(name, (multiple) ? [] : "");
                         e.stopPropagation();

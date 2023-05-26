@@ -15,7 +15,7 @@ const DEFAULT_FILTER_VALUES = {
 };
 
 
-export default function LoanInputs({ onSubmit }) {
+export default function LoanInputs({ onSubmit, disabled }) {
     const [filters, setFilters] = useState(DEFAULT_FILTER_VALUES);
     const { readers, bookTitles } = useLoanFields();
 
@@ -94,6 +94,7 @@ export default function LoanInputs({ onSubmit }) {
                             onSubmit(DEFAULT_FILTER_VALUES);
                             e.target.blur();
                         }}
+                        disabled={disabled}
                     >
                         Redefinir
                     </Button>
@@ -103,6 +104,7 @@ export default function LoanInputs({ onSubmit }) {
                             onSubmit(filters);
                             e.target.blur();
                         }}
+                        disabled={disabled}
                     >
                         Aplicar
                     </Button>

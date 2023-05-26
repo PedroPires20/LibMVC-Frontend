@@ -7,15 +7,19 @@ import Loan from "../models/loan";
 export function useLoans() {
     const [filters, setFilters] = useState({});
     const [loans, setLoans] = useState([]);
+    const [loadStatus, setLoadStatus] = useState({ loading: false, error: false });
     const api = new NetworkClient(API_BASE_URL);
 
     useEffect(() => {
+        setLoadStatus({ loading: true, error: false });
         const fetchTransformLoans = async () => {
             try {
                 let loansData = await api.fetchLoans(filters, { reader: 1, bookTitle: 1, startDate: -1 });
                 setLoans(loansData.map((loanData, index) => new Loan(loanData, index)));
+                setLoadStatus({ loading: false, error: false });
             }catch(exception) {
-                setLoans(exception);
+                console.log(exception);
+                setLoadStatus({ loading: false, error: true, errorMessage: exception.message });
             }
         }
 
@@ -60,5 +64,5 @@ export function useLoans() {
         }
     }
 
-    return { loans, filterLoans, createLoan, updateLoan, deleteLoan };
+    return { loans, loadStatus, filterLoans, createLoan, updateLoan, deleteLoan };
 }

@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useLoans } from "../hooks/useLoans";
 import Button from "../components/button/Button";
 import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../components/table_card/TableCard";
+import LoadStatus from "../components/load_status/LoadStatus";
 import LoanInputs from "../components/loan_inputs/LoanInputs";
 import ContextMenu from "../components/context_menu/ContextMenu";
 import LoanDialog from "../dialogs/LoanDialog";
@@ -17,7 +18,7 @@ export default function Loans() {
     const [targetLoanIndex, setTargetLoanIndex] = useState(null);
     const [showLoanDialog, setShowLoanDialog] = useState(false);
     const [showFinishDialog, setShowFinishDialog] = useState(false);
-    const { loans, filterLoans, createLoan, updateLoan, deleteLoan } = useLoans();
+    const { loans, loadStatus, filterLoans, createLoan, updateLoan, deleteLoan } = useLoans();
 
     useEffect(() => {
         document.title = "LibMVC - Empréstimos"
@@ -61,14 +62,21 @@ export default function Loans() {
         <div className={`loans-page${(showContextMenu) ? " loans-page-menu" : ""}`}>
             <div className="loans-header">
                 <h2>Empréstimos</h2>
-                <Button variant="primary" onClick={() => setShowLoanDialog(true)}>
+                <Button
+                    variant="primary"
+                    onClick={() => setShowLoanDialog(true)}
+                    disabled={loadStatus.loading || loadStatus.error}
+                >
                     <div className="loans-add-button">
                         <img src={addIcon} alt="novo"/>
                         <span>Novo empréstimo</span>
                     </div>
                 </Button>
             </div>
-            <LoanInputs onSubmit={filterLoans}/>
+            <LoanInputs
+                onSubmit={filterLoans}
+                disabled={loadStatus.loading || loadStatus.error}
+            />
             <TableCard>
                 <TableHeader>
                     <TableRow>
@@ -83,39 +91,47 @@ export default function Loans() {
                         <TableCell>Renovação</TableCell>
                     </TableRow>
                 </TableHeader>
-                <TableData>
-                    {loans.map((loan, index) => (
-                        <TableRow key={loan.id} onClick={(e) => handleRowClick(e, index)}>
-                            <TableCell>
-                                {loan.reader}
-                            </TableCell>
-                            <TableCell>
-                                {loan.phone}
-                            </TableCell>
-                            <TableCell minWidth="15rem" wrap>
-                                {loan.bookTitle}
-                            </TableCell>
-                            <TableCell>
-                                {loan.startDate}
-                            </TableCell>
-                            <TableCell>
-                                {loan.duration}
-                            </TableCell>
-                            <TableCell>
-                                {loan.endDate}
-                            </TableCell>
-                            <TableCell>
-                                {loan.daysRemaining}
-                            </TableCell>
-                            <TableCell>
-                                {loan.late}
-                            </TableCell>
-                            <TableCell>
-                                {loan.renew}
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableData>
+                {(loadStatus.loading || loadStatus.error) ? (
+                    <LoadStatus
+                        error={loadStatus.error}
+                        loadingMessage="Carregando dados dos empréstimos..."
+                        errorMessage="Ocorreu um erro ao recuperar os dados dos empréstimos. Por favor, tente novamente."
+                    />
+                ) : (
+                    <TableData>
+                        {loans.map((loan, index) => (
+                            <TableRow key={loan.id} onClick={(e) => handleRowClick(e, index)}>
+                                <TableCell>
+                                    {loan.reader}
+                                </TableCell>
+                                <TableCell>
+                                    {loan.phone}
+                                </TableCell>
+                                <TableCell minWidth="15rem" wrap>
+                                    {loan.bookTitle}
+                                </TableCell>
+                                <TableCell>
+                                    {loan.startDate}
+                                </TableCell>
+                                <TableCell>
+                                    {loan.duration}
+                                </TableCell>
+                                <TableCell>
+                                    {loan.endDate}
+                                </TableCell>
+                                <TableCell>
+                                    {loan.daysRemaining}
+                                </TableCell>
+                                <TableCell>
+                                    {loan.late}
+                                </TableCell>
+                                <TableCell>
+                                    {loan.renew}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableData>
+                )}
             </TableCard>
             {showContextMenu && (
                 <ContextMenu

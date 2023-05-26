@@ -21,7 +21,7 @@ export default function Loans() {
     const { loans, loadStatus, filterLoans, createLoan, updateLoan, deleteLoan } = useLoans();
 
     useEffect(() => {
-        document.title = "LibMVC - Empréstimos"
+        document.title = "SimpleLibrary - Empréstimos"
     }, []);
 
     function handleRowClick(event, targetIndex) {

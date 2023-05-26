@@ -15,7 +15,7 @@ export default function Header() {
                 >
                     <img src={menuIcon} alt="menu"/>
                 </button>
-                <h1>LibMVC</h1>
+                <h1>SimpleLibrary</h1>
             </header>
             <Menu visible={menuExpanded} onPageChange={() => setMenuExpanded(false)}/>
         </>

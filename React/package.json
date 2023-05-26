@@ -1,9 +1,9 @@
 {
-  "name": "libmvc-react",
+  "name": "simplelibrary-react",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "This package contains the implementation of the frontend for the LibMVC project based on the React framework. This package is responsible for the build/debugging of the frontend code and depends on the \"libmvc-backend\" package to provide the REST API it expects as the backend.",
+  "description": "This package contains the implementation of the frontend for the SimpleLibrary project based on the React framework. This package is responsible for the build/debugging of the frontend code and depends on the \"simplelibrary-backend\" package to provide the REST API it expects as the backend.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/PedroPires20/LibMVC-Frontend.git"
   },
   "keywords": [
-    "LibMVC",
+    "SimpleLibrary",
     "frontend",
     "POC",
     "Final",

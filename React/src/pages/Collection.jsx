@@ -21,7 +21,7 @@ export default function Collection() {
     const { books, loadStatus, queryBooks, createBook, updateBook, deleteBook } = useBooks();
 
     useEffect(() => {
-        document.title = "LibMVC - Acervo"
+        document.title = "SimpleLibrary - Acervo"
     }, []);
 
     function handleRowClick(event, targetIndex) {

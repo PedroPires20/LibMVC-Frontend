@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { useBooks } from "../hooks/useBooks";
 import Button from "../components/button/Button";
+import LoadStatus from "../components/load_status/LoadStatus";
 import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../components/table_card/TableCard";
 import CollectionInputs from "../components/collection_inputs/CollectionInputs";
 import ContextMenu from "../components/context_menu/ContextMenu";
@@ -17,7 +18,7 @@ export default function Collection() {
     const [targetBookIndex, setTargetBookIndex] = useState(null);
     const [showBookDialog, setShowBookDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-    const { books, queryBooks, createBook, updateBook, deleteBook } = useBooks();
+    const { books, loadStatus, queryBooks, createBook, updateBook, deleteBook } = useBooks();
 
     useEffect(() => {
         document.title = "LibMVC - Acervo"
@@ -61,76 +62,88 @@ export default function Collection() {
         <div className={`collection-page${(showContextMenu) ? " collection-page-menu" : ""}`}>
             <div className="collection-header">
                 <h2>Acervo</h2>
-                <Button variant="primary" onClick={() => setShowBookDialog(true)}>
+                <Button
+                    variant="primary"
+                    onClick={() => setShowBookDialog(true)}
+                    disabled={loadStatus.loading || loadStatus.error}
+                >
                     <div className="collection-add-button">
                         <img src={addIcon} alt="adicionar"/>
                         <span>Novo livro</span>
                     </div>
                 </Button>
             </div>
-            <CollectionInputs onSubmit={queryBooks}/>
-            <TableCard>
-                <TableHeader>
-                    <TableRow>
-                        <TableCell>ISBN</TableCell>
-                        <TableCell>Título</TableCell>
-                        <TableCell>Autor(es)</TableCell>
-                        <TableCell>Categorias</TableCell>
-                        <TableCell>Editora</TableCell>
-                        <TableCell>Edição</TableCell>
-                        <TableCell>Formato</TableCell>
-                        <TableCell>Data</TableCell>
-                        <TableCell>Páginas</TableCell>
-                        <TableCell>Cópias</TableCell>
-                        <TableCell>Descrição</TableCell>
-                        <TableCell>Localização</TableCell>
-                    </TableRow>
-                </TableHeader>
-                <TableData>
-                    {books.map((book, index) => (
-                        <TableRow
-                            key={book.id}
-                            onClick={(e) => handleRowClick(e, index)}
-                        >
-                            <TableCell>
-                                {book.isbn}
-                            </TableCell>
-                            <TableCell minWidth="15rem" wrap>
-                                {book.title}
-                            </TableCell>
-                            <TableCell wrap>
-                                {book.author}
-                            </TableCell>
-                            <TableCell minWidth="12rem" wrap>
-                                {book.categories}
-                            </TableCell>
-                            <TableCell>
-                                {book.publisher}
-                            </TableCell>
-                            <TableCell>
-                                {book.edition}</TableCell>
-                            <TableCell>
-                                {book.format}
-                            </TableCell>
-                            <TableCell>
-                                {book.date}
-                            </TableCell>
-                            <TableCell>
-                                {book.pages}
-                            </TableCell>
-                            <TableCell>
-                                {book.copies}
-                            </TableCell>
-                            <TableCell minWidth="20rem" wrap>
-                                {book.description}
-                            </TableCell>
-                            <TableCell>
-                                {book.location}
-                            </TableCell>
+            <CollectionInputs onSubmit={queryBooks} disabled={loadStatus.loading || loadStatus.error}/>
+                <TableCard>
+                    <TableHeader>
+                        <TableRow>
+                            <TableCell>ISBN</TableCell>
+                            <TableCell>Título</TableCell>
+                            <TableCell>Autor(es)</TableCell>
+                            <TableCell>Categorias</TableCell>
+                            <TableCell>Editora</TableCell>
+                            <TableCell>Edição</TableCell>
+                            <TableCell>Formato</TableCell>
+                            <TableCell>Data</TableCell>
+                            <TableCell>Páginas</TableCell>
+                            <TableCell>Cópias</TableCell>
+                            <TableCell>Descrição</TableCell>
+                            <TableCell>Localização</TableCell>
                         </TableRow>
-                    ))}
-                </TableData>
-            </TableCard>
+                    </TableHeader>
+                    {(loadStatus.loading || loadStatus.error) ? (
+                        <LoadStatus
+                            error={loadStatus.error}
+                            loadingMessage="Carregando dados do acervo..."
+                            errorMessage="Ocorreu um erro ao recuperar os dados do acervo. Por favor, tente novamente."
+                        />
+                    ) : (
+                        <TableData>
+                            {books.map((book, index) => (
+                                <TableRow
+                                    key={book.id}
+                                    onClick={(e) => handleRowClick(e, index)}
+                                >
+                                    <TableCell>
+                                        {book.isbn}
+                                    </TableCell>
+                                    <TableCell minWidth="15rem" wrap>
+                                        {book.title}
+                                    </TableCell>
+                                    <TableCell wrap>
+                                        {book.author}
+                                    </TableCell>
+                                    <TableCell minWidth="12rem" wrap>
+                                        {book.categories}
+                                    </TableCell>
+                                    <TableCell>
+                                        {book.publisher}
+                                    </TableCell>
+                                    <TableCell>
+                                        {book.edition}</TableCell>
+                                    <TableCell>
+                                        {book.format}
+                                    </TableCell>
+                                    <TableCell>
+                                        {book.date}
+                                    </TableCell>
+                                    <TableCell>
+                                        {book.pages}
+                                    </TableCell>
+                                    <TableCell>
+                                        {book.copies}
+                                    </TableCell>
+                                    <TableCell minWidth="20rem" wrap>
+                                        {book.description}
+                                    </TableCell>
+                                    <TableCell>
+                                        {book.location}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableData>
+                    )}
+                </TableCard>
             {showContextMenu && (
                 <ContextMenu
                     position={contextMenuPosition}

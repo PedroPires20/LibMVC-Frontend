@@ -45,6 +45,14 @@ body {
     display: none;
 }
 
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 9999s ease-in-out 0s;
+}
+
 .click-ripple-effect {
     background-color: rgba(255, 255, 255, 0);
     background-position: center;
@@ -75,11 +83,4 @@ body {
     background-color: rgba(0, 0, 0, 0.2);
     background-size: 100%;
     transition: background 0s;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  transition: background-color 9999s ease-in-out 0s;
 }

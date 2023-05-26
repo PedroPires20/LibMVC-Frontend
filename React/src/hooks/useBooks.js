@@ -7,14 +7,22 @@ import Book from "../models/book";
 export function useBooks() {
     const [query, setQuery] = useState({});
     const [books, setBooks] = useState([]);
+    const [loadStatus, setLoadStatus] = useState({ loading: false, error: false });
     const api = new NetworkClient(API_BASE_URL);
 
     useEffect(() => {
-        api.searchBooks(query.text, query.filters, { title: 1 })
-        .then((booksData) => setBooks(booksData.map(
-            (bookData, index) => new Book(bookData, index)
-        )))
-        .catch((error) => setBooks(error));
+        setLoadStatus({ loading: true, error: false });
+        const fetchTransformBooks = async () => {
+            try {
+                let booksData = await api.searchBooks(query.text, query.filters, { title: 1 });
+                setBooks(booksData.map((bookData, index) => new Book(bookData, index)));
+                setLoadStatus({ loading: false, error: false });
+            }catch(exception) {
+                console.error(exception);
+                setLoadStatus({ loading: false, error: true, errorMessage: exception.message });
+            }
+        }
+        fetchTransformBooks();
     }, [query]);
 
     function queryBooks(queryText, filters) {
@@ -62,5 +70,5 @@ export function useBooks() {
         }
     }
 
-    return { books, queryBooks, createBook, updateBook, deleteBook };
+    return { books, loadStatus, queryBooks, createBook, updateBook, deleteBook };
 }

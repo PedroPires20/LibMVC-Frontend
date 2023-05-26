@@ -13,7 +13,7 @@ const DEFAULT_FILTER_VALUES = {
 };
 
 
-export default function CollectionInputs({ onSubmit }) {
+export default function CollectionInputs({ onSubmit, disabled }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [filters, setFilters] = useState(DEFAULT_FILTER_VALUES);
     const { authors, categories, publishers, formats } = useBookFields();
@@ -85,6 +85,7 @@ export default function CollectionInputs({ onSubmit }) {
                             onSubmit("", DEFAULT_FILTER_VALUES);
                             e.target.blur();
                         }}
+                        disabled={disabled}
                     >
                         Redefinir
                     </Button>
@@ -94,6 +95,7 @@ export default function CollectionInputs({ onSubmit }) {
                             onSubmit(searchQuery, filters);
                             e.target.blur();
                         }}
+                        disabled={disabled}
                     >
                         Pesquisar
                     </Button>

@@ -18,6 +18,7 @@ export default function Collection() {
     const [targetBookIndex, setTargetBookIndex] = useState(null);
     const [showBookDialog, setShowBookDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+    const [deleteStatus, setDeleteStatus] = useState({ deleting: false, error: false });
     const { books, loadStatus, queryBooks, createBook, updateBook, deleteBook } = useBooks();
 
     useEffect(() => {
@@ -50,10 +51,17 @@ export default function Collection() {
         }
     }
 
-    function handleDeleteDialog(option) {
+    async function handleDeleteDialog(option) {
         if(option === 0  && targetBookIndex !== null) {
-            deleteBook(targetBookIndex);
+            setDeleteStatus({ deleting: true, error: false });
             setTargetBookIndex(null);
+            let deleteStatus = await deleteBook(targetBookIndex);
+            if(deleteStatus.error) {
+                setDeleteStatus({ deleting: false, error: true, errorMessage: deleteStatus.errorMessage });
+                return;
+            }else {
+                setDeleteStatus({ deleting: false, error: false });
+            }
         }
         setShowDeleteDialog(false);
     }
@@ -160,13 +168,27 @@ export default function Collection() {
             )}
             {showDeleteDialog && (
                 <DialogBox>
-                    <StateDialog
-                        variant="delete"
-                        heading="Apagar Livro?"
-                        message={`Deseja remover o livro "${books[targetBookIndex].title}" do acervo?\nUma vez excluído, as informações desse livro não poderão ser recuperadas!`}
-                        buttonLabels={["Sim", "Não"]}
-                        onClose={handleDeleteDialog}
-                    />   
+                    {(!deleteStatus.deleting && !deleteStatus.error) ? (
+                        <StateDialog
+                            variant="delete"
+                            heading="Apagar Livro?"
+                            message={`Deseja remover o livro "${books[targetBookIndex].title}" do acervo?\nUma vez excluído, as informações desse livro não poderão ser recuperadas!`}
+                            buttonLabels={["Sim", "Não"]}
+                            onClose={handleDeleteDialog}
+                        />
+                    ) : (
+                        <StateDialog
+                            variant={(deleteStatus.error) ? "error" : "load"}
+                            heading={(deleteStatus.error) ? "Erro" : "Salvando"}
+                            message={(deleteStatus.error) ? "Ocorreu um erro ao salvar as alterações no sistema." : "As alterações estão sendo processadas pelo sistema"}
+                            detailsSummary={(deleteStatus.errorMessage && deleteStatus.errorMessage !== "") && "Detalhes do erro"}
+                            detailsContent={deleteStatus.errorMessage}
+                            onClose={() => {
+                                setShowDeleteDialog(false);
+                                setDeleteStatus({ deleting: false, error: false });
+                            }}
+                        />  
+                    )}
                 </DialogBox>
             )}
         </div>

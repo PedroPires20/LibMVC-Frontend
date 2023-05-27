@@ -77,7 +77,7 @@ export default function Loans() {
                 onSubmit={filterLoans}
                 disabled={loadStatus.loading || loadStatus.error}
             />
-            <TableCard>
+            <TableCard menuActive={showContextMenu}>
                 <TableHeader>
                     <TableRow>
                         <TableCell>Leitor</TableCell>

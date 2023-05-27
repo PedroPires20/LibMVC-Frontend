@@ -4,9 +4,9 @@ import "./TableCard.css";
 const HeaderContext = createContext(false);
 
 
-export function TableCard({ children }) {
+export function TableCard({ children, menuActive }) {
     return (
-        <div className="table-card-container">
+        <div className={`table-card-container${(menuActive) ? " table-card-menu-active" : ""}`}>
             <table>
                {children}
             </table>

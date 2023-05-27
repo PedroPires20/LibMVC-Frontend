@@ -74,76 +74,76 @@ export default function Collection() {
                 </Button>
             </div>
             <CollectionInputs onSubmit={queryBooks} disabled={loadStatus.loading || loadStatus.error}/>
-                <TableCard>
-                    <TableHeader>
-                        <TableRow>
-                            <TableCell>ISBN</TableCell>
-                            <TableCell>Título</TableCell>
-                            <TableCell>Autor(es)</TableCell>
-                            <TableCell>Categorias</TableCell>
-                            <TableCell>Editora</TableCell>
-                            <TableCell>Edição</TableCell>
-                            <TableCell>Formato</TableCell>
-                            <TableCell>Data</TableCell>
-                            <TableCell>Páginas</TableCell>
-                            <TableCell>Cópias</TableCell>
-                            <TableCell>Descrição</TableCell>
-                            <TableCell>Localização</TableCell>
-                        </TableRow>
-                    </TableHeader>
-                    {(loadStatus.loading || loadStatus.error) ? (
-                        <LoadStatus
-                            error={loadStatus.error}
-                            loadingMessage="Carregando dados do acervo..."
-                            errorMessage="Ocorreu um erro ao recuperar os dados do acervo. Por favor, tente novamente."
-                        />
-                    ) : (
-                        <TableData>
-                            {books.map((book, index) => (
-                                <TableRow
-                                    key={book.id}
-                                    onClick={(e) => handleRowClick(e, index)}
-                                >
-                                    <TableCell>
-                                        {book.isbn}
-                                    </TableCell>
-                                    <TableCell minWidth="15rem" wrap>
-                                        {book.title}
-                                    </TableCell>
-                                    <TableCell wrap>
-                                        {book.author}
-                                    </TableCell>
-                                    <TableCell minWidth="12rem" wrap>
-                                        {book.categories}
-                                    </TableCell>
-                                    <TableCell>
-                                        {book.publisher}
-                                    </TableCell>
-                                    <TableCell>
-                                        {book.edition}</TableCell>
-                                    <TableCell>
-                                        {book.format}
-                                    </TableCell>
-                                    <TableCell>
-                                        {book.date}
-                                    </TableCell>
-                                    <TableCell>
-                                        {book.pages}
-                                    </TableCell>
-                                    <TableCell>
-                                        {book.copies}
-                                    </TableCell>
-                                    <TableCell minWidth="20rem" wrap>
-                                        {book.description}
-                                    </TableCell>
-                                    <TableCell>
-                                        {book.location}
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableData>
-                    )}
-                </TableCard>
+            <TableCard menuActive={showContextMenu}>
+                <TableHeader>
+                    <TableRow>
+                        <TableCell>ISBN</TableCell>
+                        <TableCell>Título</TableCell>
+                        <TableCell>Autor(es)</TableCell>
+                        <TableCell>Categorias</TableCell>
+                        <TableCell>Editora</TableCell>
+                        <TableCell>Edição</TableCell>
+                        <TableCell>Formato</TableCell>
+                        <TableCell>Data</TableCell>
+                        <TableCell>Páginas</TableCell>
+                        <TableCell>Cópias</TableCell>
+                        <TableCell>Descrição</TableCell>
+                        <TableCell>Localização</TableCell>
+                    </TableRow>
+                </TableHeader>
+                {(loadStatus.loading || loadStatus.error) ? (
+                    <LoadStatus
+                        error={loadStatus.error}
+                        loadingMessage="Carregando dados do acervo..."
+                        errorMessage="Ocorreu um erro ao recuperar os dados do acervo. Por favor, tente novamente."
+                    />
+                ) : (
+                    <TableData>
+                        {books.map((book, index) => (
+                            <TableRow
+                                key={book.id}
+                                onClick={(e) => handleRowClick(e, index)}
+                            >
+                                <TableCell>
+                                    {book.isbn}
+                                </TableCell>
+                                <TableCell minWidth="15rem" wrap>
+                                    {book.title}
+                                </TableCell>
+                                <TableCell wrap>
+                                    {book.author}
+                                </TableCell>
+                                <TableCell minWidth="12rem" wrap>
+                                    {book.categories}
+                                </TableCell>
+                                <TableCell>
+                                    {book.publisher}
+                                </TableCell>
+                                <TableCell>
+                                    {book.edition}</TableCell>
+                                <TableCell>
+                                    {book.format}
+                                </TableCell>
+                                <TableCell>
+                                    {book.date}
+                                </TableCell>
+                                <TableCell>
+                                    {book.pages}
+                                </TableCell>
+                                <TableCell>
+                                    {book.copies}
+                                </TableCell>
+                                <TableCell minWidth="20rem" wrap>
+                                    {book.description}
+                                </TableCell>
+                                <TableCell>
+                                    {book.location}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableData>
+                )}
+            </TableCard>
             {showContextMenu && (
                 <ContextMenu
                     position={contextMenuPosition}

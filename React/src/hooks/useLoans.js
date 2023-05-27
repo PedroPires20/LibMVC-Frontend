@@ -37,7 +37,9 @@ export function useLoans() {
             setLoans([...loans, Loan.fromFormData(formData, createdId)]);
         }catch(exception) {
             console.log("Error creating loan: " + exception.message);
+            return { error: true, errorMessage: exception.message };
         }
+        return { error: false };
     }
 
     async function updateLoan(index, formData) {
@@ -52,7 +54,9 @@ export function useLoans() {
             ]);
         }catch(exception) {
             console.log("Error updating loan: " + exception.message);
+            return { error: true, errorMessage: exception.message };
         }
+        return { error: false };
     }
 
     async function deleteLoan(index) {
@@ -61,7 +65,9 @@ export function useLoans() {
             setLoans([...loans.slice(0, index), ...loans.slice(index + 1)]);
         }catch(exception) {
             console.log("Error deleting loan: " + exception.message);
+            return { error: true, errorMessage: exception.message };
         }
+        return { error: false };
     }
 
     return { loans, loadStatus, filterLoans, createLoan, updateLoan, deleteLoan };

@@ -43,10 +43,10 @@ export default function Loans() {
 
     function handleLoanDialogSubmit(loanData) {
         if(targetLoanIndex !== null) {
-            updateLoan(targetLoanIndex, loanData);
             setTargetLoanIndex(null);
+            return updateLoan(targetLoanIndex, loanData);
         }else {
-            createLoan(loanData);
+            return createLoan(loanData);
         }
     }
     

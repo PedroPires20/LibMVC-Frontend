@@ -6,16 +6,22 @@ import "./LoadStatus.css";
 
 export default function LoadStatus({ error, loadingMessage, errorMessage }) {
     return (
-        <div className="load-status-container">
-            {(error) ? (
-                <img src={errorIcon} alt="Erro"/>
-            ) : (
-                <ProgressBar/>
-            )
-            }
-            <p>
-                {(error) ? errorMessage : loadingMessage}
-            </p>
-        </div>
+        <tbody>
+            <tr>
+                <td>
+                    <div className="load-status-container">
+                        {(error) ? (
+                            <img src={errorIcon} alt="Erro"/>
+                        ) : (
+                            <ProgressBar/>
+                        )
+                        }
+                        <p>
+                            {(error) ? errorMessage : loadingMessage}
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
     )
 }

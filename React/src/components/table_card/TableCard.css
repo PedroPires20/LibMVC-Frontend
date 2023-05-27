@@ -1,4 +1,4 @@
-.table-container {
+.table-card-container {
     flex: 1 1 auto;
     display: flex;
     min-width: 25rem;
@@ -10,13 +10,13 @@
     position: relative;
 }
 
-.table-container table {
+.table-card-container table {
     width: 100%;
     height: fit-content;
     border-collapse: collapse;
 }
 
-.table-container th, .table-container td {
+.table-card-cell {
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
@@ -24,7 +24,7 @@
     cursor: default;
 }
 
-.table-container td {
+td.table-card-cell {
     font-size: 0.85em;
     border-bottom: 1px solid #9b8f80;
 }

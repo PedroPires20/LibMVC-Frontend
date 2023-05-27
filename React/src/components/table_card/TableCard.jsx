@@ -6,7 +6,7 @@ const HeaderContext = createContext(false);
 
 export function TableCard({ children }) {
     return (
-        <div className="table-container">
+        <div className="table-card-container">
             <table>
                {children}
             </table>
@@ -62,6 +62,6 @@ export function TableCell({
     };
 
     return (isHeader) ?
-    <th style={elementStyles}>{children}</th> :
-    <td style={elementStyles}>{children}</td>;
+    <th className="table-card-cell" style={elementStyles}>{children}</th> :
+    <td className="table-card-cell" style={elementStyles}>{children}</td>;
 }

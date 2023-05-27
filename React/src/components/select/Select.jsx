@@ -12,7 +12,8 @@ export default function Select({
     multiple,
     formVariant,
     onChange,
-    value
+    value,
+    disabled
 }) {
     const [active, setActive] = useState(false);
     const [selectedIndexes, setSelectedIndexes] = useState([]);
@@ -82,6 +83,11 @@ export default function Select({
                                 key={index}
                                 className={`click-ripple-effect-light ${(selectedIndexes.includes(index)) ? "select-item-selected" : ""}`}
                                 onClick={(e) => {
+                                    if(disabled) {
+                                        setActive(false);
+                                        e.stopPropagation();
+                                        return;
+                                    }
                                     if(multiple) {
                                         let newSelectedIndexes;
                                         if(selectedIndexes.includes(index)) {

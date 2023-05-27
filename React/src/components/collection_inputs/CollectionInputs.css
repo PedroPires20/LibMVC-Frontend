@@ -36,18 +36,17 @@
 }
 
 .cinputs-search-box-container {
-    flex: 2 1;
-    max-width: 30rem;
+    flex: 1 1;
+    max-width: 20rem;
 }
 
 .cinputs-select-container {
-    flex: 1 1;
-    max-width: 20rem;
+    width: 15rem;
 }
 
 .cinputs-button-container {
     flex: 0;
     display: flex;
     flex-flow: row nowrap;
-    gap: 1.5em;
+    gap: 1.2em;
 }

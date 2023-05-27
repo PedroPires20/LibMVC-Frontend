@@ -21,25 +21,41 @@ export function useBookFields() {
         const loadBookFields = async () => {
             try {
                 let authorsData = await api.fetchBookFieldValues("author");
-                setAuthors({ loading: false, error: false, fieldData: authorsData });
+                setAuthors({
+                    loading: false,
+                    error: false,
+                    fieldData: authorsData.filter((value) => value && value !== "")
+                });
             }catch(exception) {
                 setAuthors({ loading: false, error: exception.message || true });
             }
             try {
                 let categoriesData = await api.fetchBookFieldValues("categories");
-                setCategories({ loading: false, error: false, fieldData: categoriesData });
+                setCategories({
+                    loading: false,
+                    error: false,
+                    fieldData: categoriesData.filter((value) => value && value !== "")
+                });
             }catch(exception) {
                 setCategories({ loading: false, error: exception.message || true });
             }
             try {
                 let publishersData = await api.fetchBookFieldValues("publisher");
-                setPublishers({ loading: false, error: false, fieldData: publishersData });
+                setPublishers({
+                    loading: false,
+                    error: false,
+                    fieldData: publishersData.filter((value) => value && value !== "")
+                });
             }catch(exception) {
                 setPublishers({ loading: false, error: exception.message || true });
             }
             try {
                 let formatsData = await api.fetchBookFieldValues("format");
-                setFormats({ loading: false, error: false, fieldData: formatsData });
+                setFormats({
+                    loading: false,
+                    error: false,
+                    fieldData: formatsData.filter((value) => value && value !== "")
+                });
             }catch(exception) {
                 setFormats({ loading: false, error: exception.message || true });
             }

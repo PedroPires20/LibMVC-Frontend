@@ -41,12 +41,12 @@ export default function Collection() {
         }
     }
 
-    function handleBookDialogSubmit(bookData) {
+    async function handleBookDialogSubmit(bookData) {
         if(targetBookIndex !== null) {
-            updateBook(targetBookIndex, bookData);
             setTargetBookIndex(null);
+            return updateBook(targetBookIndex, bookData);
         }else {
-            createBook(bookData);
+            return createBook(bookData);
         }
     }
 

@@ -5,6 +5,7 @@ import Input from "../components/input/Input";
 import TextArea from "../components/textarea/TextArea";
 import Select from "../components/select/Select";
 import DatePicker from "../components/date_picker/DatePicker";
+import StateDialog from "./StateDialog";
 import "./BookDialog.css";
 
 const DEFAULT_BOOK_DATA = {
@@ -41,6 +42,7 @@ export default function BookDialog({ updateTarget, onClose, onSubmit }) {
     );
     const [categoryAdd, setCategoryAdd] = useState(false);
     const [newCategory, setNewCategory] = useState("");
+    const [saveState, setSaveState] = useState({ saving: false, error: false });
     const { categories, appendCategory } = useBookFields();
 
     function handleInputChange(name, value) {
@@ -67,165 +69,181 @@ export default function BookDialog({ updateTarget, onClose, onSubmit }) {
         }
     }
 
-    function handleFormSubmit(event) {
+    async function handleFormSubmit(event) {
         event.preventDefault();
         const formElement = event.target;
         if(!formElement.checkValidity()) {
             const firstInvalidInput = formElement.querySelector(":invalid");
             firstInvalidInput && firstInvalidInput.focus();
         }else {
-            onSubmit(bookData);
-            onClose();
+            setSaveState({ saving: true, error: false });
+            let submitStatus = await onSubmit(bookData);
+            if(!submitStatus.error) {
+                onClose();
+            }else {
+                setSaveState({ saving: false, error: true, errorMessage: submitStatus.errorMessage });
+            }
         }
     }
 
     return (
         <DialogBox>
-            <div className="book-dialog-container">
-                <h3>
-                    {(isUpdateDialog) ? "Editar livro" : "Adicionar novo livro"}
-                </h3>
-                <p>
-                    {(isUpdateDialog) ? "Edite, abaixo, as informações desejadas e confirme suas alterações"
-                        : "Preencha as informações abaixo para cadastrar um novo livro"}
-                </p>
-                <form name="book-dialog-form" noValidate onSubmit={handleFormSubmit}>
-                    <Input
-                        name="isbn"
-                        type="text"
-                        label="ISBN"
-                        supportingText="Entre o ISBN do livro"
-                        value={bookData.isbn}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <Input
-                        name="title"
-                        type="text"
-                        label="Título"
-                        supportingText="Entre o título do livro"
-                        value={bookData.title}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <Input
-                        name="author"
-                        type="text"
-                        label="Autor(es)"
-                        supportingText="Entre o(s) autor(es) do livro"
-                        value={bookData.author}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    {(categoryAdd) ? (
+            {(!saveState.saving && !saveState.error) ? (
+                <div className="book-dialog-container">
+                    <h3>
+                        {(isUpdateDialog) ? "Editar livro" : "Adicionar novo livro"}
+                    </h3>
+                    <p>
+                        {(isUpdateDialog) ? "Edite, abaixo, as informações desejadas e confirme suas alterações"
+                            : "Preencha as informações abaixo para cadastrar um novo livro"}
+                    </p>
+                    <form name="book-dialog-form" noValidate onSubmit={handleFormSubmit}>
                         <Input
-                            name="new-category"
+                            name="isbn"
                             type="text"
-                            label="Nova categoria"
-                            supportingText="Entre o rótulo da nova categoria e pressione enter"
-                            onKeyDown={handleCategoryAdd}
-                            onChange={(name, value) => setNewCategory(value)}
-                            value={newCategory}
-                            autofocus
-                        />
-                    ) : (
-                        <Select
-                            name="categories"
-                            label="Categorias"
-                            options={getOptionsFromBookCategories(categories)}
-                            placeholder="Entre a(s) categoria(s) do livro"
-                            value={bookData.categories}
+                            label="ISBN"
+                            supportingText="Entre o ISBN do livro"
+                            value={bookData.isbn}
                             onChange={handleInputChange}
-                            disabled={categories.loading || categories.error}
-                            multiple
+                            required
+                        />
+                        <Input
+                            name="title"
+                            type="text"
+                            label="Título"
+                            supportingText="Entre o título do livro"
+                            value={bookData.title}
+                            onChange={handleInputChange}
+                            required
+                        />
+                        <Input
+                            name="author"
+                            type="text"
+                            label="Autor(es)"
+                            supportingText="Entre o(s) autor(es) do livro"
+                            value={bookData.author}
+                            onChange={handleInputChange}
+                            required
+                        />
+                        {(categoryAdd) ? (
+                            <Input
+                                name="new-category"
+                                type="text"
+                                label="Nova categoria"
+                                supportingText="Entre o rótulo da nova categoria e pressione enter"
+                                onKeyDown={handleCategoryAdd}
+                                onChange={(name, value) => setNewCategory(value)}
+                                value={newCategory}
+                                autofocus
+                            />
+                        ) : (
+                            <Select
+                                name="categories"
+                                label="Categorias"
+                                options={getOptionsFromBookCategories(categories)}
+                                placeholder="Entre a(s) categoria(s) do livro"
+                                value={bookData.categories}
+                                onChange={handleInputChange}
+                                disabled={categories.loading || categories.error}
+                                multiple
+                                formVariant
+                            />
+                        )}
+                        <Input
+                            name="publisher"
+                            type="text"
+                            label="Editora"
+                            supportingText="Entre a editora do livro"
+                            value={bookData.publisher}
+                            onChange={handleInputChange}
+                        />
+                        <Input
+                            name="edition"
+                            type="text"
+                            label="Edição"
+                            supportingText="Entre a edição do livro"
+                            value={bookData.edition}
+                            onChange={handleInputChange}
+                        />
+                        <Input
+                            name="format"
+                            type="text"
+                            label="Formato"
+                            supportingText="Entre o formato do livro"
+                            value={bookData.format}
+                            onChange={handleInputChange}
+                        />
+                        <DatePicker
+                            name="date"
+                            label="Data de publicação"
+                            supportingText="Selecione a data de publicação do livro"
+                            value={bookData.date}
+                            onChange={handleInputChange}
                             formVariant
                         />
-                    )}
-                    <Input
-                        name="publisher"
-                        type="text"
-                        label="Editora"
-                        supportingText="Entre a editora do livro"
-                        value={bookData.publisher}
-                        onChange={handleInputChange}
-                    />
-                    <Input
-                        name="edition"
-                        type="text"
-                        label="Edição"
-                        supportingText="Entre a edição do livro"
-                        value={bookData.edition}
-                        onChange={handleInputChange}
-                    />
-                    <Input
-                        name="format"
-                        type="text"
-                        label="Formato"
-                        supportingText="Entre o formato do livro"
-                        value={bookData.format}
-                        onChange={handleInputChange}
-                    />
-                    <DatePicker
-                        name="date"
-                        label="Data de publicação"
-                        supportingText="Selecione a data de publicação do livro"
-                        value={bookData.date}
-                        onChange={handleInputChange}
-                        formVariant
-                    />
-                    <Input
-                        name="pages"
-                        type="number"
-                        label="Páginas"
-                        supportingText="Entre o número de páginas do livro"
-                        minValue={1}
-                        value={bookData.pages}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <Input
-                        name="copies"
-                        type="number"
-                        label="Cópias"
-                        supportingText="Entre o número de cópias disponíveis do livro"
-                        minValue={1}
-                        value={bookData.copies}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <TextArea
-                        name="description"
-                        label="Descrição"
-                        supportingText="Entre uma breve descrição para o livro"
-                        value={bookData.description}
-                        onChange={handleInputChange}
-                    />
-                    <Input
-                        name="location"
-                        type="text"
-                        label="Localização"
-                        supportingText="Entre a localização do livro no acervo"
-                        value={bookData.location}
-                        onChange={handleInputChange}
-                    />
-                    <div className="book-dialog-buttons">
-                        <button
-                            className="click-ripple-effect-light"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                onClose();
-                            }}
-                        >
-                            Cancelar
-                        </button>
-                        <button
-                            className="click-ripple-effect-light"
-                        >
-                            Confirmar
-                        </button>
-                    </div>
-                </form>
-            </div>
+                        <Input
+                            name="pages"
+                            type="number"
+                            label="Páginas"
+                            supportingText="Entre o número de páginas do livro"
+                            minValue={1}
+                            value={bookData.pages}
+                            onChange={handleInputChange}
+                            required
+                        />
+                        <Input
+                            name="copies"
+                            type="number"
+                            label="Cópias"
+                            supportingText="Entre o número de cópias disponíveis do livro"
+                            minValue={1}
+                            value={bookData.copies}
+                            onChange={handleInputChange}
+                            required
+                        />
+                        <TextArea
+                            name="description"
+                            label="Descrição"
+                            supportingText="Entre uma breve descrição para o livro"
+                            value={bookData.description}
+                            onChange={handleInputChange}
+                        />
+                        <Input
+                            name="location"
+                            type="text"
+                            label="Localização"
+                            supportingText="Entre a localização do livro no acervo"
+                            value={bookData.location}
+                            onChange={handleInputChange}
+                        />
+                        <div className="book-dialog-buttons">
+                            <button
+                                className="click-ripple-effect-light"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    onClose();
+                                }}
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                className="click-ripple-effect-light"
+                            >
+                                Confirmar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            ) : (
+                <StateDialog
+                    variant={(saveState.error) ? "error" : "load"}
+                    heading={(saveState.error) ? "Erro" : "Salvando"}
+                    message={(saveState.error) ? "Ocorreu um erro ao salvar as alterações no sistema." : "As alterações estão sendo processadas pelo sistema"}
+                    detailsSummary={(saveState.errorMessage && saveState.errorMessage !== "") && "Detalhes do erro"}
+                    detailsContent={saveState.errorMessage}
+                    onClose={onClose}
+                />
+            )}
         </DialogBox>
     )
 }

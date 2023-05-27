@@ -41,7 +41,9 @@ export function useBooks() {
             setBooks([...books, Book.fromFormData(formData, createdId)]);
         }catch(exception) {
             console.log("Error creating book: " + exception.message);
+            return { error: true, errorMessage: exception.message };
         }
+        return { error: false };
     }
 
     async function updateBook(index, newData) {
@@ -57,7 +59,9 @@ export function useBooks() {
                 ]);
             }catch(exception) {
                 console.log("Error updating book: " + exception);
+                return { error: true, errorMessage: exception.message };
             }
+            return { error: false };
         }
     }
 
@@ -67,7 +71,9 @@ export function useBooks() {
             setBooks([...books.slice(0, index), ...books.slice(index + 1)]);
         }catch(exception) {
             console.log("Error deleting book: " + exception);
+            return { error: true, errorMessage: exception.message };
         }
+        return { error: false };
     }
 
     return { books, loadStatus, queryBooks, createBook, updateBook, deleteBook };

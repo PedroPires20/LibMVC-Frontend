@@ -5,6 +5,8 @@ import DatePicker from "../date_picker/DatePicker";
 import Button from "../button/Button";
 import "./LoanInputs.css";
 
+const FIELD_LOADING_MESSAGE = "Carregando...";
+const FIELD_LOADING_ERROR = "Ocorreu um erro ao carregar as opções do filtro";
 const DEFAULT_FILTER_VALUES = {
     "reader": "",
     "bookTitle": "",
@@ -14,13 +16,22 @@ const DEFAULT_FILTER_VALUES = {
     "late": ""
 };
 
+function getOptionsFromField(field) {
+    if(field.loading) {
+        return [FIELD_LOADING_MESSAGE];
+    }
+    if(field.error) {
+        return [FIELD_LOADING_ERROR];
+    }
+    return field.fieldData;
+}
+
 
 export default function LoanInputs({ onSubmit, disabled }) {
     const [filters, setFilters] = useState(DEFAULT_FILTER_VALUES);
     const { readers, bookTitles } = useLoanFields();
 
     function handleSelectChange(name, value) {
-        console.log('test');
         setFilters({ ...filters, [name]: value });
     }
 
@@ -33,9 +44,10 @@ export default function LoanInputs({ onSubmit, disabled }) {
                         name="reader"
                         label="Leitor"
                         placeholder="Todos"
-                        options={readers}
+                        options={getOptionsFromField(readers)}
                         value={filters.reader}
                         onChange={handleSelectChange}
+                        disabled={readers.loading || readers.error}
                     />
                 </div>
                 <div className="lfilters-input-container">
@@ -43,9 +55,10 @@ export default function LoanInputs({ onSubmit, disabled }) {
                         name="bookTitle"
                         label="Obra"
                         placeholder="Todos"
-                        options={bookTitles}
+                        options={getOptionsFromField(bookTitles)}
                         value={filters.bookTitle}
                         onChange={handleSelectChange}
+                        disabled={bookTitles.loading || bookTitles.error}
                     />
                 </div>
                 <div className="lfilters-input-container">

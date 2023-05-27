@@ -18,6 +18,7 @@ export default function Loans() {
     const [targetLoanIndex, setTargetLoanIndex] = useState(null);
     const [showLoanDialog, setShowLoanDialog] = useState(false);
     const [showFinishDialog, setShowFinishDialog] = useState(false);
+    const [loanFinishStatus, setLoanFinishStatus] = useState({ processing: false, error: false });
     const { loans, loadStatus, filterLoans, createLoan, updateLoan, deleteLoan } = useLoans();
 
     useEffect(() => {
@@ -50,10 +51,17 @@ export default function Loans() {
         }
     }
     
-    function handleFinishDialog(action) {
+    async function handleFinishDialog(action) {
         if(action === 0 && targetLoanIndex !== null) {
-            deleteLoan(targetLoanIndex);
+            setLoanFinishStatus({ processing: true, error: false });
             setTargetLoanIndex(null);
+            let deleteStatus = await deleteLoan(targetLoanIndex);
+            if(deleteStatus.error) {
+                setLoanFinishStatus({ processing: false, error: true, errorMessage: deleteStatus.errorMessage });
+                return;
+            }else {
+                setLoanFinishStatus({ processing: false, error: false });
+            }
         }
         setShowFinishDialog(false);
     }
@@ -150,13 +158,27 @@ export default function Loans() {
             )}
             {showFinishDialog && (
                 <DialogBox>
-                    <StateDialog
-                        variant="success"
-                        heading="Finalizar empréstimo?"
-                        message={"Deseja finalizar esse empréstimo?\nUma vez finalizado, o livro é considerado como devolvido e os dados relacionados ao empréstimo são excluídos"}
-                        buttonLabels={["Sim", "Não"]}
-                        onClose={handleFinishDialog}
-                    />
+                    {(!loanFinishStatus.processing && !loanFinishStatus.error) ? (
+                        <StateDialog
+                            variant="success"
+                            heading="Finalizar empréstimo?"
+                            message={"Deseja finalizar esse empréstimo?\nUma vez finalizado, o livro é considerado como devolvido e os dados relacionados ao empréstimo são excluídos"}
+                            buttonLabels={["Sim", "Não"]}
+                            onClose={handleFinishDialog}
+                        />
+                    ) : (
+                        <StateDialog
+                        variant={(loanFinishStatus.error) ? "error" : "load"}
+                        heading={(loanFinishStatus.error) ? "Erro" : "Salvando"}
+                        message={(loanFinishStatus.error) ? "Ocorreu um erro ao salvar as alterações no sistema." : "As alterações estão sendo processadas pelo sistema"}
+                        detailsSummary={(loanFinishStatus.errorMessage && loanFinishStatus.errorMessage !== "") && "Detalhes do erro"}
+                        detailsContent={loanFinishStatus.errorMessage}
+                        onClose={() => {
+                            setShowFinishDialog(false);
+                            setLoanFinishStatus({ processing: false, error: false });
+                        }}
+                    />  
+                    )}
                 </DialogBox>
             )}
         </div>

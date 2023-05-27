@@ -1,41 +1,51 @@
 import { useState, useEffect } from "react";
 import NetworkClient from "../utils/network_client";
 
+const DEFAULT_FIELD_STATE = { loading: true, error: false, fieldData: [] };
+
 
 export function useBookFields() {
-    const [authors, setAuthors] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [publishers, setPublishers] = useState([]);
-    const [formats, setFormats] = useState([]);
-    const network = new NetworkClient(API_BASE_URL);
+    const [authors, setAuthors] = useState(DEFAULT_FIELD_STATE);
+    const [categories, setCategories] = useState(DEFAULT_FIELD_STATE);
+    const [publishers, setPublishers] = useState(DEFAULT_FIELD_STATE);
+    const [formats, setFormats] = useState(DEFAULT_FIELD_STATE);
+    const api = new NetworkClient(API_BASE_URL);
 
     function appendCategory(newCategory) {
         if(!categories.includes(newCategory)) {
-            setCategories([...categories, newCategory]);
+            setCategories({...categories, fieldData: [...categories.fieldData, newCategory]});
         }
     }
 
     useEffect(() => {
-        network.fetchBookFieldValues("author")
-        .then((authors) => setAuthors(
-            authors.filter((value) => value && value !== "")
-        ))
-        .catch((error) => setAuthors(error));
-        network.fetchBookFieldValues("categories")
-        .then((categories) => setCategories(
-            categories.filter((value) => value && value !== "")
-        ))
-        .catch((error) => setCategories(error));
-        network.fetchBookFieldValues("publisher")
-        .then((publishers) => setPublishers(
-            publishers.filter((value) => value && value !== "")
-        ))
-        .catch((error) => setPublishers(error));
-        network.fetchBookFieldValues("format")
-        .then((formats) => setFormats(
-            formats.filter((value) => value && value !== "")
-        ))
-        .catch((error) => setFormats(error));
+        const loadBookFields = async () => {
+            try {
+                let authorsData = await api.fetchBookFieldValues("author");
+                setAuthors({ loading: false, error: false, fieldData: authorsData });
+            }catch(exception) {
+                setAuthors({ loading: false, error: exception.message || true });
+            }
+            try {
+                let categoriesData = await api.fetchBookFieldValues("categories");
+                setCategories({ loading: false, error: false, fieldData: categoriesData });
+            }catch(exception) {
+                setCategories({ loading: false, error: exception.message || true });
+            }
+            try {
+                let publishersData = await api.fetchBookFieldValues("publisher");
+                setPublishers({ loading: false, error: false, fieldData: publishersData });
+            }catch(exception) {
+                setPublishers({ loading: false, error: exception.message || true });
+            }
+            try {
+                let formatsData = await api.fetchBookFieldValues("format");
+                setFormats({ loading: false, error: false, fieldData: formatsData });
+            }catch(exception) {
+                setFormats({ loading: false, error: exception.message || true });
+            }
+        }
+            
+        loadBookFields();
     }, []);
 
     return { authors, categories, appendCategory, publishers, formats };

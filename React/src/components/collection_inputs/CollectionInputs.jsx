@@ -5,12 +5,24 @@ import Select from "../select/Select";
 import Button from "../button/Button";
 import "./CollectionInputs.css";
 
+const FIELD_LOADING_MESSAGE = "Carregando...";
+const FIELD_LOADING_ERROR = "Ocorreu um erro ao carregar as opções do filtro";
 const DEFAULT_FILTER_VALUES = {
     author: "",
     categories: "",
     publisher: "",
     format: ""
 };
+
+function getOptionsFromField(field) {
+    if(field.loading) {
+        return [FIELD_LOADING_MESSAGE];
+    }
+    if(field.error) {
+        return [FIELD_LOADING_ERROR];
+    }
+    return field.fieldData;
+}
 
 
 export default function CollectionInputs({ onSubmit, disabled }) {
@@ -39,20 +51,22 @@ export default function CollectionInputs({ onSubmit, disabled }) {
                     <Select
                         name="author"
                         label="Autor"
-                        options={authors}
+                        options={getOptionsFromField(authors)}
                         placeholder="Todos"
                         value={filters.author}
                         onChange={handleSelectChange}
+                        disabled={authors.loading || authors.error}
                     />
                 </div>
                 <div className="cinputs-select-container">
                     <Select
                         name="categories"
                         label="Categoria"
-                        options={categories}
+                        options={getOptionsFromField(categories)}
                         placeholder="Todos"
                         value={filters.categories}
                         onChange={handleSelectChange}
+                        disabled={categories.loading || categories.error}
                         multiple
                     />
                 </div>
@@ -60,20 +74,22 @@ export default function CollectionInputs({ onSubmit, disabled }) {
                     <Select
                         name="publisher"
                         label="Editora"
-                        options={publishers}
+                        options={getOptionsFromField(publishers)}
                         placeholder="Todos"
                         value={filters.publisher}
                         onChange={handleSelectChange}
+                        disabled={publishers.loading || publishers.error}
                     />
                 </div>
                 <div className="cinputs-select-container">
                     <Select
                         name="format"
                         label="Formato"
-                        options={formats}
+                        options={getOptionsFromField(formats)}
                         placeholder="Todos"
                         value={filters.format}
                         onChange={handleSelectChange}
+                        disabled={formats.loading || formats.error}
                     />
                 </div>
                 <div className="cinputs-button-container">

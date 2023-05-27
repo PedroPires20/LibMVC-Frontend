@@ -23,6 +23,16 @@ const DEFAULT_BOOK_DATA = {
 };
 const NEW_CATEGORY_LABEL = "Nova categoria";
 
+function getOptionsFromBookCategories(bookCategories) {
+    if(bookCategories.loading) {
+        return  ["Carregando categorias..."];
+    }
+    if(bookCategories.error) {
+        return ["Ocorreu um erro ao carregar as categorias"];
+    }
+    return [...bookCategories.fieldData, "Nova categoria"];
+}
+
 
 export default function BookDialog({ updateTarget, onClose, onSubmit }) {
     const isUpdateDialog = !!updateTarget;
@@ -122,10 +132,11 @@ export default function BookDialog({ updateTarget, onClose, onSubmit }) {
                         <Select
                             name="categories"
                             label="Categorias"
-                            options={[...categories, "Nova categoria"]}
+                            options={getOptionsFromBookCategories(categories)}
                             placeholder="Entre a(s) categoria(s) do livro"
                             value={bookData.categories}
                             onChange={handleInputChange}
+                            disabled={categories.loading || categories.error}
                             multiple
                             formVariant
                         />

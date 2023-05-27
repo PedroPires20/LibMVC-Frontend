@@ -29,6 +29,7 @@ export default class Loan extends Model {
             reader: formData.reader,
             phone: formData.phone,
             bookId: formData.bookId,
+            bookTitle: formData.bookTitle,
             startDate: toFormDate(startDate),
             endDate: toFormDate(endDate),
             duration:duration,

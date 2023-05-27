@@ -38,7 +38,8 @@ export default function LoanDialog({ updateTarget, onClose, onSubmit }) {
             firstInvalidInput && firstInvalidInput.focus();
         }else {
             setSaveState({ saving: true, error: false });
-            let submitStatus = await onSubmit(loanData);
+            let selectedBook = books.find((book) => book.id === loanData.bookId);
+            let submitStatus = await onSubmit({ ...loanData, bookTitle: selectedBook && selectedBook.title });
             if(!submitStatus.error) {
                 onClose();
             }else {

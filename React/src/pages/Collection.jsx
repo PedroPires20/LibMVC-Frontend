@@ -42,7 +42,7 @@ export default function Collection() {
         }
     }
 
-    async function handleBookDialogSubmit(bookData) {
+    function handleBookDialogSubmit(bookData) {
         if(targetBookIndex !== null) {
             setTargetBookIndex(null);
             return updateBook(targetBookIndex, bookData);

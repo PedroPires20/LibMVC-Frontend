@@ -25,13 +25,12 @@
 }
 
 .lfilters-input-container {
-    flex: 1 1;
-    max-width: 20rem;
+    width: 12rem;
 }
 
 .lfilters-buttons-container {
     flex: 0;
     display: flex;
     flex-flow: row nowrap;
-    gap: 1.5em;
+    gap: 1.2em;
 }

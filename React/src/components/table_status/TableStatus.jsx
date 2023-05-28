@@ -1,10 +1,10 @@
 import { React } from "react";
 import ProgressBar from "../progress_bar/ProgressBar";
 import errorIcon from "./assets/error_icon.svg";
-import "./LoadStatus.css";
+import "./TableStatus.css";
 
 
-export default function LoadStatus({ loading, error, message }) {
+export default function TableStatus({ loading, error, message }) {
     return (
         <tbody>
             <tr>

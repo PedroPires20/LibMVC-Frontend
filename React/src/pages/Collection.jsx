@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from "react";
 import { useBooks } from "../hooks/useBooks";
 import Button from "../components/button/Button";
-import LoadStatus from "../components/load_status/LoadStatus";
 import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../components/table_card/TableCard";
+import TableStatus from "../components/table_status/TableStatus";
 import CollectionInputs from "../components/collection_inputs/CollectionInputs";
 import ContextMenu from "../components/context_menu/ContextMenu";
 import BookDialog from "../dialogs/BookDialog";
@@ -100,7 +100,7 @@ export default function Collection() {
                     </TableRow>
                 </TableHeader>
                 {(loadStatus.loading || loadStatus.error || books.length === 0) ? (
-                    <LoadStatus
+                    <TableStatus
                         error={loadStatus.error}
                         loading={loadStatus.loading}
                         message={(loadStatus.loading) ? "Carregando dados do acervo..." :

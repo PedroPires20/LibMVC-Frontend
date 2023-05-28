@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { useLoans } from "../hooks/useLoans";
 import Button from "../components/button/Button";
 import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../components/table_card/TableCard";
-import LoadStatus from "../components/load_status/LoadStatus";
+import TableStatus from "../components/table_status/TableStatus";
 import LoanInputs from "../components/loan_inputs/LoanInputs";
 import ContextMenu from "../components/context_menu/ContextMenu";
 import LoanDialog from "../dialogs/LoanDialog";
@@ -100,7 +100,7 @@ export default function Loans() {
                     </TableRow>
                 </TableHeader>
                 {(loadStatus.loading || loadStatus.error || loans.length === 0) ? (
-                    <LoadStatus
+                    <TableStatus
                         error={loadStatus.error}
                         loading={loadStatus.loading}
                         message={(loadStatus.loading) ? "Carregando dados dos empréstimos..." :

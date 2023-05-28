@@ -12,7 +12,7 @@ export function useBookFields() {
     const api = new NetworkClient(API_BASE_URL);
 
     function appendCategory(newCategory) {
-        if(!categories.includes(newCategory)) {
+        if(!categories.fieldData.includes(newCategory)) {
             setCategories({...categories, fieldData: [...categories.fieldData, newCategory]});
         }
     }

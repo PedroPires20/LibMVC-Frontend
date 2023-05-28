@@ -27,7 +27,6 @@ export default function Select({
         const checkClickOutsideList = (e) => {
             if(selectElementRef.current && !selectElementRef.current.contains(e.target)) {
                 setActive(false);
-                setError((e.target.validationMessage && e.target.validationMessage !== "") ? errorMessage : "");
             }
         };
 
@@ -42,7 +41,7 @@ export default function Select({
         const values = (optionValues.length > 0) ? optionValues : options;
         if(Array.isArray(value)) {
             setSelectedIndexes(value.map((optionValue) => values.indexOf(optionValue)));
-        }else if(value && value !== "") {
+        }else if(value !== undefined && value !== "") {
             setSelectedIndexes([values.indexOf(value)]);
         }else {
             setSelectedIndexes([]);
@@ -112,6 +111,7 @@ export default function Select({
                                         setActive(false);
                                         e.stopPropagation()
                                     }
+                                    setError((e.target.validationMessage && e.target.validationMessage !== "") ? errorMessage : "");
                                 }}
                             >
                                 {optionLabel}

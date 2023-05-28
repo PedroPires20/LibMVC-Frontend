@@ -58,7 +58,7 @@ export default function BookDialog({ updateTarget, onClose, onSubmit }) {
         if(event.key === "Enter") {
             if(newCategory && newCategory !== "") {
                 appendCategory(newCategory);    
-                if(!categories.includes(newCategory)) {
+                if(!bookData.categories.includes(newCategory)) {
                     handleInputChange("categories", [...bookData.categories, newCategory]);
                 }
             }

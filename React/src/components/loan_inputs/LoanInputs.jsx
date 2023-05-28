@@ -12,8 +12,8 @@ const DEFAULT_FILTER_VALUES = {
     "bookTitle": "",
     "startDate": "",
     "endDate": "",
-    "renew": "",
-    "late": ""
+    "late": undefined,
+    "renew": undefined
 };
 
 function getOptionsFromField(field) {
@@ -81,21 +81,24 @@ export default function LoanInputs({ onSubmit, disabled }) {
                 </div>
                 <div className="lfilters-input-container">
                     <Select
-                        name="renew"
+                        name="late"
                         label="Atrasado"
                         options={["Sim", "Não"]}
+                        optionValues={[true, false]}
                         placeholder="Todos"
-                        value={filters.renew}
+                        value={filters.late}
                         onChange={handleSelectChange}
+                    
                     />
                 </div>
                 <div className="lfilters-input-container">
                     <Select
-                        name="late"
+                        name="renew"
                         label="Renovação"
                         options={["Sim", "Não"]}
+                        optionValues={[true, false]}
                         placeholder="Todos"
-                        value={filters.late}
+                        value={filters.renew}
                         onChange={handleSelectChange}
                     />
                 </div>

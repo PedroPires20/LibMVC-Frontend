@@ -1,6 +1,8 @@
 import Model from "./model";
 import { parseDate, toFormDate } from "../utils/utils";
 
+const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+
 
 export default class Loan extends Model {
     constructor(loanData, index = null) {
@@ -24,6 +26,8 @@ export default class Loan extends Model {
         let duration = parseInt(formData.duration);
         let endDate = new Date(startDate.getTime());
         endDate.setDate(startDate.getDate() + duration);
+        let currentDate = new Date();
+        let daysRemaining = Math.ceil((endDate.getTime() - currentDate.getTime()) / MILLISECONDS_PER_DAY);
         return new Loan({
             _id: id,
             reader: formData.reader,
@@ -32,8 +36,10 @@ export default class Loan extends Model {
             bookTitle: formData.bookTitle,
             startDate: toFormDate(startDate),
             endDate: toFormDate(endDate),
-            duration:duration,
-            renew: formData.renew
+            duration: duration,
+            daysRemaining: daysRemaining,
+            renew: formData.renew,
+            late: endDate < currentDate
         }, index);
     }
 

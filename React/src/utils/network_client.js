@@ -167,7 +167,8 @@ export default class NetworkClient {
             throw new NetworkError(exception.message);
         }
         if(!response.ok) {
-            throw new HTTPError(response.status, response.statusText, "Fetching loans data");
+            let responseBody = await response.text();
+            throw new HTTPError(response.status, response.statusText, responseBody, "Fetching loans data");
         }
         return response.json();
     }

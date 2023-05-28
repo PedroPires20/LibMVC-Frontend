@@ -99,11 +99,13 @@ export default function Collection() {
                         <TableCell>Localização</TableCell>
                     </TableRow>
                 </TableHeader>
-                {(loadStatus.loading || loadStatus.error) ? (
+                {(loadStatus.loading || loadStatus.error || books.length === 0) ? (
                     <LoadStatus
                         error={loadStatus.error}
-                        loadingMessage="Carregando dados do acervo..."
-                        errorMessage="Ocorreu um erro ao recuperar os dados do acervo. Por favor, tente novamente."
+                        loading={loadStatus.loading}
+                        message={(loadStatus.loading) ? "Carregando dados do acervo..." :
+                        ((loadStatus.error) ? "Ocorreu um erro ao recuperar os dados do acervo. Por favor, tente novamente." :
+                        "Nenhum livro foi encontrado")}
                     />
                 ) : (
                     <TableData>

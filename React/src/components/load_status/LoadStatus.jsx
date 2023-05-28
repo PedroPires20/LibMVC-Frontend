@@ -4,20 +4,16 @@ import errorIcon from "./assets/error_icon.svg";
 import "./LoadStatus.css";
 
 
-export default function LoadStatus({ error, loadingMessage, errorMessage }) {
+export default function LoadStatus({ loading, error, message }) {
     return (
         <tbody>
             <tr>
                 <td>
                     <div className="load-status-container">
-                        {(error) ? (
-                            <img src={errorIcon} alt="Erro"/>
-                        ) : (
-                            <ProgressBar/>
-                        )
-                        }
+                        {(error) && <img src={errorIcon} alt="Erro"/>}
+                        {(loading) && <ProgressBar/>}
                         <p>
-                            {(error) ? errorMessage : loadingMessage}
+                            {message}
                         </p>
                     </div>
                 </td>

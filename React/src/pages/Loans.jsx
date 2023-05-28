@@ -99,11 +99,13 @@ export default function Loans() {
                         <TableCell>Renovação</TableCell>
                     </TableRow>
                 </TableHeader>
-                {(loadStatus.loading || loadStatus.error) ? (
+                {(loadStatus.loading || loadStatus.error || loans.length === 0) ? (
                     <LoadStatus
                         error={loadStatus.error}
-                        loadingMessage="Carregando dados dos empréstimos..."
-                        errorMessage="Ocorreu um erro ao recuperar os dados dos empréstimos. Por favor, tente novamente."
+                        loading={loadStatus.loading}
+                        message={(loadStatus.loading) ? "Carregando dados dos empréstimos..." :
+                        ((loadStatus.error) ? "Ocorreu um erro ao recuperar os dados dos empréstimos. Por favor, tente novamente." :
+                        "Nenhum empréstimo foi encontrado")}
                     />
                 ) : (
                     <TableData>

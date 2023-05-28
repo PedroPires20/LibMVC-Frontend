@@ -11,12 +11,15 @@ export default function Select({
     placeholder,
     multiple,
     formVariant,
+    errorMessage = "Por favor, selecione uma opção",
     onChange,
     value,
-    disabled
+    disabled,
+    required
 }) {
     const [active, setActive] = useState(false);
     const [selectedIndexes, setSelectedIndexes] = useState([]);
+    const [error, setError] = useState("");
     const selectElementRef = useRef(null);
     const values = (optionValues.length > 0) ? optionValues : options;
 
@@ -24,6 +27,7 @@ export default function Select({
         const checkClickOutsideList = (e) => {
             if(selectElementRef.current && !selectElementRef.current.contains(e.target)) {
                 setActive(false);
+                setError((e.target.validationMessage && e.target.validationMessage !== "") ? errorMessage : "");
             }
         };
 
@@ -47,7 +51,7 @@ export default function Select({
 
     return (
         <div
-            className={`select-container${(formVariant) ? " select-container-form" : ""}${(active) ? " select-container-active": ""}`}
+            className={`select-container${(formVariant) ? " select-container-form" : ""}${(active) ? " select-container-active": ""}${(error) ? " select-container-error" : ""}`}
             onClick={() => setActive(true)}
             onKeyDown={(e) => e.key === "Enter" && setActive(false)} 
             ref={selectElementRef}
@@ -57,9 +61,14 @@ export default function Select({
                     <div className="select-name">
                         {label}
                     </div>
-                    <div className="select-selected-option">
-                        {(selectedIndexes.length > 0) ? selectedIndexes.map((index) => options[index]).join("; ") : placeholder}
-                    </div>
+                    <input
+                        type="text"
+                        className="select-selected-option"
+                        value={(selectedIndexes.length > 0) ? selectedIndexes.map((index) => options[index]).join("; ") : ""}
+                        placeholder={(error && errorMessage !== "") ? errorMessage : placeholder}
+                        required={required}
+                        onInvalid={(e) => setError(errorMessage)}
+                    />
                 </div>
                 <button
                     onClick={(e) => {

@@ -40,6 +40,10 @@
     border-bottom: 2px solid #4e4539;
 }
 
+.select-container-error .select-input {
+    border-bottom: 1px solid rgba(186, 26, 26, 0.42);
+}
+
 .select-header {
     display: flex;
     flex-flow: column nowrap;
@@ -58,11 +62,32 @@
     color: #4e4539;
 }
 
+.select-container-error .select-name {
+    color: #ba1a1a;
+}
+
 .select-selected-option {
+    font-size: 1em;
     color: #1f1b16;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    user-select: none;
+    pointer-events: none;
+}
+
+.select-selected-option::placeholder {
+    font-size: 1em;
+    color: #1f1b16;
+}
+
+
+.select-container-error .select-selected-option::placeholder {
+    color: #ba1a1a;
 }
 
 .select-container button {
@@ -126,4 +151,10 @@
 .select-item-list li.select-item-selected {
     background-color: rgba(239, 224, 207, 0.55);
     font-style: italic;
+}
+
+.select-error-message {
+    padding: 0.5em 1em 0 1em;
+    font-size: 0.75em;
+    color: #ba1a1a;
 }

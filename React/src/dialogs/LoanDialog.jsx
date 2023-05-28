@@ -92,6 +92,7 @@ export default function LoanDialog({ updateTarget, onClose, onSubmit }) {
                             optionValues={books.map((book) => book.id)}
                             onChange={handleInputChange}
                             value={loanData.bookId}
+                            errorMessage="Por favor, selecione um livro"
                             formVariant
                             required
                         />

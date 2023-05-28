@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { removeEmptyFilters } from "../utils/utils";
+import { removeEmptyFilters, objectEquals } from "../utils/utils";
 import NetworkClient from "../utils/network_client";
 import Book from "../models/book";
 
@@ -31,7 +31,9 @@ export function useBooks() {
             newQuery.text = queryText;
         }
         newQuery.filters = removeEmptyFilters(filters);
-        setQuery(newQuery);
+        if(!objectEquals(query, newQuery)) {
+            setQuery(newQuery);
+        }
     }
 
     async function createBook(formData) {
@@ -40,7 +42,7 @@ export function useBooks() {
             let { createdId } = await api.createBook(newBook.toRequestBody());
             setBooks([...books, Book.fromFormData(formData, createdId)]);
         }catch(exception) {
-            console.log("Error creating book: " + exception.message);
+            console.error("Error creating book: " + exception.message);
             return { error: true, errorMessage: exception.message };
         }
         return { error: false };
@@ -58,7 +60,7 @@ export function useBooks() {
                     ...books.slice(index + 1)
                 ]);
             }catch(exception) {
-                console.log("Error updating book: " + exception);
+                console.error("Error updating book: " + exception);
                 return { error: true, errorMessage: exception.message };
             }
             return { error: false };
@@ -70,7 +72,7 @@ export function useBooks() {
             await api.deleteBook(books[index].id);
             setBooks([...books.slice(0, index), ...books.slice(index + 1)]);
         }catch(exception) {
-            console.log("Error deleting book: " + exception);
+            console.error("Error deleting book: " + exception);
             return { error: true, errorMessage: exception.message };
         }
         return { error: false };

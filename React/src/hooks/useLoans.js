@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { removeEmptyFilters } from "../utils/utils";
+import { removeEmptyFilters, objectEquals } from "../utils/utils";
 import NetworkClient from "../utils/network_client";
 import Loan from "../models/loan";
 
@@ -18,7 +18,7 @@ export function useLoans() {
                 setLoans(loansData.map((loanData, index) => new Loan(loanData, index)));
                 setLoadStatus({ loading: false, error: false });
             }catch(exception) {
-                console.log(exception);
+                console.error("Error loading loans: " + exception);
                 setLoadStatus({ loading: false, error: true, errorMessage: exception.message });
             }
         }
@@ -26,8 +26,11 @@ export function useLoans() {
         fetchTransformLoans();
     }, [filters]);
 
-    function filterLoans(filters) {
-        setFilters(removeEmptyFilters(filters));
+    function filterLoans(inputFilters) {
+        let newFilters = removeEmptyFilters(inputFilters);
+        if(!objectEquals(filters, newFilters)) {
+            setFilters(newFilters);
+        }
     }
 
     async function createLoan(formData) {
@@ -36,7 +39,7 @@ export function useLoans() {
             let { createdId } = await api.createLoan(newLoan.toRequestBody());
             setLoans([...loans, Loan.fromFormData(formData, createdId)]);
         }catch(exception) {
-            console.log("Error creating loan: " + exception.message);
+            console.error("Error creating loan: " + exception.message);
             return { error: true, errorMessage: exception.message };
         }
         return { error: false };
@@ -53,7 +56,7 @@ export function useLoans() {
                 ...loans.slice(index + 1)
             ]);
         }catch(exception) {
-            console.log("Error updating loan: " + exception.message);
+            console.error("Error updating loan: " + exception.message);
             return { error: true, errorMessage: exception.message };
         }
         return { error: false };
@@ -64,7 +67,7 @@ export function useLoans() {
             await api.deleteLoan(loans[index].id);
             setLoans([...loans.slice(0, index), ...loans.slice(index + 1)]);
         }catch(exception) {
-            console.log("Error deleting loan: " + exception.message);
+            console.error("Error deleting loan: " + exception.message);
             return { error: true, errorMessage: exception.message };
         }
         return { error: false };

@@ -5,14 +5,16 @@ React Applications with Established UI Patterns" (que pode ser acessado neste
 [link](https://martinfowler.com/articles/modularizing-react-apps.html)), a
 arquitetura escolhida para o *frontend* dessa aplicação foi desenvolvida de
 forma a maximizar a reutilização de código entre as diferentes implementações.
-Tomando como inspiração a já bem estabelecida arquitetura
+Mais especificamente, o modelo *Layered frontend application* (aplicação
+*frontend* em camadas), proposto nesse artigo, foi tomado como inspiração
+juntamente à já bem estabelecida arquitetura
 [MVC](https://developer.mozilla.org/en-US/docs/Glossary/MVC) (do inglês, *Model
 View Controller*, significando modelo, visualização e controle,
 respectivamente), a arquitetura proposta implementa, no *backend*, os modelos e
 controladores associados às entidades com as quais a aplicação lida —
 nominalmente: livros e empréstimos —, contendo, portanto, a maior parte da
-lógica da aplicação (em uma abordagem conhecida como *thin-client*). As, por sua
-vez, são implementadas no *frontend*.
+lógica da aplicação (em uma abordagem conhecida como *thin-client*). As, views
+por sua vez, são implementadas no *frontend*.
 
 Porém, devido à divisão mais forte entre *frontend* e *backend* que é imposta
 pela necessidade de comunicação em rede (via API REST), algumas modificações
@@ -84,4 +86,3 @@ anteriormente. Os *getters* são implementados utilizando a sintaxe `get` da
 linguagem JavaScript, que permite acessá-los como se fossem propriedades,
 tornando o acesso aos dados nas views mais conveniente e melhorando a
 legibilidade do código.
- 

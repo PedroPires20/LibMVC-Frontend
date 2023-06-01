@@ -37,7 +37,7 @@ suporte a *Hot Module Replacing* (HMR), recurso que permite a substituição de
 módulos modificados em tempo de execução (isto é, sem interromper a aplicação),
 permitido visualizar, imediatamente, as modificações realizadas durante o
 desenvolvimento. Seu uso é recomendado pelos próprios autores do React como uma
-boa forma de configuar um ambiente JavaScript modular, como pode ser visto nesse
+boa forma de configurar um ambiente JavaScript modular, como pode ser visto nesse
 [link](https://react.dev/learn/add-react-to-an-existing-project#step-1-set-up-a-modular-javascript-environment)
 (o uso de alguma ferramenta de compilação em geral é extremamente recomendado
 pelos criadores do React).

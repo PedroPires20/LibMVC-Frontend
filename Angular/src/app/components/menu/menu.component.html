@@ -1,6 +1,10 @@
 <nav [className]="(expanded) ? 'side-menu-expanded' : 'side-menu-hidden'">
     <ul>
-        <li><a>Acervo</a></li>
-        <li><a>Empréstimos</a></li>
+        <li>
+            <a routerLink="/collection" routerLinkActive="active-page">Acervo</a>
+        </li>
+        <li>
+            <a routerLink="/loans" routerLinkActive="active-page">Empréstimos</a>
+        </li>
     </ul>
 </nav>

@@ -6,10 +6,12 @@ import { LoansComponent } from './pages/loans/loans.component';
 const routes: Routes = [
   {
     path: "collection",
+    title: "SimpleLibrary - Acervo",
     component: CollectionComponent
   },
   {
     path: "loans",
+    title: "SimpleLibrary - Empréstimos",
     component: LoansComponent
   },
   {

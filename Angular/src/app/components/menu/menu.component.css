@@ -56,3 +56,14 @@ li a {
 li a:visited {
     color: inherit;
 }
+
+.active-page {
+    background-color: #4e4539;
+    position: relative;
+    cursor: default;
+}
+
+.active-page:hover {
+    background-color: #4e4539;
+    cursor: default;
+}

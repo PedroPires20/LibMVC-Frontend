@@ -4,13 +4,15 @@ import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu/menu.component';
 import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
+import { ButtonComponent } from './button/button.component';
 
 
 
 @NgModule({
   declarations: [
     MenuComponent,
-    HeaderComponent
+    HeaderComponent,
+    ButtonComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     MenuComponent,
-    HeaderComponent
+    HeaderComponent,
+    ButtonComponent
   ]
 })
 export class ComponentsModule { }

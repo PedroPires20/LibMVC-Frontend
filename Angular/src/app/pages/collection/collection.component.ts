@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class CollectionComponent {
 
+  testClick() {
+    console.log("clicked")
+  }
+
 }

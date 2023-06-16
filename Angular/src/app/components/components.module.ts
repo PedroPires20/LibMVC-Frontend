@@ -6,6 +6,7 @@ import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
 import { ButtonComponent } from './button/button.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 
@@ -14,7 +15,8 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
     MenuComponent,
     HeaderComponent,
     ButtonComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
     MenuComponent,
     HeaderComponent,
     ButtonComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    SpinnerComponent
   ]
 })
 export class ComponentsModule { }

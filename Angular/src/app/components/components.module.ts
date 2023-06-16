@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ButtonComponent } from './button/button.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 
 
@@ -16,7 +17,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
     HeaderComponent,
     ButtonComponent,
     ProgressBarComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    DialogComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
     HeaderComponent,
     ButtonComponent,
     ProgressBarComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    DialogComponent
   ]
 })
 export class ComponentsModule { }

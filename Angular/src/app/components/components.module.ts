@@ -10,6 +10,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { TableCardComponent } from './table-card/table-card.component';
 import { DataCellDirective } from './table-card/data-cell.directive';
+import { CheckboxComponent } from './checkbox/checkbox.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { DataCellDirective } from './table-card/data-cell.directive';
     SpinnerComponent,
     DialogComponent,
     TableCardComponent,
-    DataCellDirective
+    DataCellDirective,
+    CheckboxComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import { DataCellDirective } from './table-card/data-cell.directive';
     SpinnerComponent,
     DialogComponent,
     TableCardComponent,
-    DataCellDirective
+    DataCellDirective,
+    CheckboxComponent
   ]
 })
 export class ComponentsModule { }

@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="input" [class.input-checked]="value">
+        <button (click)="handleCheck()">
+            <div class="checkmark-state click-ripple-effect-light">
+                <img src="../../../assets/check_icon_small.svg" alt="marcado"/>
+            </div>
+        </button>
+        <label>{{ label }}</label>
+    </div>
+    <span *ngIf="supportingText">{{ supportingText }}</span>
+</div>

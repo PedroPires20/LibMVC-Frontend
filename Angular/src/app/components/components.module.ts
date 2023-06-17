@@ -11,6 +11,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { TableCardComponent } from './table-card/table-card.component';
 import { DataCellDirective } from './table-card/data-cell.directive';
 import { CheckboxComponent } from './checkbox/checkbox.component';
+import { SearchBoxComponent } from './search-box/search-box.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
     DialogComponent,
     TableCardComponent,
     DataCellDirective,
-    CheckboxComponent
+    CheckboxComponent,
+    SearchBoxComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
     DialogComponent,
     TableCardComponent,
     DataCellDirective,
-    CheckboxComponent
+    CheckboxComponent,
+    SearchBoxComponent
   ]
 })
 export class ComponentsModule { }

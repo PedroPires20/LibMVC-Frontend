@@ -1,0 +1,8 @@
+<input
+    name="search-box"
+    type="text"
+    placeholder="Pesquise por título, descrição, autor, etc."
+    [value]="searchQuery"
+    (input)="handleInput($event)"
+/>
+<img src="../../../assets/search_icon.svg" alt="search"/>

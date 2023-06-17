@@ -8,7 +8,8 @@ import { ButtonComponent } from './button/button.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { DialogComponent } from './dialog/dialog.component';
-
+import { TableCardComponent } from './table-card/table-card.component';
+import { DataCellDirective } from './table-card/data-cell.directive';
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import { DialogComponent } from './dialog/dialog.component';
     ButtonComponent,
     ProgressBarComponent,
     SpinnerComponent,
-    DialogComponent
+    DialogComponent,
+    TableCardComponent,
+    DataCellDirective
   ],
   imports: [
     CommonModule,
@@ -30,7 +33,9 @@ import { DialogComponent } from './dialog/dialog.component';
     ButtonComponent,
     ProgressBarComponent,
     SpinnerComponent,
-    DialogComponent
+    DialogComponent,
+    TableCardComponent,
+    DataCellDirective
   ]
 })
 export class ComponentsModule { }

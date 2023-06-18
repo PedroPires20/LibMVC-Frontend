@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from "@angular/forms";
 
 import { MenuComponent } from './menu/menu.component';
 import { HeaderComponent } from './header/header.component';
@@ -12,6 +13,7 @@ import { TableCardComponent } from './table-card/table-card.component';
 import { DataCellDirective } from './table-card/data-cell.directive';
 import { CheckboxComponent } from './checkbox/checkbox.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
+import { TextAreaComponent } from './text-area/text-area.component';
 
 
 @NgModule({
@@ -25,11 +27,13 @@ import { SearchBoxComponent } from './search-box/search-box.component';
     TableCardComponent,
     DataCellDirective,
     CheckboxComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    TextAreaComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   exports: [
     MenuComponent,
@@ -41,7 +45,8 @@ import { SearchBoxComponent } from './search-box/search-box.component';
     TableCardComponent,
     DataCellDirective,
     CheckboxComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    TextAreaComponent
   ]
 })
 export class ComponentsModule { }

@@ -1,0 +1,23 @@
+<div class="container" [ngClass]="{'container-active': active, 'container-error': error}">
+    <label>{{ label }}</label>
+    <div class="control"  [ngClass]="{'control-active': active, 'control-error': error}">
+        <textarea
+            [name]="name"
+            [minlength]="minLength || null"
+            [maxlength]="maxLength || null"
+            [required]="required"
+            [ngModel]="value"
+            (ngModelChange)="handleInput($event)"
+            (focus)="handleFocusIn()"
+            (blur)="handleFocusOut()"
+        >
+        </textarea>
+        <button (click)="handleClearButtonClick($event)">
+            <img src="../../../assets/cancel_icon.svg" alt="limpar"/>
+        </button>
+    </div>
+    <span *ngIf="errorMessage; else supportText" class="error-message">{{ errorMessage }}</span>
+    <ng-template #supportText>
+        <span *ngIf="supportingText" class="support-text">{{ supportingText }}</span>
+    </ng-template>
+</div>

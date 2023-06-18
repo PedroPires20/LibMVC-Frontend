@@ -16,6 +16,7 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { TextAreaComponent } from './text-area/text-area.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
+import { InputComponent } from './input/input.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
     SearchBoxComponent,
     TextAreaComponent,
     DatePickerComponent,
-    ContextMenuComponent
+    ContextMenuComponent,
+    InputComponent
   ],
   imports: [
     CommonModule,
@@ -52,7 +54,8 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
     SearchBoxComponent,
     TextAreaComponent,
     DatePickerComponent,
-    ContextMenuComponent
+    ContextMenuComponent,
+    InputComponent
   ]
 })
 export class ComponentsModule { }

@@ -1,0 +1,32 @@
+<div class="container" [ngClass]="{ 'container-error': error, 'container-active': active }">
+    <label [class.small-label]="active || value">{{ label }}</label>
+    <div class="control" [class.control-error]="error">
+        <input
+            [attr.name]="name || null"
+            [type]="type"
+            [attr.minLength]="minLength || null"
+            [attr.maxLength]="maxLength || null"
+            [attr.min]="minValue || null"
+            [attr.max]="maxValue || null"
+            [attr.step]="step || null"
+            [attr.pattern]="validationPattern || null"
+            [required]="required"
+            [autofocus]="autofocus"
+            [ngModel]="value"
+            (ngModelChange)="handleInput($event)"
+            (focus)="handleFocusIn()"
+            (blur)="handleFocusOut()"
+        />
+        <button (click)="handleClearButtonClick()">
+            <img src="../../../assets/cancel_icon.svg" alt="limpar"/>
+        </button>
+    </div>
+    <span *ngIf="error; else supporting" class="error-message">
+        {{ errorMessage }}
+    </span>
+    <ng-template #supporting>
+        <span *ngIf="supportingText" class="support-message">
+            {{ supportingText }}
+        </span>
+    </ng-template>
+</div>

@@ -1,0 +1,23 @@
+<div
+    class="container"
+    tab-index="0"
+    [ngStyle]="{ 'top.px': position.y, 'left.px': position.x }"
+    #contextMenuContainer
+>
+    <div class="option">
+        <div class="button-container">
+            <button class="click-ripple-effect" (click)="menuClose.emit(0)">
+                <img src="../../../assets/edit_icon.svg" alt="editar"/>
+            </button>
+        </div>
+        <label>Editar</label>
+    </div>
+    <div class="option">
+        <div class="button-container">
+            <button class="click-ripple-effect" (click)="menuClose.emit(1)">
+                <img [src]="(loanVariant) ? '../../../assets/check_icon.svg' : '../../../assets/delete_icon.svg'" alt="editar"/>
+            </button>
+        </div>
+        <label>{{ (loanVariant) ? "Finalizar" : "Apagar" }}</label>
+    </div>
+</div>

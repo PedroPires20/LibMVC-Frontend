@@ -15,6 +15,7 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { TextAreaComponent } from './text-area/text-area.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
+import { ContextMenuComponent } from './context-menu/context-menu.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     CheckboxComponent,
     SearchBoxComponent,
     TextAreaComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    ContextMenuComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +51,8 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     CheckboxComponent,
     SearchBoxComponent,
     TextAreaComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    ContextMenuComponent
   ]
 })
 export class ComponentsModule { }

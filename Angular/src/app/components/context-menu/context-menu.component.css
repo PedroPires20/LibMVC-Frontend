@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2rem;
+    width: fit-content;
+    height: fit-content;
+    background: linear-gradient(0deg, rgba(126, 87, 0, 0.05), rgba(126, 87, 0, 0.05)), #fffbff;
+    box-shadow: 0px 0.628472px 1.25694px rgba(0, 0, 0, 0.3), 0px 1.25694px 3.77083px 1.25694px rgba(0, 0, 0, 0.15);
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+    position: absolute;
+    z-index: 6;
+}
+
+.option {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.button-container {
+    background: linear-gradient(0deg, rgba(251, 187, 73, 0.11), rgba(251, 187, 73, 0.11)), #1F1B16;
+    box-shadow: 0px 1.93345px 3.8669px 1.45009px rgba(0, 0, 0, 0.15), 0px 0.483362px 1.45009px rgba(0, 0, 0, 0.3);
+    border-radius: 0.85rem;
+
+}
+
+button {
+    padding: 1em;
+    outline: none;
+    border: none;
+    background: none;
+}
+
+img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+label {
+    font-size: 0.88em;
+    font-weight: 500;
+    color: #000;
+    line-height: 1.25rem;
+    user-select: none;
+}

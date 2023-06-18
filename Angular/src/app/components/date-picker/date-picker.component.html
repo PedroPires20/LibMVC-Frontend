@@ -1,0 +1,21 @@
+<div class="container" [ngClass]="{ 'container-form': formVariant, 'container-active': active, 'container-error': error }">
+    <label [class.active]="active">{{ label }}</label>
+    <div class="control" [class.control-error]="error">
+        <input
+            type="date"
+            [min]="minDate"
+            [max]="maxDate"
+            [required]="required"
+            [ngModel]="value"
+            (ngModelChange)="handleInput($event)"
+            (focus)="handleFocusIn()"
+            (blur)="handleFocusOut()"
+        />
+    </div>
+    <span *ngIf="error; else supporting" class="error-message">
+        {{ errorMessage }}
+    </span>
+    <ng-template #supporting>
+        <span *ngIf="supportingText" class="support-message">{{ supportingText }}</span>
+    </ng-template>
+</div>

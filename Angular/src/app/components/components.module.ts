@@ -14,6 +14,7 @@ import { DataCellDirective } from './table-card/data-cell.directive';
 import { CheckboxComponent } from './checkbox/checkbox.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { TextAreaComponent } from './text-area/text-area.component';
+import { DatePickerComponent } from './date-picker/date-picker.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { TextAreaComponent } from './text-area/text-area.component';
     DataCellDirective,
     CheckboxComponent,
     SearchBoxComponent,
-    TextAreaComponent
+    TextAreaComponent,
+    DatePickerComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +48,8 @@ import { TextAreaComponent } from './text-area/text-area.component';
     DataCellDirective,
     CheckboxComponent,
     SearchBoxComponent,
-    TextAreaComponent
+    TextAreaComponent,
+    DatePickerComponent
   ]
 })
 export class ComponentsModule { }

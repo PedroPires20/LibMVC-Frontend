@@ -1,0 +1,27 @@
+<div class="container" tabindex="0" (keydown.enter)="active = false">
+    <div class="input" (click)="active = true">
+        <div class="header">
+            <div class="name">
+                {{ label }}
+            </div>
+            <input
+                type="text"
+                class="selected-option"
+            />
+        </div>
+        <button>
+            <img src="../../../assets/cancel_icon.svg" alt="redefinir"/>
+        </button>
+    </div>
+    <div *ngIf="active" class="item-list-container">
+        <ul class="item-list">
+            <li
+                *ngFor="let option of options; index as index"
+                class="click-ripple-effect-light"
+                [class.item-selected]="false"
+            >
+                {{ option }}
+            </li>
+        </ul>
+    </div>
+</div>

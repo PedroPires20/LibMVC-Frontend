@@ -1,0 +1,110 @@
+<app-dialog>
+    <div class="container">
+        <h3>{{ dialogTitle }}</h3>
+        <p>{{ dialogTip }}</p>
+        <form name="book-dialog-form" novalidate>
+            <app-input
+                name="isbn"
+                type="text"
+                label="ISBN"
+                supportingText="Entre o ISBN do livro"
+                [required]="true"
+            />
+            <app-input
+                name="title"
+                type="text"
+                label="Título"
+                supportingText="Entre o título do livro"
+                [required]="true"
+            />
+            <app-input
+                name="author"
+                type="text"
+                label="Autor(es)"
+                supportingText="Entre o(s) autor(es) do livro"
+                [required]="true"
+            />
+            <app-input
+                *ngIf="addCategory; else categoriesSelector"
+                name="new-category"
+                type="text"
+                label="Nova categoria"
+                supportingText="Entre o rótulo da nova categoria e pressione enter"
+                [autofocus]="true"
+                (keydown)="handleCategoryAdd($event)"
+                [(ngModel)]="newCategory"
+            />
+            <ng-template #categoriesSelector>
+                <app-select
+                    name="categories"
+                    label="Categorias"
+                    placeholder="Entre a(s) categoria(s) do livro"
+                    [multiple]="true"
+                    [formVariant]="true"
+                    [options]="categoryOptions"
+                    (ngModelChange)="handleCategoriesChange($event)"
+                    [(ngModel)]="selectedCategories"
+                />
+            </ng-template>
+            <app-input
+                name="publisher"
+                type="text"
+                label="Editora"
+                supportingText="Entre a editora do livro"
+            />
+            <app-input
+                name="edition"
+                type="text"
+                label="Edição"
+                supportingText="Entre a editora do livro"
+            />
+            <app-input
+                name="format"
+                type="text"
+                label="Formato"
+                supportingText="Entre a editora do livro"
+            />
+            <app-date-picker
+                name="date"
+                label="Data de publicação"
+                supportingText="Selecione a data de publicação do livro"
+                [formVariant]="true"
+            />
+            <app-input
+                name="pages"
+                type="number"
+                label="Páginas"
+                supportingText="Entre o número de páginas do livro"
+                [minValue]="1"
+                [required]="true"
+            />
+            <app-input
+                name="copies"
+                type="number"
+                label="Cópias"
+                supportingText="Entre o número de cópias disponíveis do livro"
+                [minValue]="1"
+                [required]="true"
+            />
+            <app-text-area
+                name="description"
+                label="Descrição"
+                supportingText="Entre uma breve descrição para o livro"
+            />
+            <app-input
+                name="location"
+                type="text"
+                label="Localização"
+                supportingText="Entre a localização do livro no acervo"
+            />
+            <div class="buttons">
+                <button class="click-ripple-effect-light" (click)="$event.preventDefault()">
+                    Cancelar
+                </button>
+                <button class="click-ripple-effect-light" (click)="$event.preventDefault()">
+                    Confirmar
+                </button>
+            </div>
+        </form>
+    </div>
+</app-dialog>

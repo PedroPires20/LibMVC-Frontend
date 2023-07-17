@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, ElementRef, HostListener, SimpleChanges, forwardRef } from '@angular/core';
+import { Component, Input, OnChanges, ElementRef, HostListener, SimpleChanges, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -91,7 +91,7 @@ export class SelectComponent implements OnChanges, ControlValueAccessor {
   @Input() name = "";
   @Input() label = "";
   @Input() options: string[] = [];
-  @Input() optionValues: string[] = [];
+  @Input() optionValues: any[] = [];
   @Input() placeholder?: string;
   @Input() multiple = false;
   @Input() formVariant = false;

@@ -1,5 +1,10 @@
-<div class="container" tabindex="0" (keydown.enter)="active = false">
-    <div class="input" (click)="active = true">
+<div
+    class="container"
+    tabindex="0"
+    (click)="active = true"
+    (keydown.enter)="active = false"
+>
+    <div class="input">
         <div class="header">
             <div class="name">
                 {{ label }}
@@ -7,9 +12,13 @@
             <input
                 type="text"
                 class="selected-option"
+                [name]="name"
+                [placeholder]="placeholder"
+                [required]="required"
+                [value]="generateInputValue()"
             />
         </div>
-        <button>
+        <button (click)="handleClearButtonClick($event)">
             <img src="../../../assets/cancel_icon.svg" alt="redefinir"/>
         </button>
     </div>
@@ -18,7 +27,8 @@
             <li
                 *ngFor="let option of options; index as index"
                 class="click-ripple-effect-light"
-                [class.item-selected]="false"
+                [class.item-selected]="selectedIndexes.includes(index)"
+                (click)="handleOptionClick($event, index)"
             >
                 {{ option }}
             </li>

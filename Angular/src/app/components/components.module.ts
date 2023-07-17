@@ -19,6 +19,7 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
 import { InputComponent } from './input/input.component';
 import { SelectComponent } from './select/select.component';
 import { CollectionInputsComponent } from './collection-inputs/collection-inputs.component';
+import { LoanInputsComponent } from './loan-inputs/loan-inputs.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { CollectionInputsComponent } from './collection-inputs/collection-inputs
     ContextMenuComponent,
     InputComponent,
     SelectComponent,
-    CollectionInputsComponent
+    CollectionInputsComponent,
+    LoanInputsComponent
   ],
   imports: [
     CommonModule,
@@ -61,7 +63,8 @@ import { CollectionInputsComponent } from './collection-inputs/collection-inputs
     ContextMenuComponent,
     InputComponent,
     SelectComponent,
-    CollectionInputsComponent
+    CollectionInputsComponent,
+    LoanInputsComponent
   ]
 })
 export class ComponentsModule { }

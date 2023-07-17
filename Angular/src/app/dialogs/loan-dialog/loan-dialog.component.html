@@ -1,0 +1,59 @@
+<app-dialog>
+    <div class="container">
+        <h3>{{ dialogTitle }}</h3>
+        <p>{{ dialogTip }}</p>
+        <form name="loan-dialog-form" novalidate>
+            <app-input
+                name="reader"
+                type="text"
+                label="Leitor"
+                supportingText="Entre o nome do leitor"
+                [required]="true"
+            />
+            <app-input
+                name="phone"
+                type="text"
+                label="Telefone"
+                supportingText="Entre o telefone de contato do leitor"
+                validationPattern="\(\d{2,5}\)\s*9?\d{4}-?\d{4}"
+                errorMessage="Por favor, entre um número de telefone válido"
+                [required]="true"
+            />
+            <app-select
+                name="bookId"
+                label="Livro"
+                placeholder="Selecione o livro a ser emprestado"
+                errorMessage="Por favor, selecione um livro"
+                [formVariant]="true"
+                [required]="true"
+            />
+            <app-date-picker
+                name="startDate"
+                label="Data de início"
+                [formVariant]="true"
+                [required]="true"
+            />
+            <app-input
+                name="duration"
+                type="number"
+                label="Duração"
+                supportingText="Entre a duração do empréstimo (em dias)"
+                [minValue]="1"
+                [required]="true"
+            />
+            <app-checkbox
+                name="renew"
+                label="Renovação"
+                supportingText="Marque essa opção se estiver registrando a renovação de um empréstimo anterior"
+            />
+            <div class="buttons">
+                <button class="click-ripple-effect-light" (click)="$event.preventDefault()">
+                    Cancelar
+                </button>
+                <button class="click-ripple-effect-light" (click)="$event.preventDefault()">
+                    Confirmar
+                </button>
+            </div>
+        </form>
+    </div>
+</app-dialog>

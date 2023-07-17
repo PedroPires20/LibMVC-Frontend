@@ -3,6 +3,8 @@
     height: 70vh;
     overflow-y: auto;
     font-size: 1rem;
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 h3 {
@@ -22,9 +24,11 @@ p {
 form {
     display: flex;
     flex-flow: column nowrap;
+    justify-content: space-between;
     gap: 0.85em;
     padding: 0.8em 0.5em 0.8em 0;
     position: relative;
+    flex: 1 1;
 }
 
 .buttons {
@@ -32,6 +36,7 @@ form {
     flex-flow: row nowrap;
     justify-content: flex-end;
     gap: 0.6em;
+    padding-right: 0.5em;
 }
 .buttons button {
     border: none;
@@ -40,4 +45,5 @@ form {
     font-weight: 500;
     color: #8d4f00;
     padding: 0.5em;
+    cursor: pointer;
 }

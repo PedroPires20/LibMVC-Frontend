@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { BookDialogComponent } from './book-dialog/book-dialog.component';
 import { ComponentsModule } from '../components/components.module';
 import { FormsModule } from '@angular/forms';
+import { LoanDialogComponent } from './loan-dialog/loan-dialog.component';
 
 
 
 @NgModule({
   declarations: [
-    BookDialogComponent
+    BookDialogComponent,
+    LoanDialogComponent
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     ComponentsModule
   ],
   exports: [
-    BookDialogComponent
+    BookDialogComponent,
+    LoanDialogComponent
   ]
 })
 export class DialogsModule { }

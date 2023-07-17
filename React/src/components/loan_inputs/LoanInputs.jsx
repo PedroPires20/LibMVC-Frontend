@@ -54,7 +54,7 @@ export default function LoanInputs({ onSubmit, disabled }) {
                     <Select
                         name="bookTitle"
                         label="Obra"
-                        placeholder="Todos"
+                        placeholder="Todas"
                         options={getOptionsFromField(bookTitles)}
                         value={filters.bookTitle}
                         onChange={handleSelectChange}
@@ -65,7 +65,7 @@ export default function LoanInputs({ onSubmit, disabled }) {
                     <DatePicker
                         name="startDate"
                         label="Data empréstimo"
-                        placeholder="Todos"
+                        placeholder="Todas"
                         value={filters.startDate}
                         onChange={handleSelectChange}
                     />
@@ -74,7 +74,7 @@ export default function LoanInputs({ onSubmit, disabled }) {
                     <DatePicker
                         name="endDate"
                         label="Data devolução"
-                        placeholder="Todos"
+                        placeholder="Todas"
                         value={filters.endDate}
                         onChange={handleSelectChange}
                     />

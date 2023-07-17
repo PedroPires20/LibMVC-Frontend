@@ -63,7 +63,7 @@ export default function CollectionInputs({ onSubmit, disabled }) {
                         name="categories"
                         label="Categoria"
                         options={getOptionsFromField(categories)}
-                        placeholder="Todos"
+                        placeholder="Todas"
                         value={filters.categories}
                         onChange={handleSelectChange}
                         disabled={categories.loading || categories.error}
@@ -75,7 +75,7 @@ export default function CollectionInputs({ onSubmit, disabled }) {
                         name="publisher"
                         label="Editora"
                         options={getOptionsFromField(publishers)}
-                        placeholder="Todos"
+                        placeholder="Todas"
                         value={filters.publisher}
                         onChange={handleSelectChange}
                         disabled={publishers.loading || publishers.error}

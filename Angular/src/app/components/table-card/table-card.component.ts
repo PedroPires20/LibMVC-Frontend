@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-table-card',
   template: `
     <table>
-      <ng-content select="thead, tbody"/>
+      <ng-content select="thead, tbody, app-table-status"/>
     </table>
   `,
   styleUrls: ['./table-card.component.css']

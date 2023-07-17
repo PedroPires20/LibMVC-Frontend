@@ -1,0 +1,13 @@
+<tbody>
+    <tr>
+        <td>
+            <div>
+                <img *ngIf="error" src="assets/error_icon.svg" alt="error"/>
+                <app-progress-bar *ngIf="loading"/>
+                <p>
+                    {{ message }}
+                </p>
+            </div>
+        </td>
+    </tr>
+</tbody>

@@ -20,6 +20,7 @@ import { InputComponent } from './input/input.component';
 import { SelectComponent } from './select/select.component';
 import { CollectionInputsComponent } from './collection-inputs/collection-inputs.component';
 import { LoanInputsComponent } from './loan-inputs/loan-inputs.component';
+import { TableStatusComponent } from './table-status/table-status.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { LoanInputsComponent } from './loan-inputs/loan-inputs.component';
     InputComponent,
     SelectComponent,
     CollectionInputsComponent,
-    LoanInputsComponent
+    LoanInputsComponent,
+    TableStatusComponent
   ],
   imports: [
     CommonModule,
@@ -64,7 +66,8 @@ import { LoanInputsComponent } from './loan-inputs/loan-inputs.component';
     InputComponent,
     SelectComponent,
     CollectionInputsComponent,
-    LoanInputsComponent
+    LoanInputsComponent,
+    TableStatusComponent
   ]
 })
 export class ComponentsModule { }

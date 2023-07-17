@@ -1,0 +1,21 @@
+<div class="container">
+    <img *ngIf="variant !== 'load'" [src]="iconPath" [alt]="altMessage"/>
+    <h3>{{heading}}</h3>
+    <p *ngFor="let line of message.split('\n')">{{line}}</p>
+    <details *ngIf="detailsSummary">
+        <summary>{{detailsSummary}}</summary>
+        <div class="details-content">
+            {{detailsContent}}
+        </div>
+    </details>
+    <app-spinner *ngIf="variant === 'load'; else dialogButtons"/>
+    <ng-template #dialogButtons>
+        <div class="dialog-buttons">
+            <button *ngFor="let label of buttonLabels; index as index"
+                class="click-ripple-effect-light"
+            >
+                {{label}}
+            </button>
+        </div>
+    </ng-template>
+</div>

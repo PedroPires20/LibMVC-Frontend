@@ -1,0 +1,47 @@
+<div class="input-card">
+    <div class="titles">
+        <h3>Pesquisa no acervo:</h3>
+        <h3>Refine sua busca:</h3>
+    </div>
+    <div class="inputs">
+        <div class="search-box-container">
+            <app-search-box/>
+        </div>
+        <div class="select-container">
+            <app-select
+                name="author"
+                label="Autor"
+                placeholder="Todos"
+            />
+        </div>
+        <div class="select-container">
+            <app-select
+                name="categories"
+                label="Categoria"
+                placeholder="Todas"
+            />
+        </div>
+        <div class="select-container">
+            <app-select
+                name="publisher"
+                label="Editora"
+                placeholder="Todas"
+            />
+        </div>
+        <div class="select-container">
+            <app-select
+                name="format"
+                label="Formato"
+                placeholder="Todos"
+            />
+        </div>
+        <div class="buttons-container">
+            <app-button variant="secondary" [disabled]="disabled">
+                Redefinir
+            </app-button>
+            <app-button variant="secondary" [disabled]="disabled">
+                Pesquisar
+            </app-button>
+        </div>
+    </div>
+</div>

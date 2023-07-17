@@ -82,7 +82,7 @@ export class SelectComponent implements OnChanges, ControlValueAccessor {
   generateInputValue() {
     if(this.selectedIndexes.length > 0) {
       return this.selectedIndexes.map(
-        (optionIndex) => this.optionValuesMap[optionIndex]
+        (optionIndex) => this.options[optionIndex]
       ).join("; ");
     }
     return "";

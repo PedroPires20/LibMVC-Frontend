@@ -1,5 +1,5 @@
 <div
-    class="container"
+    [class]="{ container: true, 'container-form': formVariant, 'container-active': active }"
     tabindex="0"
     (click)="active = true"
     (keydown.enter)="active = false"

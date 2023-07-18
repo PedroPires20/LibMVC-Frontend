@@ -86,6 +86,9 @@ input:-webkit-autofill:active {
 }
 
 .page-container {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2rem;
     margin-top: 5rem;
     padding: 2rem 4rem;
     height: calc(100vh - 5rem);

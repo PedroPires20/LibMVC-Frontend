@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CollectionComponent } from './collection/collection.component';
 import { ComponentsModule } from '../components/components.module';
 import { LoansComponent } from './loans/loans.component';
+import { DialogsModule } from '../dialogs/dialogs.module';
 
 
 
@@ -15,7 +16,9 @@ import { LoansComponent } from './loans/loans.component';
   imports: [
     CommonModule,
     ComponentsModule,
-    FormsModule
+    FormsModule,
+    ComponentsModule,
+    DialogsModule
   ]
 })
 export class PagesModule { }

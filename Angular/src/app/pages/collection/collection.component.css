@@ -1,0 +1,35 @@
+.page-container {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2rem;
+    margin-top: 5rem;
+    padding: 2rem 4rem;
+    height: calc(100vh - 5rem);
+    min-height: 600px;
+}
+
+.header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header h2 {
+    font-size: 2.8rem;
+    font-weight: 500;
+    color: #372F24;
+    flex: 0;
+}
+
+.add-button {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.add-button img {
+    width: 1.5rem;
+    height: 1.5rem;
+}

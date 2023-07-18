@@ -1,3 +1,46 @@
 <div class="page-container">
-    <p>collection works!</p>
+    <div class="header">
+        <h2>Acervo</h2>
+        <app-button>
+            <div class="add-button">
+                <img src="assets/add_icon.svg" alt="adicionar"/>
+                <span>Novo livro</span>
+            </div>
+        </app-button>
+    </div>
+    <app-collection-inputs/>
+    <app-table-card>
+        <thead>
+            <tr>
+                <th>ISBN</th>
+                <th>Título</th>
+                <th>Autor(es)</th>
+                <th>Categorias</th>
+                <th>Editora</th>
+                <th>Edição</th>
+                <th>Formato</th>
+                <th>Data</th>
+                <th>Páginas</th>
+                <th>Cópias</th>
+                <th>Descrição</th>
+                <th>Localização</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>6500019504</td>
+                <td minWidth="15rem" [wrap]="true">Engenharia de Software Moderna</td>
+                <td [wrap]="true">Marco Tulio Valente</td>
+                <td minWidth="12rem" [wrap]="true">Computação; Informática; Mídias Digitais</td>
+                <td>Independente</td>
+                <td>1ª edição</td>
+                <td>Físico (capa comum)</td>
+                <td>01/01/2022</td>
+                <td>408</td>
+                <td>7</td>
+                <td minWidth="20rem" [wrap]="true">Engenharia de Software Moderna é um livro-texto que cobre um amplo conjunto de princípios e práticas para desenvolvimento de software com produtividade e qualidade, incluindo: métodos ágeis, como Scrum, XP e Kanban; levantamento ágil de requisitos, incluindo histórias de usuários, MVPs e testes A/B; projeto de software, tratando de propriedades de projeto, princípios e padrões de projeto</td>
+                <td>Estante 3, prateleira 1 seção 4</td>
+            </tr>
+        </tbody>
+    </app-table-card>
 </div>

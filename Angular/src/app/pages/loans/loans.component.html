@@ -1,3 +1,40 @@
 <div class="page-container">
-    <p>loans works!</p>
+    <div class="header">
+        <h2>Empréstimos</h2>
+        <app-button>
+            <div class="add-button">
+                <img src="assets/add_icon.svg" alt="novo"/>
+                <span>Novo empréstimo</span>
+            </div>
+        </app-button>
+    </div>
+    <app-loan-inputs/>
+    <app-table-card>
+        <thead>
+            <tr>
+                <th>Leitor</th>
+                <th>Tel Contato</th>
+                <th>Obra</th>
+                <th>Data empréstimo</th>
+                <th>Duração</th>
+                <th>Data devolução</th>
+                <th>Dias restantes</th>
+                <th>Atrasado</th>
+                <th>Renovação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>João da Silva</td>
+                <td>(037) 99999-9999</td>
+                <td>Engenharia de Software Moderna</td>
+                <td>01/04/2023</td>
+                <td>10</td>
+                <td>11/04/2023</td>
+                <td>-98</td>
+                <td>N</td>
+                <td>S</td>
+            </tr>
+        </tbody>
+    </app-table-card>
 </div>

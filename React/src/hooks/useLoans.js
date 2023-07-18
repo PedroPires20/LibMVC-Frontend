@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { removeEmptyFilters, objectEquals } from "../utils/utils";
-import NetworkClient from "../utils/network_client";
-import Loan from "../models/loan";
+import { removeEmptyFilters, objectEquals } from "@common/utils/utils";
+import NetworkClient from "@common/utils/network_client";
+import Loan from "@common/models/loan";
 
 
 export function useLoans() {

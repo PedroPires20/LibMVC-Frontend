@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import NetworkClient from "../utils/network_client";
+import NetworkClient from "@common/utils/network_client";
 
 const DEFAULT_FIELD_STATE = { loading: true, error: false, fieldData: [] };
 

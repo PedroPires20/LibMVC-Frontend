@@ -5,7 +5,7 @@ import { Component, Input, HostBinding } from '@angular/core';
   template: `
     <div
       [ngStyle]="{ '--filled-width': value + '%'}"
-      [ngClass]="indefinite ? 'indefinite' : ''"
+      [class.indefinite]="indefinite"
     >
    
     </div>

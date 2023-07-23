@@ -5,13 +5,16 @@
     </div>
     <div class="inputs">
         <div class="search-box-container">
-            <app-search-box/>
+            <app-search-box [(searchQuery)]="query"/>
         </div>
         <div class="select-container">
             <app-select
                 name="author"
                 label="Autor"
                 placeholder="Todos"
+                [disabled]="authorSelectorDisabled"
+                [options]="authorOptions"
+                [(ngModel)]="filters.author"
             />
         </div>
         <div class="select-container">
@@ -19,6 +22,10 @@
                 name="categories"
                 label="Categoria"
                 placeholder="Todas"
+                [multiple]="true"
+                [disabled]="categoriesSelectorDisabled"
+                [options]="categoriesOptions"
+                [(ngModel)]="filters.categories"
             />
         </div>
         <div class="select-container">
@@ -26,6 +33,9 @@
                 name="publisher"
                 label="Editora"
                 placeholder="Todas"
+                [disabled]="publisherSelectorDisabled"
+                [options]="publisherOptions"
+                [(ngModel)]="filters.publisher"
             />
         </div>
         <div class="select-container">
@@ -33,13 +43,24 @@
                 name="format"
                 label="Formato"
                 placeholder="Todos"
+                [disabled]="formatSelectorDisabled"
+                [options]="formatOptions"
+                [(ngModel)]="filters.format"
             />
         </div>
         <div class="buttons-container">
-            <app-button variant="secondary" [disabled]="disabled">
+            <app-button
+                variant="secondary"
+                [disabled]="disabled"
+                (click)="handleReset()"
+            >
                 Redefinir
             </app-button>
-            <app-button variant="secondary" [disabled]="disabled">
+            <app-button
+                variant="secondary"
+                [disabled]="disabled"
+                (click)="handleSearch()"
+            >
                 Pesquisar
             </app-button>
         </div>

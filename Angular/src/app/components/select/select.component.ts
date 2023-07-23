@@ -33,6 +33,13 @@ export class SelectComponent implements OnChanges, ControlValueAccessor {
 
   writeValue(newValue: string | string[]) {
     this.value = newValue;
+    if(Array.isArray(newValue)) {
+      this.selectedIndexes = newValue.map((value) => this.optionValuesMap.indexOf(value));
+    }else if(newValue && newValue !== "") {
+      this.selectedIndexes = [this.optionValuesMap.indexOf(this.value)];
+    }else {
+      this.selectedIndexes = [];
+    }
   }
   
   registerOnChange(fn: any) {

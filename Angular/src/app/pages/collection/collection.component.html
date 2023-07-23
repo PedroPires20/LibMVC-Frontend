@@ -26,21 +26,29 @@
                 <th>Localização</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>6500019504</td>
-                <td minWidth="15rem" [wrap]="true">Engenharia de Software Moderna</td>
-                <td [wrap]="true">Marco Tulio Valente</td>
-                <td minWidth="12rem" [wrap]="true">Computação; Informática; Mídias Digitais</td>
-                <td>Independente</td>
-                <td>1ª edição</td>
-                <td>Físico (capa comum)</td>
-                <td>01/01/2022</td>
-                <td>408</td>
-                <td>7</td>
-                <td minWidth="20rem" [wrap]="true">Engenharia de Software Moderna é um livro-texto que cobre um amplo conjunto de princípios e práticas para desenvolvimento de software com produtividade e qualidade, incluindo: métodos ágeis, como Scrum, XP e Kanban; levantamento ágil de requisitos, incluindo histórias de usuários, MVPs e testes A/B; projeto de software, tratando de propriedades de projeto, princípios e padrões de projeto</td>
-                <td>Estante 3, prateleira 1 seção 4</td>
-            </tr>
-        </tbody>
+        <app-table-status
+            *ngIf="booksLoading || errorLoading || books.length === 0; else booksData"
+            [loading]="booksLoading"
+            [error]="errorLoading"
+            [message]="statusMessage"
+        />
+        <ng-template #booksData>
+            <tbody>
+                <tr *ngFor="let book of books">
+                    <td>{{book.isbn}}</td>
+                    <td minWidth="15rem" [wrap]="true">{{book.title}}</td>
+                    <td [wrap]="true">{{book.author}}</td>
+                    <td minWidth="12rem" [wrap]="true">{{book.categories}}</td>
+                    <td>{{book.publisher}}</td>
+                    <td>{{book.edition}}</td>
+                    <td>{{book.format}}</td>
+                    <td>{{book.date}}</td>
+                    <td>{{book.pages}}</td>
+                    <td>{{book.copies}}</td>
+                    <td minWidth="20rem" [wrap]="true">{{book.description}}</td>
+                    <td>{{book.location}}</td>
+                </tr>
+            </tbody>
+        </ng-template>
     </app-table-card>
 </div>

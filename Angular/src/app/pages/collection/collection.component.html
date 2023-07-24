@@ -34,7 +34,10 @@
         />
         <ng-template #booksData>
             <tbody>
-                <tr *ngFor="let book of books">
+                <tr
+                    *ngFor="let book of books; index as index"
+                    (click)="handleRowClick($event, index)"
+                >
                     <td>{{book.isbn}}</td>
                     <td minWidth="15rem" [wrap]="true">{{book.title}}</td>
                     <td [wrap]="true">{{book.author}}</td>
@@ -51,4 +54,9 @@
             </tbody>
         </ng-template>
     </app-table-card>
+    <app-context-menu
+        *ngIf="showContextMenu"
+        [position]="contextMenuPosition"
+        (menuClose)="handleContextMenuClose($event)"
+    />
 </div>

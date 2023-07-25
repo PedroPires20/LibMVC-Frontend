@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-state-dialog',
@@ -31,4 +31,6 @@ export class StateDialogComponent {
   @Input() detailsSummary = "";
   @Input() detailsContent = "";
   @Input() buttonLabels: string[] = ["Ok"];
+
+  @Output() dialogClose = new EventEmitter<number>();
 }

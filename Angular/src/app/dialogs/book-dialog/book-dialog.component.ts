@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-book-dialog',
@@ -27,6 +27,11 @@ export class BookDialogComponent {
     }
   }
 
+  handleDialogClose(event: MouseEvent) {
+    event.preventDefault();
+    this.dialogClose.emit();
+  }
+
   get dialogTitle() {
     return (this.isUpdateDialog) ? "Editar livro" : "Adicionar novo livro";
   }
@@ -40,6 +45,12 @@ export class BookDialogComponent {
   get categoryOptions() {
     return [...this.categories, "Nova categoria"]
   }
+
+  @Output()
+  dialogClose = new EventEmitter<void>();
+
+  @Output()
+  formSubmit = new EventEmitter<void>();
 
   isUpdateDialog = false;
   addCategory = false;

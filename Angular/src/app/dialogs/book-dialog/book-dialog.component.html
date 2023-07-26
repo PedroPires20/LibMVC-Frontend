@@ -2,7 +2,7 @@
     <div class="container">
         <h3>{{ dialogTitle }}</h3>
         <p>{{ dialogTip }}</p>
-        <form name="book-dialog-form" novalidate>
+        <form name="book-dialog-form" novalidate (ngSubmit)="formSubmit.emit()">
             <app-input
                 name="isbn"
                 type="text"
@@ -101,7 +101,7 @@
                 <button class="click-ripple-effect-light" (click)="$event.preventDefault()">
                     Cancelar
                 </button>
-                <button class="click-ripple-effect-light" (click)="$event.preventDefault()">
+                <button class="click-ripple-effect-light">
                     Confirmar
                 </button>
             </div>

@@ -25,12 +25,66 @@ export class StateDialogComponent {
     return "";  
   }
 
-  @Input() variant: "success" | "delete" | "error" | "load" = "success";
-  @Input() heading = "";
-  @Input() message = "";
-  @Input() detailsSummary = "";
-  @Input() detailsContent = "";
-  @Input() buttonLabels: string[] = ["Ok"];
+  @Input() 
+  set variant(value: "success" | "delete" | "error" | "load" | undefined) {
+    this._variant = (value) ? value : "success";
+  }
+
+  get variant() {
+    return this._variant;
+  }
+
+  @Input()
+  set heading(value: string | undefined) {
+    this._heading = value || "";
+  }
+
+  get heading(): string {
+    return this._heading;
+  }
+
+  @Input()
+  set message(value: string | undefined) {
+    this._message = value || "";
+  }
+
+  get message(): string {
+    return this._message;
+  }
+
+  @Input()
+  set detailsSummary(value: string | undefined) {
+    this._detailsSummary = value || "";
+  }
+
+  get detailsSummary(): string {
+    return this._detailsSummary;
+  }
+  
+  @Input()
+  set detailsContent(value: string | undefined) {
+    this._detailsContent = value || "";
+  }
+
+  get detailsContent(): string {
+    return this._detailsContent;
+  }
+
+  @Input()
+  set buttonLabels(value: string[] | undefined) {
+    this._buttonLabels = value || ["Ok"];
+  }
+
+  get buttonLabels(): string[] {
+    return this._buttonLabels;
+  }
 
   @Output() dialogClose = new EventEmitter<number>();
+
+  private _variant: "success" | "delete" | "error" | "load" = "success";
+  private _heading: string = "";
+  private _message: string = "";
+  private _detailsSummary: string = "";
+  private _detailsContent: string = "";
+  private _buttonLabels: string[] = ["Ok"];
 }

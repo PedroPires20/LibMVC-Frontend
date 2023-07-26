@@ -32,6 +32,16 @@ export class BookService {
     }
   }
 
+  async deleteBook(bookIndex: number) {
+    try {
+      await this._api.deleteBook(this._selectedBooks[bookIndex].id);
+      this.selectedBooks.splice(bookIndex);
+    }catch(exception: any) {
+      console.error("Error deleting book: " + exception);
+      return exception.message || "Error deleting book";
+    }
+  }
+
   private _shouldRefetchBooks(query: string, filters: any) {
     return (this._previousQuery !== query) || (!objectEquals(this._previousFilters, filters));
   }

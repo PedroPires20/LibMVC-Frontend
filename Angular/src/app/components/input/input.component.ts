@@ -31,7 +31,11 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   handleInput(newValue: any) {
-    this.value = newValue;
+    if(this.type === "number") {
+      this.value = parseFloat(newValue);
+    }else {
+      this.value = newValue;
+    }
     this.onValueChange(this.value);
   }
 
@@ -43,7 +47,8 @@ export class InputComponent implements ControlValueAccessor {
     this.active = false;
   }
 
-  handleClearButtonClick() {
+  handleClearButtonClick(event: MouseEvent) {
+    event.preventDefault();
     this.value = "";
     this.onValueChange("");
   }

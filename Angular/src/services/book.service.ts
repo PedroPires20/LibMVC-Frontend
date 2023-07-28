@@ -23,12 +23,23 @@ export class BookService {
         this._selectedBooks = booksData.map((bookData: any, index: number) => new Book(bookData, index));
         this._status = "loaded";
       }catch(exception: any) {
-        console.error(exception);
+        console.error("Error fetching books: " + exception);
         this._status = "error";
         this._errorMessage = exception?.message;
       }
       this._previousQuery = query;
       this._previousFilters = filters;
+    }
+  }
+
+  async createBook(formData: any) {
+    let newBook = Book.fromFormData(formData);
+    try {
+      let { createdId } = await this._api.createBook(newBook.toRequestBody());
+      this._selectedBooks.push(Book.fromFormData(formData, createdId));
+    }catch(exception: any) {
+      console.error("Error creating book: " + exception);
+      return exception.message || "Error creating book";
     }
   }
 

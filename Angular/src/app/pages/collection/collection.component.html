@@ -1,7 +1,7 @@
 <div class="page-container">
     <div class="header">
         <h2>Acervo</h2>
-        <app-button>
+        <app-button (click)="showBookDialog = true">
             <div class="add-button">
                 <img src="assets/add_icon.svg" alt="adicionar"/>
                 <span>Novo livro</span>
@@ -70,4 +70,5 @@
             (dialogClose)="handleDeleteDialogClose($event)"
         />
     </app-dialog>
+    <app-book-dialog *ngIf="showBookDialog" (dialogClose)="showBookDialog = false"/>
 </div>

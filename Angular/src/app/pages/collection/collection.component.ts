@@ -104,4 +104,5 @@ export class CollectionComponent implements OnInit {
   contextMenuPosition: ContextMenuPosition = { x: 0, y: 0 };
   clickTargetIndex: number | null = null;
   deleteDialogState: BookDeleteState | null = null;
+  showBookDialog = false;
 }

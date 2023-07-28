@@ -1,24 +1,58 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
+interface BookFormModel {
+  isbn: string,
+  title: string,
+  author: string,
+  categories: string[],
+  publisher: string,
+  edition: string,
+  format: string,
+  date: string,
+  pages: number | "",
+  copies: number | null | "",
+  description: string,
+  location: string
+}
+
+
 @Component({
   selector: 'app-book-dialog',
   templateUrl: './book-dialog.component.html',
   styleUrls: ['./book-dialog.component.css']
 })
 export class BookDialogComponent {
+  constructor() {
+    this.bookModel = {
+      isbn: "",
+      title: "",
+      author: "",
+      categories: [],
+      publisher: "",
+      edition: "",
+      format: "",
+      date: "",
+      pages: "",
+      copies: "",
+      description: "",
+      location: ""
+    };
+  }
+
   handleCategoriesChange(selectedCategories: any) {
     if(selectedCategories.includes("Nova categoria")) {
       this.addCategory = true;
-      this.selectedCategories = this.selectedCategories.filter(
-        (category) => category !== "Nova categoria"
-      );
     }
+    this.bookModel.categories = selectedCategories.filter(
+      (category: any) => category !== "Nova categoria"
+    );
   }
 
   handleCategoryAdd(event: KeyboardEvent) {
     if(event.key === "Enter") {
       if(this.newCategory !== "" && !this.categories.includes(this.newCategory)) {
         this.categories.push(this.newCategory);
+        this.bookModel.categories.push(this.newCategory);
       }
       this.newCategory = "";
       this.addCategory = false;
@@ -31,7 +65,7 @@ export class BookDialogComponent {
     event.preventDefault();
     this.dialogClose.emit();
   }
-
+  
   get dialogTitle() {
     return (this.isUpdateDialog) ? "Editar livro" : "Adicionar novo livro";
   }
@@ -57,5 +91,6 @@ export class BookDialogComponent {
   newCategory = "";
 
   categories: string[] = []
-  selectedCategories: string[] = []
+
+  bookModel: BookFormModel;
 }

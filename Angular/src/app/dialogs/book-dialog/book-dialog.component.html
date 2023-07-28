@@ -2,13 +2,14 @@
     <div class="container">
         <h3>{{ dialogTitle }}</h3>
         <p>{{ dialogTip }}</p>
-        <form name="book-dialog-form" novalidate (ngSubmit)="formSubmit.emit()">
+        <form name="book-dialog-form" novalidate>
             <app-input
                 name="isbn"
                 type="text"
                 label="ISBN"
                 supportingText="Entre o ISBN do livro"
                 [required]="true"
+                [(ngModel)]="bookModel.isbn"
             />
             <app-input
                 name="title"
@@ -16,6 +17,7 @@
                 label="Título"
                 supportingText="Entre o título do livro"
                 [required]="true"
+                [(ngModel)]="bookModel.title"
             />
             <app-input
                 name="author"
@@ -23,6 +25,7 @@
                 label="Autor(es)"
                 supportingText="Entre o(s) autor(es) do livro"
                 [required]="true"
+                [(ngModel)]="bookModel.author"
             />
             <app-input
                 *ngIf="addCategory; else categoriesSelector"
@@ -43,7 +46,7 @@
                     [formVariant]="true"
                     [options]="categoryOptions"
                     (ngModelChange)="handleCategoriesChange($event)"
-                    [(ngModel)]="selectedCategories"
+                    [ngModel]="bookModel.categories"
                 />
             </ng-template>
             <app-input
@@ -51,24 +54,28 @@
                 type="text"
                 label="Editora"
                 supportingText="Entre a editora do livro"
+                [(ngModel)]="bookModel.publisher"
             />
             <app-input
                 name="edition"
                 type="text"
                 label="Edição"
-                supportingText="Entre a editora do livro"
+                supportingText="Entre a edição do livro"
+                [(ngModel)]="bookModel.edition"
             />
             <app-input
                 name="format"
                 type="text"
                 label="Formato"
-                supportingText="Entre a editora do livro"
+                supportingText="Entre o formato do livro"
+                [(ngModel)]="bookModel.format"
             />
             <app-date-picker
                 name="date"
                 label="Data de publicação"
                 supportingText="Selecione a data de publicação do livro"
                 [formVariant]="true"
+                [(ngModel)]="bookModel.date"
             />
             <app-input
                 name="pages"
@@ -77,6 +84,7 @@
                 supportingText="Entre o número de páginas do livro"
                 [minValue]="1"
                 [required]="true"
+                [(ngModel)]="bookModel.pages"
             />
             <app-input
                 name="copies"
@@ -85,11 +93,13 @@
                 supportingText="Entre o número de cópias disponíveis do livro"
                 [minValue]="1"
                 [required]="true"
+                [(ngModel)]="bookModel.copies"
             />
             <app-text-area
                 name="description"
                 label="Descrição"
                 supportingText="Entre uma breve descrição para o livro"
+                [(ngModel)]="bookModel.description"
             />
             <app-input
                 name="location"
@@ -98,7 +108,7 @@
                 supportingText="Entre a localização do livro no acervo"
             />
             <div class="buttons">
-                <button class="click-ripple-effect-light" (click)="$event.preventDefault()">
+                <button class="click-ripple-effect-light" (click)="handleDialogClose($event)">
                     Cancelar
                 </button>
                 <button class="click-ripple-effect-light">

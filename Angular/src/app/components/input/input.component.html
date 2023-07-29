@@ -1,7 +1,12 @@
-<div class="container" [ngClass]="{ 'container-error': error, 'container-active': active }">
+<div
+    class="container"
+    [ngClass]="{ 'container-error': error, 'container-active': active }"
+>
     <label [class.small-label]="active || value">{{ label }}</label>
     <div class="control" [class.control-error]="error">
         <input
+            #inputModel="ngModel"
+            #inputElement
             [attr.name]="name || null"
             [type]="type"
             [attr.minLength]="minLength || null"
@@ -22,7 +27,7 @@
         </button>
     </div>
     <span *ngIf="error; else supporting" class="error-message">
-        {{ errorMessage }}
+        {{ errorMessage || inputElement.validationMessage }}
     </span>
     <ng-template #supporting>
         <span *ngIf="supportingText" class="support-message">

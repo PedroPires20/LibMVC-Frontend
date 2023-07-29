@@ -1,5 +1,5 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Input, ViewChild, forwardRef, Host, Optional } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -14,6 +14,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class InputComponent implements ControlValueAccessor {
+  constructor(@Host() @Optional() parentForm?: NgForm) {
+    this._parentForm = parentForm || null;
+  }
+
   writeValue(newValue: any) {
     this.value = newValue;
   }
@@ -53,6 +57,11 @@ export class InputComponent implements ControlValueAccessor {
     this.onValueChange("");
   }
 
+  get error() {
+    return this._inputModel.invalid &&
+      (this._inputModel.dirty || this._inputModel.touched || this._parentForm?.submitted);
+  }
+
   @Input() name = "";
   @Input() label = "";
   @Input() supportingText = "";
@@ -72,5 +81,9 @@ export class InputComponent implements ControlValueAccessor {
   onValueChange: any = () => {};
   disabled = false;
   active = false;
-  error = false;
+
+  @ViewChild("inputModel", { static: true })
+  private _inputModel!: NgModel;
+  
+  private _parentForm: NgForm | null;
 }

@@ -33,6 +33,8 @@ declare module "@common/models/book.js" {
             description: string;
             location: string;
         };
+
+        getFieldsDiff(targetObject: Book): boolean;
         
         get id(): any;
         get isbn(): any;

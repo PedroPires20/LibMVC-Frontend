@@ -22,6 +22,8 @@ declare module "@common/models/loan.js" {
             renew: string;
         };
 
+        getFieldsDiff(targetObject: Loan): boolean;
+
         get id(): string;
         get reader(): string;
         get phone(): string;

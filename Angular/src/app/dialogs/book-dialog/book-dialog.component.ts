@@ -34,7 +34,7 @@ interface SaveStatus {
   styleUrls: ['./book-dialog.component.css']
 })
 export class BookDialogComponent implements OnInit, OnChanges {
-  constructor(bookService: BookService, bookFieldsService: BookFieldsService) {
+  constructor(bookService: BookService, bookFieldsService: BookFieldsService, formElementRef: ElementRef) {
     this.bookModel = {
       isbn: "",
       title: "",
@@ -51,6 +51,7 @@ export class BookDialogComponent implements OnInit, OnChanges {
     };
     this._bookService = bookService;
     this._bookFieldsService = bookFieldsService;
+    this._formElementRef = formElementRef;
   }
 
   ngOnInit(): void {
@@ -108,7 +109,16 @@ export class BookDialogComponent implements OnInit, OnChanges {
     this.dialogClose.emit();
   }
 
-  async handleFormSubmit() {
+  async handleFormSubmit(form: NgForm) {
+    if(!form.valid) {
+      const firstInvalidInputName = Object.keys(form.controls).find(
+        (controlName) => form.controls[controlName].invalid
+      );
+      this._formElementRef.nativeElement.querySelector(
+        `[name=${firstInvalidInputName}] input`
+      ).focus();
+      return;
+    }
     this.saveStatus = {
       variant: "load",
       heading: "Salvando",
@@ -179,4 +189,5 @@ export class BookDialogComponent implements OnInit, OnChanges {
 
   private _bookService: BookService;
   private _bookFieldsService: BookFieldsService;
+  private _formElementRef: ElementRef;
 }

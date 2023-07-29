@@ -2,7 +2,7 @@
     <div class="container" *ngIf="saveStatus === null">
         <h3>{{ dialogTitle }}</h3>
         <p>{{ dialogTip }}</p>
-        <form name="book-dialog-form" novalidate (ngSubmit)="handleFormSubmit()">
+        <form #bookForm="ngForm" novalidate (ngSubmit)="handleFormSubmit(bookForm)">
             <app-input
                 name="isbn"
                 type="text"

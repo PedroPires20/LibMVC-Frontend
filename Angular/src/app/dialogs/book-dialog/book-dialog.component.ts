@@ -1,4 +1,6 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { BookFieldsService } from 'src/services/book-fields.service';
 import { BookService } from 'src/services/book.service';
 
 interface BookFormModel {
@@ -31,8 +33,8 @@ interface SaveStatus {
   templateUrl: './book-dialog.component.html',
   styleUrls: ['./book-dialog.component.css']
 })
-export class BookDialogComponent implements OnChanges {
-  constructor(bookService: BookService) {
+export class BookDialogComponent implements OnInit, OnChanges {
+  constructor(bookService: BookService, bookFieldsService: BookFieldsService) {
     this.bookModel = {
       isbn: "",
       title: "",
@@ -48,6 +50,11 @@ export class BookDialogComponent implements OnChanges {
       location: ""
     };
     this._bookService = bookService;
+    this._bookFieldsService = bookFieldsService;
+  }
+
+  ngOnInit(): void {
+    this.categories = this._bookFieldsService.categories.values;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -147,6 +154,10 @@ export class BookDialogComponent implements OnChanges {
     return [...this.categories, "Nova categoria"]
   }
 
+  get categoriesLoadStatus() {
+    return this._bookFieldsService.categories.loadStatus;
+  }
+
   get isUpdateDialog() {
     return this.indexToUpdate !== null;
   }
@@ -167,4 +178,5 @@ export class BookDialogComponent implements OnChanges {
   bookModel: BookFormModel;
 
   private _bookService: BookService;
+  private _bookFieldsService: BookFieldsService;
 }

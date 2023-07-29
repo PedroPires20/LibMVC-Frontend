@@ -45,8 +45,9 @@
                     [multiple]="true"
                     [formVariant]="true"
                     [options]="categoryOptions"
-                    (ngModelChange)="handleCategoriesChange($event)"
+                    [disabled]="categoriesLoadStatus !== 'loaded'"
                     [ngModel]="bookModel.categories"
+                    (ngModelChange)="handleCategoriesChange($event)"
                 />
             </ng-template>
             <app-input

@@ -1,8 +1,8 @@
 <app-dialog>
-    <div class="container">
+    <div class="container" *ngIf="saveStatus === null">
         <h3>{{ dialogTitle }}</h3>
         <p>{{ dialogTip }}</p>
-        <form name="book-dialog-form" novalidate>
+        <form name="book-dialog-form" novalidate (ngSubmit)="handleFormSubmit()">
             <app-input
                 name="isbn"
                 type="text"
@@ -41,7 +41,7 @@
                 <app-select
                     name="categories"
                     label="Categorias"
-                    placeholder="Entre a(s) categoria(s) do livro"
+                    placeholder="Selecione a(s) categoria(s) do livro"
                     [multiple]="true"
                     [formVariant]="true"
                     [options]="categoryOptions"
@@ -106,6 +106,7 @@
                 type="text"
                 label="Localização"
                 supportingText="Entre a localização do livro no acervo"
+                [(ngModel)]="bookModel.location"
             />
             <div class="buttons">
                 <button class="click-ripple-effect-light" (click)="handleDialogClose($event)">
@@ -117,4 +118,13 @@
             </div>
         </form>
     </div>
+    <app-state-dialog
+        *ngIf="saveStatus"
+        [variant]="saveStatus.variant"
+        [heading]="saveStatus.heading"
+        [message]="saveStatus.message"
+        [detailsSummary]="saveStatus.summary"
+        [detailsContent]="saveStatus.details"
+        (dialogClose)="handleErrorDialogClose()"
+    />
 </app-dialog>

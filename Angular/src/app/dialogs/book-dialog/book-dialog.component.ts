@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { BookService } from 'src/services/book.service';
 
 interface BookFormModel {
   isbn: string,
@@ -15,14 +16,23 @@ interface BookFormModel {
   location: string
 }
 
+interface SaveStatus {
+  variant: "error" | "load",
+  heading: string,
+  message: string,
+  buttons?: string[],
+  summary?: string,
+  details?: string
+}
+
 
 @Component({
   selector: 'app-book-dialog',
   templateUrl: './book-dialog.component.html',
   styleUrls: ['./book-dialog.component.css']
 })
-export class BookDialogComponent {
-  constructor() {
+export class BookDialogComponent implements OnChanges {
+  constructor(bookService: BookService) {
     this.bookModel = {
       isbn: "",
       title: "",
@@ -37,6 +47,31 @@ export class BookDialogComponent {
       description: "",
       location: ""
     };
+    this._bookService = bookService;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+      if(changes["indexToUpdate"].currentValue !== changes["indexToUpdate"].previousValue) {
+        let indexToUpdate = changes["indexToUpdate"].currentValue;
+        if(indexToUpdate === null) {
+          this.bookModel = {
+            isbn: "",
+            title: "",
+            author: "",
+            categories: [],
+            publisher: "",
+            edition: "",
+            format: "",
+            date: "",
+            pages: "",
+            copies: "",
+            description: "",
+            location: ""
+          };
+        }else {
+          this.bookModel = this._bookService.selectedBooks[indexToUpdate].toFormData() as unknown as BookFormModel;
+        }
+      }
   }
 
   handleCategoriesChange(selectedCategories: any) {
@@ -65,7 +100,39 @@ export class BookDialogComponent {
     event.preventDefault();
     this.dialogClose.emit();
   }
-  
+
+  async handleFormSubmit() {
+    this.saveStatus = {
+      variant: "load",
+      heading: "Salvando",
+      message: "As alterações estão sendo processadas pelo sistema"
+    };
+    let result: any;
+    if(this.indexToUpdate !== null) {
+      result = await this._bookService.updateBook(this.indexToUpdate, this.bookModel);
+    }else {
+      result = await this._bookService.createBook(this.bookModel);
+    }
+    if(result) {
+      this.saveStatus = {
+        variant: "error",
+        heading: "Erro",
+        message: "Ocorreu um erro ao salvar as alterações no sistema.",
+        buttons: ["Ok"],
+        summary: "Detalhes do erro",
+        details: result
+      };
+    }else {
+      this.saveStatus = null;
+      this.dialogClose.emit();
+    }
+  }
+
+  handleErrorDialogClose() {
+    this.saveStatus = null;
+    this.dialogClose.emit();
+  }
+
   get dialogTitle() {
     return (this.isUpdateDialog) ? "Editar livro" : "Adicionar novo livro";
   }
@@ -80,17 +147,24 @@ export class BookDialogComponent {
     return [...this.categories, "Nova categoria"]
   }
 
+  get isUpdateDialog() {
+    return this.indexToUpdate !== null;
+  }
+
+  @Input()
+  indexToUpdate: number | null = null;
+
   @Output()
   dialogClose = new EventEmitter<void>();
 
   @Output()
   formSubmit = new EventEmitter<void>();
 
-  isUpdateDialog = false;
   addCategory = false;
   newCategory = "";
-
   categories: string[] = []
-
+  saveStatus: SaveStatus | null = null;
   bookModel: BookFormModel;
+
+  private _bookService: BookService;
 }

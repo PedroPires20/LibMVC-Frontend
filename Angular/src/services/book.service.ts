@@ -43,6 +43,20 @@ export class BookService {
     }
   }
 
+  async updateBook(bookIndex: number, newData: any) {
+    let updatedBook = Book.fromFormData(newData, this._selectedBooks[bookIndex].id, bookIndex);
+    let diff = this._selectedBooks[bookIndex].getFieldsDiff(updatedBook);
+    if(!!diff) {
+      try {
+        await this._api.updateBook(this._selectedBooks[bookIndex].id, updatedBook.toRequestBody());
+        this._selectedBooks[bookIndex] = updatedBook;
+      }catch(exception: any) {
+        console.error("Error updating book: " + exception);
+        return exception.message || "Error updating book";
+      }
+    }
+  }
+
   async deleteBook(bookIndex: number) {
     try {
       await this._api.deleteBook(this._selectedBooks[bookIndex].id);

@@ -38,7 +38,7 @@ export class CollectionComponent implements OnInit {
   handleContextMenuClose(action?: number) {
     this.showContextMenu = false;
     if(action === 0) {
-
+      this.showBookDialog = true;
     }else if(action === 1) {
       this.deleteDialogState = {
         variant: "delete",
@@ -47,6 +47,11 @@ export class CollectionComponent implements OnInit {
         buttonLabels: ["Sim", "Não"]
       };
     }
+  }
+
+  handleBookDialogClose() {
+    this.showBookDialog = false;
+    this.clickTargetIndex = null;
   }
 
   handleDeleteDialogClose(action: number) {

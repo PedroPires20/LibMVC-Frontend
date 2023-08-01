@@ -70,5 +70,9 @@
             (dialogClose)="handleDeleteDialogClose($event)"
         />
     </app-dialog>
-    <app-book-dialog *ngIf="showBookDialog" (dialogClose)="showBookDialog = false"/>
+    <app-book-dialog
+        *ngIf="showBookDialog"
+        [indexToUpdate]="clickTargetIndex"
+        (dialogClose)="handleBookDialogClose()"
+    />
 </div>

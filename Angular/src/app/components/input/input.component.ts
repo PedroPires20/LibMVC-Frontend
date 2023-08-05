@@ -19,7 +19,8 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   writeValue(newValue: any) {
-    this.value = newValue;
+    this.value = (this.type === "number" && newValue !== "") ? Number(newValue)
+      : newValue;
   }
   
   registerOnChange(fn: any) {
@@ -35,8 +36,8 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   handleInput(newValue: any) {
-    if(this.type === "number") {
-      this.value = parseFloat(newValue);
+    if(this.type === "number" && newValue !== "") {
+      this.value = Number(newValue);
     }else {
       this.value = newValue;
     }
@@ -77,7 +78,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() defaultValue = "";
   @Input() errorMessage = "";
 
-  value: any = "";
+  value: string | number = "";
   onValueChange: any = () => {};
   disabled = false;
   active = false;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ContextMenuPosition } from 'src/app/components/context-menu/context-menu.component';
 import { LoansService } from 'src/services/loans.service';
 
 
@@ -14,6 +15,20 @@ export class LoansComponent implements OnInit {
 
   ngOnInit(): void {
     this._loansService.fetchLoans();
+  }
+
+  handleRowClick(event: MouseEvent, index: number) {
+    const target = event.target as HTMLElement;
+    const { top, left, width, height } = target.getBoundingClientRect();
+    this.contextMenuPosition = { x: left, y: top + height };
+    this.showContextMenu = true;
+    this.clickTargetIndex = index;
+    event.stopPropagation();
+  }
+
+  handleContextMenuClose(action?: number) {
+    this.showContextMenu = false;
+    console.log(action);
   }
 
   get loansLoading() {
@@ -35,4 +50,8 @@ export class LoansComponent implements OnInit {
   get loans() {
     return this._loansService.selectedLoans;
   }
+
+  showContextMenu = false;
+  contextMenuPosition: ContextMenuPosition = { x: 0, y: 0 };
+  clickTargetIndex: number | null = null;
 }

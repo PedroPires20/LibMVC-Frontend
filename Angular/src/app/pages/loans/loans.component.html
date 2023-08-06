@@ -31,7 +31,10 @@
         />
         <ng-template #loansData>
             <tbody>
-                <tr *ngFor="let loan of loans">
+                <tr
+                    *ngFor="let loan of loans; index as index"
+                    (click)="handleRowClick($event, index)"
+                >
                     <td>{{loan.reader}}</td>
                     <td>{{loan.phone}}</td>
                     <td>{{loan.bookTitle}}</td>
@@ -45,4 +48,10 @@
             </tbody>
         </ng-template>
     </app-table-card>
+    <app-context-menu
+        *ngIf="showContextMenu"
+        [loanVariant]="true"
+        [position]="contextMenuPosition"
+        (menuClose)="handleContextMenuClose($event)"
+    />
 </div>

@@ -46,6 +46,20 @@ export class LoansService {
     }
   }
 
+  async updateLoan(loanIndex: number, newData: any) {
+    let updatedLoan = Loan.fromFormData(newData, this.selectedLoans[loanIndex].id, loanIndex);
+    let diff = this.selectedLoans[loanIndex].getFieldsDiff(updatedLoan);
+    if(!!diff) {
+      try {
+        await this._api.updateLoan(updatedLoan.id, updatedLoan.toRequestBody());
+        this.selectedLoans[loanIndex] = updatedLoan;
+      }catch(exception: any) {
+        console.error("Error updating loan: " + exception);
+        return exception.message || "Error updating loan";
+      }
+    }
+  }
+
   async finishLoan(loanIndex: number) {
     try {
       await this._api.deleteLoan(this._selectedLoans[loanIndex].id);

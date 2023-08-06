@@ -6,6 +6,9 @@
                 name="reader"
                 label="Leitor"
                 placeholder="Todos"
+                [disabled]="readerSelectorDisabled"
+                [options]="readerOptions"
+                [(ngModel)]="filters.reader"
             />
         </div>
         <div class="input-container">
@@ -13,6 +16,9 @@
                 name="bookTitle"
                 label="Obra"
                 placeholder="Todas"
+                [disabled]="bookTitleSelectorDisabled"
+                [options]="bookTitleOptions"
+                [(ngModel)]="filters.bookTitle"
             />
         </div>
         <div class="input-container">
@@ -20,12 +26,14 @@
                 name="startDate"
                 label="Data empréstimo"
                 placeholder="Todas"
+                [(ngModel)]="filters.startDate"
             />
         </div>
         <div class="input-container">
             <app-date-picker
                 name="endDate"
                 label="Data devolução"
+                [(ngModel)]="filters.endDate"
             />
         </div>
         <div class="input-container">
@@ -35,6 +43,7 @@
                 placeholder="Todos"
                 [options]="['Sim', 'Não']"
                 [optionValues]="[true, false]"
+                [(ngModel)]="filters.late"
             />
         </div>
         <div class="input-container">
@@ -44,13 +53,22 @@
                 placeholder="Todos"
                 [options]="['Sim', 'Não']"
                 [optionValues]="[true, false]"
+                [(ngModel)]="filters.renew"
             />
         </div>
         <div class="buttons-container">
-            <app-button variant="secondary" [disabled]="disabled">
+            <app-button
+                variant="secondary"
+                [disabled]="disabled"
+                (click)="handleReset()"
+            >
                 Redefinir
             </app-button>
-            <app-button variant="secondary" [disabled]="disabled">
+            <app-button
+                variant="secondary"
+                [disabled]="disabled"
+                (click)="handleFilter()"
+            >
                 Aplicar
             </app-button>
         </div>

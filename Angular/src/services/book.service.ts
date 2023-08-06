@@ -16,10 +16,11 @@ export class BookService {
   }
 
   async fetchBooks(query = "", filters: any = {}) {
-    if(this._shouldRefetchBooks(query, filters)) {
+    const currentFilters = removeEmptyFilters(filters);
+    if(this._shouldRefetchBooks(query, currentFilters)) {
       this._status = "loading";
       try {
-        let booksData = await this._api.searchBooks(query, removeEmptyFilters(filters), { title: 1 });
+        let booksData = await this._api.searchBooks(query, currentFilters, { title: 1 });
         this._selectedBooks = booksData.map((bookData: any, index: number) => new Book(bookData, index));
         this._status = "loaded";
       }catch(exception: any) {
@@ -28,7 +29,7 @@ export class BookService {
         this._errorMessage = exception?.message;
       }
       this._previousQuery = query;
-      this._previousFilters = filters;
+      this._previousFilters = currentFilters;
     }
   }
 

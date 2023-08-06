@@ -1,12 +1,32 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
+interface LoanFormModel {
+  reader: string,
+  phone: string,
+  bookId: string,
+  startDate: string,
+  duration: number | "",
+  renew: boolean
+}
+
+
 @Component({
   selector: 'app-loan-dialog',
   templateUrl: './loan-dialog.component.html',
   styleUrls: ['./loan-dialog.component.css']
 })
 export class LoanDialogComponent {
+  constructor() {
+    this.loanModel = {
+      reader: "",
+      phone: "",
+      bookId: "",
+      startDate: "",
+      duration: "",
+      renew: false
+    };
+  }
   
   get dialogTitle() {
     return (this.isUpdateDialog) ? "Editar empréstimo" : "Novo empréstimo";
@@ -22,6 +42,7 @@ export class LoanDialogComponent {
   }
 
   handleFormSubmit(form: NgForm) {
+    console.log(this.loanModel);
     this.formSubmit.emit();
   }
 
@@ -39,4 +60,5 @@ export class LoanDialogComponent {
   @Output()
   formSubmit = new EventEmitter<void>();
 
+  loanModel: LoanFormModel;
 }

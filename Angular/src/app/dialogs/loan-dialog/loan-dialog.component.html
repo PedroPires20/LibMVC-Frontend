@@ -9,6 +9,7 @@
                 label="Leitor"
                 supportingText="Entre o nome do leitor"
                 [required]="true"
+                [(ngModel)]="loanModel.reader"
             />
             <app-input
                 name="phone"
@@ -18,6 +19,7 @@
                 validationPattern="\(\d{2,5}\)\s*9?\d{4}-?\d{4}"
                 errorMessage="Por favor, entre um número de telefone válido"
                 [required]="true"
+                [(ngModel)]="loanModel.phone"
             />
             <app-select
                 name="bookId"
@@ -26,12 +28,14 @@
                 errorMessage="Por favor, selecione um livro"
                 [formVariant]="true"
                 [required]="true"
+                [(ngModel)]="loanModel.bookId"
             />
             <app-date-picker
                 name="startDate"
                 label="Data de início"
                 [formVariant]="true"
                 [required]="true"
+                [(ngModel)]="loanModel.startDate"
             />
             <app-input
                 name="duration"
@@ -40,11 +44,13 @@
                 supportingText="Entre a duração do empréstimo (em dias)"
                 [minValue]="1"
                 [required]="true"
+                [(ngModel)]="loanModel.duration"
             />
             <app-checkbox
                 name="renew"
                 label="Renovação"
                 supportingText="Marque essa opção se estiver registrando a renovação de um empréstimo anterior"
+                [(ngModel)]="loanModel.renew"
             />
             <div class="buttons">
                 <button class="click-ripple-effect-light" (click)="handleDialogClose($event)">

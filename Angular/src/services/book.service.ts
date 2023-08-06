@@ -49,7 +49,7 @@ export class BookService {
     let diff = this._selectedBooks[bookIndex].getFieldsDiff(updatedBook);
     if(!!diff) {
       try {
-        await this._api.updateBook(this._selectedBooks[bookIndex].id, updatedBook.toRequestBody());
+        await this._api.updateBook(updatedBook.id, updatedBook.toRequestBody());
         this._selectedBooks[bookIndex] = updatedBook;
       }catch(exception: any) {
         console.error("Error updating book: " + exception);

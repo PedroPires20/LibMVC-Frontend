@@ -28,6 +28,9 @@
                 errorMessage="Por favor, selecione um livro"
                 [formVariant]="true"
                 [required]="true"
+                [options]="bookTitles"
+                [optionValues]="bookIds"
+                [disabled]="bookSelectorDisabled"
                 [(ngModel)]="loanModel.bookId"
             />
             <app-date-picker

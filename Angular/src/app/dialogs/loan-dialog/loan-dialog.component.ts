@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { BookService } from 'src/services/book.service';
 
 interface LoanFormModel {
   reader: string,
@@ -10,14 +11,17 @@ interface LoanFormModel {
   renew: boolean
 }
 
+const BOOKS_LOADING_MESSAGE = "Carregando...";
+const LOAD_ERROR_MESSAGE = "Ocorreu um erro ao carregar os livros disponíveis";
+
 
 @Component({
   selector: 'app-loan-dialog',
   templateUrl: './loan-dialog.component.html',
   styleUrls: ['./loan-dialog.component.css']
 })
-export class LoanDialogComponent {
-  constructor() {
+export class LoanDialogComponent implements OnInit {
+  constructor(bookService: BookService) {
     this.loanModel = {
       reader: "",
       phone: "",
@@ -26,8 +30,23 @@ export class LoanDialogComponent {
       duration: "",
       renew: false
     };
+    this._bookService = bookService;
   }
-  
+
+  ngOnInit(): void {
+      this._bookService.fetchBooks();
+  }
+
+  handleFormSubmit(form: NgForm) {
+    console.log(this.loanModel);
+    this.formSubmit.emit();
+  }
+
+  handleDialogClose(event: MouseEvent) {
+    event.preventDefault();
+    this.dialogClose.emit();
+  }
+
   get dialogTitle() {
     return (this.isUpdateDialog) ? "Editar empréstimo" : "Novo empréstimo";
   }
@@ -41,14 +60,23 @@ export class LoanDialogComponent {
     return this.indexToUpdate !== null;
   }
 
-  handleFormSubmit(form: NgForm) {
-    console.log(this.loanModel);
-    this.formSubmit.emit();
+  get bookTitles() {
+    switch(this._bookService.status) {
+      case "loaded": 
+        return (this._bookService.selectedBooks.length > 0) ?
+          this._bookService.selectedBooks.map((book) => book.title)
+            : ["Nenhum livro encontrado"];
+      case "loading": return [BOOKS_LOADING_MESSAGE];
+      case "error": return [LOAD_ERROR_MESSAGE];
+    }
   }
 
-  handleDialogClose(event: MouseEvent) {
-    event.preventDefault();
-    this.dialogClose.emit();
+  get bookSelectorDisabled() {
+    return this._bookService.status !== "loaded" || this._bookService.selectedBooks.length === 0;
+  }
+
+  get bookIds() {
+    return this._bookService.selectedBooks.map((book) => book.id);
   }
 
   @Input()
@@ -61,4 +89,6 @@ export class LoanDialogComponent {
   formSubmit = new EventEmitter<void>();
 
   loanModel: LoanFormModel;
+
+  private _bookService: BookService;
 }

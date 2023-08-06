@@ -2,6 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ContextMenuPosition } from 'src/app/components/context-menu/context-menu.component';
 import { LoansService } from 'src/services/loans.service';
 
+interface LoanFinishState {
+  variant: "success" | "error" | "load",
+  heading: string,
+  message: string,
+  buttonLabels?: string[],
+  summary?: string,
+  details?: string
+}
+
 
 @Component({
   selector: 'app-loans',
@@ -28,7 +37,47 @@ export class LoansComponent implements OnInit {
 
   handleContextMenuClose(action?: number) {
     this.showContextMenu = false;
-    console.log(action);
+    if(action === 0) {
+
+    }else if(action === 1) {
+      this.finishDialogState = {
+        variant: "success",
+        heading: "Finalizar empréstimo?",
+        message: "Deseja finalizar esse empréstimo?\nUma vez finalizado, o livro é considerado como devolvido e os dados relacionados ao empréstimo são excluídos",
+        buttonLabels: ["Sim", "Não"]
+      }
+    }
+  }
+
+  handleFinishDialogClose(action: number) {
+    if(this.finishDialogState?.variant === "success" && action === 0
+      && this.clickTargetIndex !== null) {
+        this._handleLoanFinish();
+    }else {
+      this.finishDialogState = null;
+    }
+  }
+
+  private async _handleLoanFinish() {
+    if(this.clickTargetIndex !== null) {
+      this.finishDialogState = {
+        variant: "load",
+        heading: "Salvando",
+        message: "As alterações estão sendo processadas pelo sistema"
+      };
+      let result = await this._loansService.finishLoan(this.clickTargetIndex);
+      if(result) {
+        this.finishDialogState = {
+          variant: "error",
+          heading: "Erro",
+          message: "Ocorreu um erro ao salvar as alterações no sistema.",
+          summary: "Detalhes do erro",
+          details: result
+        };
+        return;
+      }
+    }
+    this.finishDialogState = null;
   }
 
   get loansLoading() {
@@ -54,4 +103,5 @@ export class LoansComponent implements OnInit {
   showContextMenu = false;
   contextMenuPosition: ContextMenuPosition = { x: 0, y: 0 };
   clickTargetIndex: number | null = null;
+  finishDialogState: LoanFinishState | null = null;
 }

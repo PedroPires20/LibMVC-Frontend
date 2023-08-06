@@ -54,4 +54,15 @@
         [position]="contextMenuPosition"
         (menuClose)="handleContextMenuClose($event)"
     />
+    <app-dialog *ngIf="finishDialogState">
+        <app-state-dialog
+            [variant]="finishDialogState.variant"
+            [heading]="finishDialogState.heading"
+            [message]="finishDialogState.message"
+            [detailsSummary]="finishDialogState.summary"
+            [detailsContent]="finishDialogState.details"
+            [buttonLabels]="finishDialogState.buttonLabels"
+            (dialogClose)="handleFinishDialogClose($event)"
+        />
+    </app-dialog>
 </div>

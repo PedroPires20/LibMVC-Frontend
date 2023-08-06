@@ -76,7 +76,7 @@ export class LoanDialogComponent implements OnInit {
       };
     }else {
       this.saveStatus = null;
-      this.formSubmit.emit();
+      this.dialogClose.emit();
     }
   }
 
@@ -127,9 +127,6 @@ export class LoanDialogComponent implements OnInit {
 
   @Output()
   dialogClose = new EventEmitter<void>();
-
-  @Output()
-  formSubmit = new EventEmitter<void>();
 
   loanModel: LoanFormModel;
   saveStatus: SaveStatus | null = null;

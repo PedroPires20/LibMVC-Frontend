@@ -178,9 +178,6 @@ export class BookDialogComponent implements OnInit, OnChanges {
   @Output()
   dialogClose = new EventEmitter<void>();
 
-  @Output()
-  formSubmit = new EventEmitter<void>();
-
   addCategory = false;
   newCategory = "";
   categories: string[] = []

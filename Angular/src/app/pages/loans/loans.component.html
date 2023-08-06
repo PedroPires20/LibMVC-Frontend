@@ -23,18 +23,26 @@
                 <th>Renovação</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>João da Silva</td>
-                <td>(037) 99999-9999</td>
-                <td>Engenharia de Software Moderna</td>
-                <td>01/04/2023</td>
-                <td>10</td>
-                <td>11/04/2023</td>
-                <td>-98</td>
-                <td>N</td>
-                <td>S</td>
-            </tr>
-        </tbody>
+        <app-table-status
+            *ngIf="loansLoading || errorLoading || loans.length === 0; else loansData"
+            [loading]="loansLoading"
+            [error]="errorLoading"
+            [message]="statusMessage"
+        />
+        <ng-template #loansData>
+            <tbody>
+                <tr *ngFor="let loan of loans">
+                    <td>{{loan.reader}}</td>
+                    <td>{{loan.phone}}</td>
+                    <td>{{loan.bookTitle}}</td>
+                    <td>{{loan.startDate}}</td>
+                    <td>{{loan.duration}}</td>
+                    <td>{{loan.endDate}}</td>
+                    <td>{{loan.daysRemaining}}</td>
+                    <td>{{loan.late}}</td>
+                    <td>{{loan.renew}}</td>
+                </tr>
+            </tbody>
+        </ng-template>
     </app-table-card>
 </div>

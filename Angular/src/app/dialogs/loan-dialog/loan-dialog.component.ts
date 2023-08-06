@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-loan-dialog',
@@ -16,5 +17,26 @@ export class LoanDialogComponent {
       : "Preencha as informações abaixo para cadastrar um novo empréstimo no sistema";
   }
 
-  isUpdateDialog = false;
+  get isUpdateDialog() {
+    return this.indexToUpdate !== null;
+  }
+
+  handleFormSubmit(form: NgForm) {
+    this.formSubmit.emit();
+  }
+
+  handleDialogClose(event: MouseEvent) {
+    event.preventDefault();
+    this.dialogClose.emit();
+  }
+
+  @Input()
+  indexToUpdate: number | null = null;
+
+  @Output()
+  dialogClose = new EventEmitter<void>();
+
+  @Output()
+  formSubmit = new EventEmitter<void>();
+
 }

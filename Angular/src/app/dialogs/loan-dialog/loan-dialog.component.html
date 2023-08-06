@@ -2,7 +2,7 @@
     <div class="container">
         <h3>{{ dialogTitle }}</h3>
         <p>{{ dialogTip }}</p>
-        <form name="loan-dialog-form" novalidate>
+        <form #loanForm="ngForm" novalidate (ngSubmit)="handleFormSubmit(loanForm)">
             <app-input
                 name="reader"
                 type="text"
@@ -47,10 +47,10 @@
                 supportingText="Marque essa opção se estiver registrando a renovação de um empréstimo anterior"
             />
             <div class="buttons">
-                <button class="click-ripple-effect-light" (click)="$event.preventDefault()">
+                <button class="click-ripple-effect-light" (click)="handleDialogClose($event)">
                     Cancelar
                 </button>
-                <button class="click-ripple-effect-light" (click)="$event.preventDefault()">
+                <button class="click-ripple-effect-light">
                     Confirmar
                 </button>
             </div>

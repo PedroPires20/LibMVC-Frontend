@@ -35,6 +35,16 @@ export class LoansService {
     }
   }
 
+  async finishLoan(loanIndex: number) {
+    try {
+      await this._api.deleteLoan(this._selectedLoans[loanIndex].id);
+      this._selectedLoans.splice(loanIndex);
+    }catch(exception: any) {
+      console.error("Error finalizing loan: " + exception);
+      return exception.message || "Error finalizing loan";
+    }
+  }
+
   get status() {
     return this._status || "loading";
   }

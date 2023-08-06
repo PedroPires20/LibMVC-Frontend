@@ -1,5 +1,5 @@
 <app-dialog>
-    <div class="container">
+    <div class="container" *ngIf="saveStatus === null">
         <h3>{{ dialogTitle }}</h3>
         <p>{{ dialogTip }}</p>
         <form #loanForm="ngForm" novalidate (ngSubmit)="handleFormSubmit(loanForm)">
@@ -65,4 +65,13 @@
             </div>
         </form>
     </div>
+    <app-state-dialog
+        *ngIf="saveStatus !== null"
+        [variant]="saveStatus.variant"
+        [heading]="saveStatus.heading"
+        [message]="saveStatus.message"
+        [detailsSummary]="saveStatus.summary"
+        [detailsContent]="saveStatus.details"
+        (dialogClose)="handleErrorDialogClose()"
+    />
 </app-dialog>

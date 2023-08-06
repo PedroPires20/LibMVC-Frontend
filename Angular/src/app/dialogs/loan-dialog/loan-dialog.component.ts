@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BookService } from 'src/services/book.service';
+import { LoansService } from 'src/services/loans.service';
 
 interface LoanFormModel {
   reader: string,
@@ -9,6 +10,15 @@ interface LoanFormModel {
   startDate: string,
   duration: number | "",
   renew: boolean
+}
+
+interface SaveStatus {
+  variant: "error" | "load",
+  heading: string,
+  message: string,
+  buttons?: string[],
+  summary?: string,
+  details?: string
 }
 
 const BOOKS_LOADING_MESSAGE = "Carregando...";
@@ -21,7 +31,7 @@ const LOAD_ERROR_MESSAGE = "Ocorreu um erro ao carregar os livros disponíveis";
   styleUrls: ['./loan-dialog.component.css']
 })
 export class LoanDialogComponent implements OnInit {
-  constructor(bookService: BookService) {
+  constructor(bookService: BookService, loansService: LoansService, formElementRef: ElementRef) {
     this.loanModel = {
       reader: "",
       phone: "",
@@ -31,19 +41,52 @@ export class LoanDialogComponent implements OnInit {
       renew: false
     };
     this._bookService = bookService;
+    this._loansService = loansService;
+    this._formElementRef = formElementRef;
   }
 
   ngOnInit(): void {
       this._bookService.fetchBooks();
   }
 
-  handleFormSubmit(form: NgForm) {
-    console.log(this.loanModel);
-    this.formSubmit.emit();
+  async handleFormSubmit(form: NgForm) {
+    if(!form.valid) {
+      const firstInvalidInputName = Object.keys(form.controls).find(
+        (controlName) => form.controls[controlName].invalid
+      );
+      this._formElementRef.nativeElement.querySelector(
+        `[name=${firstInvalidInputName}] input`
+      ).focus();
+      return;
+    }
+    this.saveStatus = {
+      variant: "load",
+      heading: "Salvando",
+      message: "As alterações estão sendo processadas pelo sistema"
+    };
+    let result: any;
+    result = await this._loansService.createLoan(this.loanModel);
+    if(result) {
+      this.saveStatus = {
+        variant: "error",
+        heading: "Erro",
+        message: "Ocorreu um erro ao salvar as alterações no sistema.",
+        summary: "Detalhes do erro",
+        details: result
+      };
+    }else {
+      this.saveStatus = null;
+      this.formSubmit.emit();
+    }
   }
 
   handleDialogClose(event: MouseEvent) {
     event.preventDefault();
+    this.dialogClose.emit();
+  }
+
+  handleErrorDialogClose() {
+    this.saveStatus = null;
     this.dialogClose.emit();
   }
 
@@ -89,6 +132,9 @@ export class LoanDialogComponent implements OnInit {
   formSubmit = new EventEmitter<void>();
 
   loanModel: LoanFormModel;
+  saveStatus: SaveStatus | null = null;
 
   private _bookService: BookService;
+  private _loansService: LoansService;
+  private _formElementRef: ElementRef;
 }

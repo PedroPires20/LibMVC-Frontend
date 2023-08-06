@@ -35,6 +35,17 @@ export class LoansService {
     }
   }
 
+  async createLoan(formData: any) {
+    let newLoan = Loan.fromFormData(formData);
+    try {
+      let { createdId } = await this._api.createLoan(newLoan.toRequestBody());
+      this._selectedLoans.push(Loan.fromFormData(formData, createdId));
+    }catch(exception: any) {
+      console.error("Error creating loan: " + exception);
+      return exception.message || "Error creating loan";
+    }
+  }
+
   async finishLoan(loanIndex: number) {
     try {
       await this._api.deleteLoan(this._selectedLoans[loanIndex].id);

@@ -14,7 +14,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class CheckboxComponent implements ControlValueAccessor {
-  handleCheck() {
+  handleCheck(event: MouseEvent) {
+    event.preventDefault();
     this.value = !this.value;
     this.onChange(this.value);
   }

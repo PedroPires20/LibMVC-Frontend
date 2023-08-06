@@ -67,6 +67,7 @@
     </app-dialog>
     <app-loan-dialog
         *ngIf="showLoanDialog"
-        (dialogClose)="showLoanDialog = false"
+        [indexToUpdate]="clickTargetIndex"
+        (dialogClose)="handleLoanDialogClose()"
     />
 </div>

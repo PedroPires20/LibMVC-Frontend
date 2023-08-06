@@ -38,7 +38,7 @@ export class LoansComponent implements OnInit {
   handleContextMenuClose(action?: number) {
     this.showContextMenu = false;
     if(action === 0) {
-
+      this.showLoanDialog = true;
     }else if(action === 1) {
       this.finishDialogState = {
         variant: "success",
@@ -47,6 +47,11 @@ export class LoansComponent implements OnInit {
         buttonLabels: ["Sim", "Não"]
       }
     }
+  }
+
+  handleLoanDialogClose() {
+    this.clickTargetIndex = null;
+    this.showLoanDialog = false;
   }
 
   handleFinishDialogClose(action: number) {

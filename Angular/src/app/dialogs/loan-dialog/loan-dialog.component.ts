@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BookService } from 'src/services/book.service';
 import { LoansService } from 'src/services/loans.service';
@@ -30,7 +30,7 @@ const LOAD_ERROR_MESSAGE = "Ocorreu um erro ao carregar os livros disponíveis";
   templateUrl: './loan-dialog.component.html',
   styleUrls: ['./loan-dialog.component.css']
 })
-export class LoanDialogComponent implements OnInit {
+export class LoanDialogComponent implements OnInit, OnChanges {
   constructor(bookService: BookService, loansService: LoansService, formElementRef: ElementRef) {
     this.loanModel = {
       reader: "",
@@ -49,6 +49,24 @@ export class LoanDialogComponent implements OnInit {
       this._bookService.fetchBooks();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+      if(changes["indexToUpdate"].currentValue !== changes["indexToUpdate"].previousValue) {
+        let indexToUpdate = changes["indexToUpdate"].currentValue;
+        if(indexToUpdate === null) {
+          this.loanModel = {
+            reader: "",
+            phone: "",
+            bookId: "",
+            startDate: "",
+            duration: "",
+            renew: false
+          };
+        }else {
+          this.loanModel = this._loansService.selectedLoans[indexToUpdate].toFormData() as unknown as LoanFormModel;
+        }
+      }
+  }
+
   async handleFormSubmit(form: NgForm) {
     if(!form.valid) {
       const firstInvalidInputName = Object.keys(form.controls).find(
@@ -65,7 +83,11 @@ export class LoanDialogComponent implements OnInit {
       message: "As alterações estão sendo processadas pelo sistema"
     };
     let result: any;
-    result = await this._loansService.createLoan(this.loanModel);
+    if(this.indexToUpdate !== null) {
+      result = await this._loansService.updateLoan(this.indexToUpdate, this.loanModel);
+    }else {
+      result = await this._loansService.createLoan(this.loanModel);
+    }
     if(result) {
       this.saveStatus = {
         variant: "error",

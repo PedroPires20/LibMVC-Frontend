@@ -8,6 +8,7 @@ interface LoanFormModel {
   reader: string,
   phone: string,
   bookId: string,
+  bookTitle: string,
   startDate: string,
   duration: number | "",
   renew: boolean
@@ -42,6 +43,7 @@ export class LoanDialogComponent implements OnInit, OnChanges {
       reader: "",
       phone: "",
       bookId: "",
+      bookTitle: "",
       startDate: "",
       duration: "",
       renew: false
@@ -65,6 +67,7 @@ export class LoanDialogComponent implements OnInit, OnChanges {
             reader: "",
             phone: "",
             bookId: "",
+            bookTitle: "",
             startDate: "",
             duration: "",
             renew: false
@@ -85,6 +88,8 @@ export class LoanDialogComponent implements OnInit, OnChanges {
       ).focus();
       return;
     }
+    let selectedBook = this._bookService.selectedBooks.find((book) => book.id === this.loanModel.bookId);
+    this.loanModel.bookTitle = selectedBook?.title || "";
     this.saveStatus = {
       variant: "load",
       heading: "Salvando",

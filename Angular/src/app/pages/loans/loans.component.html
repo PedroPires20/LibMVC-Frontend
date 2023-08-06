@@ -2,7 +2,7 @@
     <div class="header">
         <h2>Empréstimos</h2>
         <app-button>
-            <div class="add-button">
+            <div class="add-button" (click)="showLoanDialog = true">
                 <img src="assets/add_icon.svg" alt="novo"/>
                 <span>Novo empréstimo</span>
             </div>
@@ -65,4 +65,8 @@
             (dialogClose)="handleFinishDialogClose($event)"
         />
     </app-dialog>
+    <app-loan-dialog
+        *ngIf="showLoanDialog"
+        (dialogClose)="showLoanDialog = false"
+    />
 </div>

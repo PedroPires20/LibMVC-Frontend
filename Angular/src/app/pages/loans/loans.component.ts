@@ -104,4 +104,5 @@ export class LoansComponent implements OnInit {
   contextMenuPosition: ContextMenuPosition = { x: 0, y: 0 };
   clickTargetIndex: number | null = null;
   finishDialogState: LoanFinishState | null = null;
+  showLoanDialog = false;
 }

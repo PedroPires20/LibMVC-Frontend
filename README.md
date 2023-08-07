@@ -116,7 +116,10 @@ carregamento do acervo é apresentada na imagem abaixo:
 ## Arquitetura comum
 
 Um detalhamento da arquitetura comum utilizada em todas as implementações do
-*frontend* pode ser encontrado nesse [link](docs/arquitetura.md).
+*frontend* pode ser encontrado nesse [link](docs/arquitetura.md). O código fonte
+que implementa os componentes dessa arquitetura e é compartilhado por todas as
+implementações, por sua vez, pode ser acessado por meio desse
+[link](common/README.md).
 
 ## Implementações
 
@@ -131,3 +134,4 @@ o códigos fontes podem ser acessados mais facilmente utilizando os links
 listados abaixo:
 
 - [Implementação em React](React/README.md)
+- [Implementação em Angular](Angular/README.md)

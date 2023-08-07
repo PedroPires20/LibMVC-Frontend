@@ -11,12 +11,12 @@ interface, permitindo que esta seja definida como a composição de vários
 componentes menores, facilitando bastante o processo de desenvolvimento. Um
 componente em React é, de forma bastante, uma função que gera HTML, se
 comportando como uma espécie de "template" para construção de strings HTML.
-Além disso, o react também fornece uma coleção de funções que facilitam
+Além disso, o React também fornece uma coleção de funções que facilitam
 a implementação da lógica da interface, possibilitando que tarefas como
 gerenciamento de estado, carregamento de dados, execução de efeitos colaterais,
 etc., sejam implementadas de forma simples.
 
-Os detalhes relativos a essa implementação em específico podem ser explorados
+Os detalhes relativos a essa implementação em específico são explorados
 nas seções seguintes.
 
 ## Tecnologias

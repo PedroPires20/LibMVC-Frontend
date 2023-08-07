@@ -11,7 +11,9 @@ React em sua máquina, basta seguir as instruções abaixo:
 
 3. Clone o repositório do *frontend*:
 
-```console git clone https://github.com/PedroPires20/SimpleLibrary-Frontend.git```
+```console
+git clone https://github.com/PedroPires20/SimpleLibrary-Frontend.git
+```
 
 4. Acesse o diretório correspondente à implementação em React e instale as
    dependências do projeto, executando, a partir do diretório em que clonou o

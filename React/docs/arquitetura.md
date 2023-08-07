@@ -19,7 +19,7 @@ O diagrama a seguir apresenta uma visão geral da arquitetura da implementação
 React, incluindo os componentes suas camadas (denotadas pelas cores) e a relações
 de dependência (representadas por setas):
 
-![Diagrama arquitetura React](Diagrama_arquitetura.png)
+![Diagrama arquitetura (implementação em React)](Diagrama_arquitetura.png)
 
 A camada lógica (representada em roxo) é composta por [*custom
 hooks*](https://react.dev/learn/reusing-logic-with-custom-hooks), um padrão de

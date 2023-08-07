@@ -130,7 +130,8 @@ export default function Collection() {
                                     {book.publisher}
                                 </TableCell>
                                 <TableCell>
-                                    {book.edition}</TableCell>
+                                    {book.edition}
+                                </TableCell>
                                 <TableCell>
                                     {book.format}
                                 </TableCell>

@@ -8,6 +8,8 @@ import DatePicker from "../components/date_picker/DatePicker";
 import StateDialog from "./StateDialog";
 import "./LoanDialog.css";
 
+const FIELD_LOADING_MESSAGE = "Carregando...";
+const FIELD_LOADING_ERROR = "Ocorreu um erro ao carregar as opções do filtro";
 const DEFAULT_LOAN_DATA = {
     reader: "",
     phone: "",
@@ -24,10 +26,19 @@ export default function LoanDialog({ updateTarget, onClose, onSubmit }) {
         (isUpdateDialog) ? updateTarget.toFormData() : DEFAULT_LOAN_DATA
     );
     const [saveState, setSaveState] = useState({ saving: false, error: false });
-    const { books } = useBooks();
+    const { books, loadStatus } = useBooks();
 
     function handleInputChange(name, value) {
         setLoanData({ ...loanData, [name]: value });
+    }
+
+    function getBookSelectorOptions() {
+        if(loadStatus.loading) {
+            return [FIELD_LOADING_MESSAGE];
+        }else if(loadStatus.error) {
+            return [FIELD_LOADING_ERROR];
+        }
+        return books.map((book) => book.title);
     }
 
     async function handleFormSubmit(event) {
@@ -88,8 +99,9 @@ export default function LoanDialog({ updateTarget, onClose, onSubmit }) {
                             name="bookId"
                             label="Livro"
                             placeholder="Selecione o livro a ser emprestado"
-                            options={books.map((book) => book.title)}
+                            options={getBookSelectorOptions()}
                             optionValues={books.map((book) => book.id)}
+                            disabled={loadStatus.loading || loadStatus.error}
                             onChange={handleInputChange}
                             value={loanData.bookId}
                             errorMessage="Por favor, selecione um livro"

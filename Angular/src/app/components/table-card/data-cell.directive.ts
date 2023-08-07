@@ -18,5 +18,5 @@ export class DataCellDirective {
   @Input() align = "center";
   @Input() valign = "center";
   @Input() wrap = false;
-  @Input() minWidth = "10rem";
+  @Input() minWidth?: string;
 }

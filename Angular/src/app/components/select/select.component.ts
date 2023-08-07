@@ -21,6 +21,13 @@ export class SelectComponent implements OnChanges, ControlValueAccessor {
   ngOnChanges(changes: SimpleChanges) {
     if(changes["options"] || changes["optionValues"]) {
       this.optionValuesMap = (this.optionValues.length > 0) ? this.optionValues : this.options;
+      if(Array.isArray(this.value)) {
+        this.selectedIndexes = this.value.map((value) => this.optionValuesMap.indexOf(value));
+      }else if(this.value && this.value !== "") {
+        this.selectedIndexes = [this.optionValuesMap.indexOf(this.value)];
+      }else {
+        this.selectedIndexes = [];
+      }
     }
   }
 

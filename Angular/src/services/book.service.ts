@@ -69,7 +69,8 @@ export class BookService {
   }
 
   private _shouldRefetchBooks(query: string, filters: any) {
-    return (this._previousQuery !== query) || (!objectEquals(this._previousFilters, filters));
+    return (this._previousQuery !== query) ||
+      (!objectEquals(this._previousFilters, filters)) || this.status === "error";
   }
 
   get status() {

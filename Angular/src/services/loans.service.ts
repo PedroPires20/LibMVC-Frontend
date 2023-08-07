@@ -17,7 +17,7 @@ export class LoansService {
 
   async fetchLoans(filters: any = {}) {
     const currentFilters = removeEmptyFilters(filters);
-    if(!objectEquals(this._previousFilters, currentFilters)) {
+    if(!objectEquals(this._previousFilters, currentFilters) || this.status === "error") {
       this._status = "loading";
       try {
         let loansData = await this._api.fetchLoans(

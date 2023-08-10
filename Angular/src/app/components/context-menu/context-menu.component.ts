@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, HostListener, HostBinding } from '@angular/core';
 
 export interface ContextMenuPosition {
   x: number,
@@ -21,6 +21,17 @@ export class ContextMenuComponent {
       this.menuClose.emit();   
     }
   }
+
+  @HostBinding("style")
+  get hostStyles(): any {
+    return {
+      top: this.position.y + "px",
+      left: this.position.x + "px",
+    };
+  }
+
+  @HostBinding("attr.tabindex")
+  readonly hostTabIndex = 0;
 
   @Input() loanVariant = false;
   @Input() position: ContextMenuPosition = { x: 0, y: 0 };

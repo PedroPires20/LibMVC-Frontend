@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from 'src/services/book.service';
-import { BookFieldsService } from 'src/services/book-fields.service';
 import { ContextMenuPosition } from 'src/app/components/context-menu/context-menu.component';
 
 interface BookDeleteState {
@@ -19,7 +18,7 @@ interface BookDeleteState {
   styleUrls: ['./collection.component.css']
 })
 export class CollectionComponent implements OnInit {
-  constructor(private _bookService: BookService, private _bookFieldsService: BookFieldsService) {
+  constructor(private _bookService: BookService) {
 
   }
 
@@ -82,7 +81,6 @@ export class CollectionComponent implements OnInit {
         };
         return;
       }
-      this._bookFieldsService.refreshFields();
     }
     this.deleteDialogState = null;
   }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContextMenuPosition } from 'src/app/components/context-menu/context-menu.component';
 import { LoansService } from 'src/services/loans.service';
-import { LoanFieldsService } from 'src/services/loan-fields.service';
 
 interface LoanFinishState {
   variant: "success" | "error" | "load",
@@ -19,7 +18,7 @@ interface LoanFinishState {
   styleUrls: ['./loans.component.css']
 })
 export class LoansComponent implements OnInit {
-  constructor(private _loansService: LoansService, private _loanFieldsService: LoanFieldsService) {
+  constructor(private _loansService: LoansService) {
 
   }
 
@@ -82,7 +81,6 @@ export class LoansComponent implements OnInit {
         };
         return;
       }
-      this._loanFieldsService.refreshFields();
     }
     this.finishDialogState = null;
   }

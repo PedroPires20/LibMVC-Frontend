@@ -141,7 +141,6 @@ export class BookDialogComponent implements OnInit, OnChanges {
       };
     }else {
       this.saveStatus = null;
-      this._bookFieldsService.refreshFields();
       this.dialogClose.emit();
     }
   }

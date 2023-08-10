@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BookService } from 'src/services/book.service';
-import { LoanFieldsService } from 'src/services/loan-fields.service';
 import { LoansService } from 'src/services/loans.service';
 
 interface LoanFormModel {
@@ -36,7 +35,6 @@ export class LoanDialogComponent implements OnInit, OnChanges {
   constructor(
     bookService: BookService,
     loansService: LoansService,
-    loanFieldsService: LoanFieldsService,
     formElementRef: ElementRef
   ) {
     this.loanModel = {
@@ -50,7 +48,6 @@ export class LoanDialogComponent implements OnInit, OnChanges {
     };
     this._bookService = bookService;
     this._loansService = loansService;
-    this._loanFieldsService = loanFieldsService;
     this._formElementRef = formElementRef;
   }
 
@@ -111,7 +108,6 @@ export class LoanDialogComponent implements OnInit, OnChanges {
       };
     }else {
       this.saveStatus = null;
-      this._loanFieldsService.refreshFields();
       this.dialogClose.emit();
     }
   }
@@ -169,6 +165,5 @@ export class LoanDialogComponent implements OnInit, OnChanges {
 
   private _bookService: BookService;
   private _loansService: LoansService;
-  private _loanFieldsService: LoanFieldsService;
   private _formElementRef: ElementRef;
 }

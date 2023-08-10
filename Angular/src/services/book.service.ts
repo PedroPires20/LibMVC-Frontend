@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { BookFieldsService } from './book-fields.service';
 import NetworkClient from '@common/utils/network_client.js';
 import Book from '@common/models/book.js';
 import { removeEmptyFilters, objectEquals } from '@common/utils/utils.js';
@@ -9,10 +10,11 @@ import { removeEmptyFilters, objectEquals } from '@common/utils/utils.js';
   providedIn: 'root'
 })
 export class BookService {
-  constructor() {
+  constructor(bookFieldsService: BookFieldsService) {
     this._api = new NetworkClient(environment.API_BASE_URL);
     this._selectedBooks = [];
     this._errorMessage = "";
+    this._bookFieldsService = bookFieldsService;
   }
 
   async fetchBooks(query = "", filters: any = {}) {
@@ -38,6 +40,7 @@ export class BookService {
     try {
       let { createdId } = await this._api.createBook(newBook.toRequestBody());
       this._selectedBooks.push(Book.fromFormData(formData, createdId));
+      this._bookFieldsService.refreshFields();
     }catch(exception: any) {
       console.error("Error creating book: " + exception);
       return exception.message || "Error creating book";
@@ -51,6 +54,7 @@ export class BookService {
       try {
         await this._api.updateBook(updatedBook.id, updatedBook.toRequestBody());
         this._selectedBooks[bookIndex] = updatedBook;
+        this._bookFieldsService.refreshFields();
       }catch(exception: any) {
         console.error("Error updating book: " + exception);
         return exception.message || "Error updating book";
@@ -62,6 +66,7 @@ export class BookService {
     try {
       await this._api.deleteBook(this._selectedBooks[bookIndex].id);
       this.selectedBooks.splice(bookIndex);
+      this._bookFieldsService.refreshFields();
     }catch(exception: any) {
       console.error("Error deleting book: " + exception);
       return exception.message || "Error deleting book";
@@ -91,4 +96,5 @@ export class BookService {
   private _errorMessage: string;
   private _previousQuery?: string;
   private _previousFilters: any;
+  private _bookFieldsService: BookFieldsService;
 }

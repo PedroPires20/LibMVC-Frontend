@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { LoanFieldsService } from './loan-fields.service';
 import NetworkClient from '@common/utils/network_client.js';
 import Loan from '@common/models/loan.js';
 import { removeEmptyFilters, objectEquals } from '@common/utils/utils.js';
@@ -9,10 +10,11 @@ import { removeEmptyFilters, objectEquals } from '@common/utils/utils.js';
   providedIn: 'root'
 })
 export class LoansService {
-  constructor() {
+  constructor(loanFieldsService: LoanFieldsService) {
     this._api = new NetworkClient(environment.API_BASE_URL);
     this._selectedLoans = [];
     this._errorMessage = "";
+    this._loanFieldsService = loanFieldsService;
   }
 
   async fetchLoans(filters: any = {}) {
@@ -40,6 +42,7 @@ export class LoansService {
     try {
       let { createdId } = await this._api.createLoan(newLoan.toRequestBody());
       this._selectedLoans.push(Loan.fromFormData(formData, createdId));
+      this._loanFieldsService.refreshFields();
     }catch(exception: any) {
       console.error("Error creating loan: " + exception);
       return exception.message || "Error creating loan";
@@ -53,6 +56,7 @@ export class LoansService {
       try {
         await this._api.updateLoan(updatedLoan.id, updatedLoan.toRequestBody());
         this.selectedLoans[loanIndex] = updatedLoan;
+        this._loanFieldsService.refreshFields();
       }catch(exception: any) {
         console.error("Error updating loan: " + exception);
         return exception.message || "Error updating loan";
@@ -64,6 +68,7 @@ export class LoansService {
     try {
       await this._api.deleteLoan(this._selectedLoans[loanIndex].id);
       this._selectedLoans.splice(loanIndex);
+      this._loanFieldsService.refreshFields();
     }catch(exception: any) {
       console.error("Error finalizing loan: " + exception);
       return exception.message || "Error finalizing loan";
@@ -87,4 +92,5 @@ export class LoansService {
   private _status?: "loading" | "error" | "loaded";
   private _errorMessage: string;
   private _previousFilters: any;
+  private _loanFieldsService: LoanFieldsService;
 }

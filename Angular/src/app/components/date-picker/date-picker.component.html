@@ -1,7 +1,16 @@
-<div class="container" [ngClass]="{ 'container-form': formVariant, 'container-active': active, 'container-error': error }">
+<div
+    class="container"
+    [ngClass]="{
+        'container-form': formVariant,
+        'container-active': active,
+        'container-error': error
+    }"
+>
     <label [class.active]="active">{{ label }}</label>
     <div class="control" [class.control-error]="error">
         <input
+            #inputModel="ngModel"
+            #inputElement
             type="date"
             [min]="minDate"
             [max]="maxDate"
@@ -13,7 +22,7 @@
         />
     </div>
     <span *ngIf="error; else supporting" class="error-message">
-        {{ errorMessage }}
+        {{ errorMessage || inputElement.validationMessage }}
     </span>
     <ng-template #supporting>
         <span *ngIf="supportingText" class="support-message">{{ supportingText }}</span>

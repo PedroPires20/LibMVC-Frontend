@@ -1,5 +1,5 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Input, forwardRef, ViewChild, Host, Optional } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-date-picker',
@@ -14,6 +14,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class DatePickerComponent implements ControlValueAccessor {
+  constructor(@Host() @Optional() parentForm?: NgForm) {
+    this._parentForm = parentForm || null;
+  }
+
   handleFocusIn() {
     this.active = true;
   }
@@ -39,6 +43,11 @@ export class DatePickerComponent implements ControlValueAccessor {
 
   }
 
+  get error() {
+    return this._inputModel.invalid &&
+      (this._inputModel.dirty || this._inputModel.touched || this._parentForm?.submitted);
+  }
+
   @Input() name = "";
   @Input() label = "";
   @Input() supportingText = "";
@@ -51,5 +60,9 @@ export class DatePickerComponent implements ControlValueAccessor {
   value: any = '';
   onValueChange: any = () => {};
   active = false;
-  error = false;
+
+  @ViewChild("inputModel", { static: true })
+  private _inputModel!: NgModel;
+
+  private _parentForm: NgForm | null;
 }

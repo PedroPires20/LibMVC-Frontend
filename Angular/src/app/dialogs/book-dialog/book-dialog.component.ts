@@ -61,7 +61,7 @@ export class BookDialogComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
       if(changes["indexToUpdate"].currentValue !== changes["indexToUpdate"].previousValue) {
         let indexToUpdate = changes["indexToUpdate"].currentValue;
-        if(indexToUpdate === null) {
+        if(indexToUpdate === null || !this._bookService.selectedBooks[indexToUpdate]) {
           this.bookModel = {
             isbn: "",
             title: "",

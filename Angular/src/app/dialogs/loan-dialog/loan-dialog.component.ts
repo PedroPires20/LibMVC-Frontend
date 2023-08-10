@@ -59,7 +59,8 @@ export class LoanDialogComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
       if(changes["indexToUpdate"].currentValue !== changes["indexToUpdate"].previousValue) {
         let indexToUpdate = changes["indexToUpdate"].currentValue;
-        if(indexToUpdate === null) {
+        console.log(indexToUpdate);
+        if(indexToUpdate === null || !this._loansService.selectedLoans[indexToUpdate]) {
           this.loanModel = {
             reader: "",
             phone: "",

@@ -54,12 +54,12 @@ table >>> tbody tr:last-child td {
     border-bottom: none;
 }
 
-.menu-active {
+:host.menu-active {
     overflow: hidden;
     position: relative;
 }
 
-.menu-active table::before {
+:host.menu-active table::before {
     content: "";
     display: block;
     width: 100%;

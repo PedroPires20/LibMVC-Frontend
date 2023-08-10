@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-table-card',
@@ -10,5 +10,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./table-card.component.css']
 })
 export class TableCardComponent {
-
+  
+  @HostBinding("class.menu-active")
+  @Input()
+  contextMenuActive = false;
 }

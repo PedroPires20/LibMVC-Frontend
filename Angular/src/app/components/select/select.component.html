@@ -1,5 +1,10 @@
 <div
-    [class]="{ container: true, 'container-form': formVariant, 'container-active': active }"
+    [class]="{
+        container: true,
+        'container-form': formVariant,
+        'container-active': active,
+        'container-error': error
+    }"
     tabindex="0"
     (click)="active = true"
     (keydown.enter)="active = false"
@@ -10,12 +15,13 @@
                 {{ label }}
             </div>
             <input
+                #inputModel="ngModel"
                 type="text"
                 class="selected-option"
                 [name]="name"
-                [placeholder]="placeholder"
+                [placeholder]="inputPlaceholder"
                 [required]="required"
-                [value]="generateInputValue()"
+                [ngModel]="generateInputValue()"
             />
         </div>
         <button (click)="handleClearButtonClick($event)">

@@ -1,5 +1,5 @@
-import { Component, Input, OnChanges, ElementRef, HostListener, SimpleChanges, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, Input, OnChanges, ElementRef, HostListener, SimpleChanges, forwardRef, ViewChild, Host, Optional } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-select',
@@ -14,8 +14,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class SelectComponent implements OnChanges, ControlValueAccessor {
-  constructor(selectElement: ElementRef) {
-    this.selectElementRef = selectElement;
+  constructor(selectElement: ElementRef, @Host() @Optional() parentForm?: NgForm) {
+    this._selectElementRef = selectElement;
+    this._parentForm = parentForm || null;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -33,7 +34,7 @@ export class SelectComponent implements OnChanges, ControlValueAccessor {
 
   @HostListener("document:click", ["$event"])
   handleDocumentClick(event: MouseEvent) {
-    if(!this.selectElementRef.nativeElement.contains(event.target)) {
+    if(!this._selectElementRef.nativeElement.contains(event.target)) {
       this.active = false;
     }
   }
@@ -102,6 +103,15 @@ export class SelectComponent implements OnChanges, ControlValueAccessor {
     return "";
   }
 
+  get error() {
+    return this._inputModel?.invalid &&
+      (this._inputModel?.dirty || this._parentForm?.submitted);
+  }
+
+  get inputPlaceholder() {
+    return (this.error && this.errorMessage !== "") ? this.errorMessage : this.placeholder;
+  }
+
   @Input() name = "";
   @Input() label = "";
   @Input() options: string[] = [];
@@ -118,5 +128,10 @@ export class SelectComponent implements OnChanges, ControlValueAccessor {
   onChange: any = () => {};
   optionValuesMap = (this.optionValues.length > 0) ? this.optionValues : this.options;
   selectedIndexes: number[] = [];
-  private selectElementRef: ElementRef;
+
+  @ViewChild("inputModel", { static: false })
+  private _inputModel!: NgModel;
+
+  private _selectElementRef: ElementRef;
+  private _parentForm: NgForm | null;
 }

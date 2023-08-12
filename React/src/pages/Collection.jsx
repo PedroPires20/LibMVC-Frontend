@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useBooks } from "../hooks/useBooks";
+import { useBookFields } from "../hooks/useBookFields";
 import Button from "../components/button/Button";
 import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../components/table_card/TableCard";
 import TableStatus from "../components/table_status/TableStatus";
@@ -20,6 +21,7 @@ export default function Collection() {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [deleteStatus, setDeleteStatus] = useState({ deleting: false, error: false });
     const { books, loadStatus, queryBooks, createBook, updateBook, deleteBook } = useBooks();
+    const { refreshBookFields, ...bookFields } = useBookFields();
 
     useEffect(() => {
         document.title = "SimpleLibrary - Acervo"
@@ -42,13 +44,16 @@ export default function Collection() {
         }
     }
 
-    function handleBookDialogSubmit(bookData) {
+    async function handleBookDialogSubmit(bookData) {
+        let result;
         if(targetBookIndex !== null) {
             setTargetBookIndex(null);
-            return updateBook(targetBookIndex, bookData);
+            result = await updateBook(targetBookIndex, bookData);
         }else {
-            return createBook(bookData);
+            result = await createBook(bookData);
         }
+        refreshBookFields();
+        return result;
     }
 
     async function handleDeleteDialog(option) {
@@ -61,6 +66,7 @@ export default function Collection() {
                 return;
             }else {
                 setDeleteStatus({ deleting: false, error: false });
+                refreshBookFields();
             }
         }
         setShowDeleteDialog(false);
@@ -81,7 +87,11 @@ export default function Collection() {
                     </div>
                 </Button>
             </div>
-            <CollectionInputs onSubmit={queryBooks} disabled={loadStatus.loading || loadStatus.error}/>
+            <CollectionInputs
+                bookFields={bookFields}
+                onSubmit={queryBooks}
+                disabled={loadStatus.loading || loadStatus.error}
+            />
             <TableCard menuActive={showContextMenu}>
                 <TableHeader>
                     <TableRow>

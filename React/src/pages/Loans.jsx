@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useLoans } from "../hooks/useLoans";
+import { useLoanFields } from "../hooks/useLoanFields";
 import Button from "../components/button/Button";
 import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../components/table_card/TableCard";
 import TableStatus from "../components/table_status/TableStatus";
@@ -20,6 +21,7 @@ export default function Loans() {
     const [showFinishDialog, setShowFinishDialog] = useState(false);
     const [loanFinishStatus, setLoanFinishStatus] = useState({ processing: false, error: false });
     const { loans, loadStatus, filterLoans, createLoan, updateLoan, deleteLoan } = useLoans();
+    const { refreshLoanFields, ...loanFields } = useLoanFields();
 
     useEffect(() => {
         document.title = "SimpleLibrary - Empréstimos"
@@ -42,13 +44,16 @@ export default function Loans() {
         }
     }
 
-    function handleLoanDialogSubmit(loanData) {
+    async function handleLoanDialogSubmit(loanData) {
+        let result;
         if(targetLoanIndex !== null) {
             setTargetLoanIndex(null);
-            return updateLoan(targetLoanIndex, loanData);
+            result = await updateLoan(targetLoanIndex, loanData);
         }else {
-            return createLoan(loanData);
+            result = await createLoan(loanData);
         }
+        refreshLoanFields();
+        return result;
     }
     
     async function handleFinishDialog(action) {
@@ -61,6 +66,7 @@ export default function Loans() {
                 return;
             }else {
                 setLoanFinishStatus({ processing: false, error: false });
+                refreshLoanFields();
             }
         }
         setShowFinishDialog(false);
@@ -82,6 +88,7 @@ export default function Loans() {
                 </Button>
             </div>
             <LoanInputs
+                loanFields={loanFields}
                 onSubmit={filterLoans}
                 disabled={loadStatus.loading || loadStatus.error}
             />

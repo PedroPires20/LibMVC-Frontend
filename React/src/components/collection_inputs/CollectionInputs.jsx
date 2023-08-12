@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-import { useBookFields } from "../../hooks/useBookFields";
 import SearchBox from "../search_box/SearchBox";
 import Select from "../select/Select";
 import Button from "../button/Button";
@@ -25,10 +24,10 @@ function getOptionsFromField(field) {
 }
 
 
-export default function CollectionInputs({ onSubmit, disabled }) {
+export default function CollectionInputs({ onSubmit, disabled, bookFields }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [filters, setFilters] = useState(DEFAULT_FILTER_VALUES);
-    const { authors, categories, publishers, formats } = useBookFields();
+    const { authors, categories, publishers, formats } = bookFields;
 
     function handleSelectChange(name, option) {
         setFilters({ ...filters, [name]: option });

@@ -17,52 +17,60 @@ export function useBookFields() {
         }
     }
 
-    useEffect(() => {
-        const loadBookFields = async () => {
-            try {
-                let authorsData = await api.fetchBookFieldValues("author");
-                setAuthors({
-                    loading: false,
-                    error: false,
-                    fieldData: authorsData.filter((value) => value && value !== "")
-                });
-            }catch(exception) {
-                setAuthors({ loading: false, error: exception.message || true });
-            }
-            try {
-                let categoriesData = await api.fetchBookFieldValues("categories");
-                setCategories({
-                    loading: false,
-                    error: false,
-                    fieldData: categoriesData.filter((value) => value && value !== "")
-                });
-            }catch(exception) {
-                setCategories({ loading: false, error: exception.message || true });
-            }
-            try {
-                let publishersData = await api.fetchBookFieldValues("publisher");
-                setPublishers({
-                    loading: false,
-                    error: false,
-                    fieldData: publishersData.filter((value) => value && value !== "")
-                });
-            }catch(exception) {
-                setPublishers({ loading: false, error: exception.message || true });
-            }
-            try {
-                let formatsData = await api.fetchBookFieldValues("format");
-                setFormats({
-                    loading: false,
-                    error: false,
-                    fieldData: formatsData.filter((value) => value && value !== "")
-                });
-            }catch(exception) {
-                setFormats({ loading: false, error: exception.message || true });
-            }
+    async function loadBookFields() {
+        try {
+            let authorsData = await api.fetchBookFieldValues("author");
+            setAuthors({
+                loading: false,
+                error: false,
+                fieldData: authorsData.filter((value) => value && value !== "")
+            });
+        }catch(exception) {
+            setAuthors({ loading: false, error: exception.message || true });
         }
-            
+        try {
+            let categoriesData = await api.fetchBookFieldValues("categories");
+            setCategories({
+                loading: false,
+                error: false,
+                fieldData: categoriesData.filter((value) => value && value !== "")
+            });
+        }catch(exception) {
+            setCategories({ loading: false, error: exception.message || true });
+        }
+        try {
+            let publishersData = await api.fetchBookFieldValues("publisher");
+            setPublishers({
+                loading: false,
+                error: false,
+                fieldData: publishersData.filter((value) => value && value !== "")
+            });
+        }catch(exception) {
+            setPublishers({ loading: false, error: exception.message || true });
+        }
+        try {
+            let formatsData = await api.fetchBookFieldValues("format");
+            setFormats({
+                loading: false,
+                error: false,
+                fieldData: formatsData.filter((value) => value && value !== "")
+            });
+        }catch(exception) {
+            setFormats({ loading: false, error: exception.message || true });
+        }
+    }
+
+    useEffect(() => {
         loadBookFields();
     }, []);
 
-    return { authors, categories, appendCategory, publishers, formats };
+    function refreshBookFields() {
+        setAuthors(DEFAULT_FIELD_STATE);
+        setCategories(DEFAULT_FIELD_STATE);
+        setPublishers(DEFAULT_FIELD_STATE);
+        setFormats(DEFAULT_FIELD_STATE);
+        loadBookFields();
+    }
+
+    return { authors, categories, appendCategory, publishers, formats, refreshBookFields };
 }

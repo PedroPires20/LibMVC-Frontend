@@ -1,0 +1,35 @@
+{
+  "name": "simplelibrary-svelte",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "This package contains the implementation of the frontend for the SimpleLibrary project based on the Svelte framework. This package is responsible for the build/debugging of the frontend code and depends on the \"simplelibrary-backend\" package to provide the REST API it expects as the backend.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PedroPires20/SimpleLibrary-Frontend.git"
+  },
+  "keywords": [
+    "SimpleLibrary",
+    "frontend",
+    "POC",
+    "Final",
+    "Project",
+    "frameworks"
+  ],
+  "author": "Pedro Dias Pires",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PedroPires20/SimpleLibrary-Frontend/issues"
+  },
+  "homepage": "https://github.com/PedroPires20/SimpleLibrary-Frontend#readme",
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^2.4.2",
+    "svelte": "^4.0.5",
+    "vite": "^4.4.5"
+  }
+}

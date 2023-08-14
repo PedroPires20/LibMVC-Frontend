@@ -1,4 +1,5 @@
 <script>
+    import { useLocation, link } from "svelte-routing";
     import { cubicOut } from "svelte/easing";
 
     function menuSlideTransition(node, { duration = 300 }) {
@@ -7,6 +8,8 @@
             css: (t) => `transform: translate(-${100 * (1 - cubicOut(t))}%)`
         }
     }
+
+    let location = useLocation();
 </script>
 
 <style>
@@ -37,6 +40,17 @@
         border-bottom: 1px solid #4e4539;
     }
 
+    a.selected{
+        background-color: #4e4539;
+        position: relative;
+        cursor: default;
+    }
+
+    a.selected:hover {
+        background-color: #4e4539;
+        cursor: default;
+    }
+
     a {
         display: block;
         width: 100%;
@@ -54,10 +68,24 @@
 <nav transition:menuSlideTransition>
     <ul>
         <li>
-            <a>Acervo</a>
+            <a
+                use:link 
+                href="/collection"
+                class:selected={$location.pathname === "/collection"}
+                on:click
+            >
+                Acervo
+            </a>
         </li>
         <li>
-            <a>Empréstimos</a>
+            <a
+                use:link
+                href="/loans"
+                class:selected={$location.pathname === "/loans"}
+                on:click
+            >
+                Empréstimos
+            </a>
         </li>
     </ul>
 </nav>

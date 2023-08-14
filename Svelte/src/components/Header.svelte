@@ -44,5 +44,5 @@
     <h1>SimpleLibrary</h1>
 </header>
 {#if menuVisible}
-    <Menu/>
+    <Menu on:click={() => menuVisible = false}/>
 {/if}

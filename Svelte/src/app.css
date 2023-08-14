@@ -53,6 +53,16 @@ input:-webkit-autofill:active {
   transition: background-color 9999s ease-in-out 0s;
 }
 
+.page-container {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2rem;
+  margin-top: 5rem;
+  padding: 2rem 4rem;
+  height: calc(100vh - 5rem);
+  min-height: 600px;
+}
+
 .click-ripple-effect {
   background-color: rgba(255, 255, 255, 0);
   background-position: center;

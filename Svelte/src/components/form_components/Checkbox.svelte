@@ -4,7 +4,7 @@
     export let name = '';
     export let label = '';
     export let supportingText = '';
-    export let value;
+    export let value = undefined;
 </script>
 
 <style>

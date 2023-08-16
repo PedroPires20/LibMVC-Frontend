@@ -4,7 +4,7 @@
     import deleteIcon from "../assets/delete_icon.svg";
     import editIcon from "../assets/edit_icon.svg";
 
-    export let position;
+    export let position = {};
     export let loanVariant = false;
 
     const dispatch = createEventDispatcher();

@@ -1,6 +1,6 @@
 <script>
     export let width = "25rem";
-    export let value;
+    export let value = null;
 
     $: indefinite = (typeof value !== "number") || value < 0 || value > 100;
 </script>

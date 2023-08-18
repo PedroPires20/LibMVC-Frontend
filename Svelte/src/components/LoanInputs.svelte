@@ -64,14 +64,12 @@
             <DatePicker
                 name="startDate"
                 label="Data empréstimo"
-                placeholder="Todas"
             />
         </div>
         <div class="input-container">
             <DatePicker
                 name="endDate"
                 label="Data devolução"
-                placeholder="Todas"
             />
         </div>
         <div class="input-container">

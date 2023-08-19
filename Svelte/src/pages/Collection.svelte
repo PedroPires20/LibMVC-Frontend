@@ -1,5 +1,6 @@
 <script>
     import CollectionInputs from "../components/CollectionInputs.svelte";
+    import TableStatus from "../components/table_components/TableStatus.svelte";
     import TableCard from "../components/table_components/TableCard.svelte";
     import TableHeader from "../components/table_components/TableHeader.svelte";
     import TableBody from "../components/table_components/TableBody.svelte";
@@ -7,6 +8,9 @@
     import TableCell from "../components/table_components/TableCell.svelte";
     import Button from "../components/Button.svelte";
     import addIcon from "../assets/add_icon.svg";
+    import { createBooks } from "../stores/book_store";
+
+    let selectedBooks = createBooks();
 </script>
 
 <style>
@@ -70,44 +74,64 @@
             </TableRow>
         </TableHeader>
         <TableBody>
-            <TableRow>
-                <TableCell>
-                    8550804606
-                </TableCell>
-                <TableCell minWidth="15rem" wrap>
-                    Arquitetura limpa: O guia do artesão para estrutura e design de software
-                </TableCell>
-                <TableCell wrap>
-                    Robert C. Martin
-                </TableCell>
-                <TableCell minWidth="12rem" wrap>
-                    Computação; Informática; Mídias Digitais
-                </TableCell>
-                <TableCell>
-                    Alta Books
-                </TableCell>
-                <TableCell>
-                    1ª edição
-                </TableCell>
-                <TableCell>
-                    Físico (capa comum)
-                </TableCell>
-                <TableCell>
-                    23/04/2019
-                </TableCell>
-                <TableCell>
-                    436
-                </TableCell>
-                <TableCell>
-                    9
-                </TableCell>
-                <TableCell minWidth="20rem" wrap>
-                    As regras universais de arquitetura de software aumentam dramaticamente a produtividade dos desenvolvedores ao longo da vida dos sistemas de software. Agora, aproveitando o sucesso dos seus best-sellers "Código Limpo" e "O Codificador Limpo", o lendário artesão de software Robert C. Martin (“Uncle Bob”) vai revelar essas regras e ajudar o leitor a aplicá-las.
-                </TableCell>
-                <TableCell>
-                    Estante 2, prateleira 1 seção 6
-                </TableCell>
-            </TableRow>
+            {#await selectedBooks.queryBooks()}
+                <TableStatus
+                    message="Carregando dados do acervo..."
+                    loading
+                />
+            {:then}
+                {#if $selectedBooks.length > 0}
+                    {#each $selectedBooks as book}
+                        <TableRow>
+                            <TableCell>
+                                {book.isbn}
+                            </TableCell>
+                            <TableCell minWidth="15rem" wrap>
+                                {book.title}
+                            </TableCell>
+                            <TableCell wrap>
+                                {book.author}
+                            </TableCell>
+                            <TableCell minWidth="12rem" wrap>
+                                {book.categories}
+                            </TableCell>
+                            <TableCell>
+                                {book.publisher}
+                            </TableCell>
+                            <TableCell>
+                                {book.edition}
+                            </TableCell>
+                            <TableCell>
+                                {book.format}
+                            </TableCell>
+                            <TableCell>
+                                {book.date}
+                            </TableCell>
+                            <TableCell>
+                                {book.pages}
+                            </TableCell>
+                            <TableCell>
+                                {book.copies}
+                            </TableCell>
+                            <TableCell minWidth="20rem" wrap>
+                                {book.description}
+                            </TableCell>
+                            <TableCell>
+                                {book.location}
+                            </TableCell>
+                        </TableRow>
+                    {/each}
+                {:else}
+                    <TableStatus
+                        message="Nenhum livro foi encontrado"
+                    />
+                {/if}
+            {:catch}
+                <TableStatus
+                    message="Ocorreu um erro ao recuperar os dados do acervo. Por favor, tente novamente."
+                    error
+                />
+            {/await}
         </TableBody>
     </TableCard>
 </main>

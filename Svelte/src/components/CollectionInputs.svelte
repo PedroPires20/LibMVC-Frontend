@@ -1,7 +1,18 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import SearchBox from "./SearchBox.svelte";
     import Select from "./form_components/Select.svelte";
     import Button from "./Button.svelte";
+
+    const dispatch = createEventDispatcher();
+
+    let query = "";
+    let filters = {
+        author: "",
+        categories: [],
+        publisher: "",
+        format: ""
+    };
 </script>
 
 <style>
@@ -66,13 +77,14 @@
     </div>
     <div class="inputs">
         <div class="search-box-container">
-            <SearchBox/>
+            <SearchBox bind:searchQuery={query}/>
         </div>
         <div class="select-container">
             <Select
                 name="author"
                 label="Autor"
                 placeholder="Todos"
+                bind:value={filters.author}
             />
         </div>
         <div class="select-container">
@@ -81,6 +93,7 @@
                 label="Categoria"
                 placeholder="Todas"
                 multiple
+                bind:value={filters.categories}
             />
         </div>
         <div class="select-container">
@@ -88,6 +101,7 @@
                 name="publisher"
                 label="Editora"
                 placeholder="Todas"
+                bind:value={filters.publisher}
             />
         </div>
         <div class="select-container">
@@ -95,13 +109,20 @@
                 name="format"
                 label="Formato"
                 placeholder="Todos"
+                bind:value={filters.format}
             />
         </div>
         <div class="buttons-container">
-            <Button variant="secondary">
+            <Button
+                variant="secondary"
+                on:click={() => dispatch("submit", { query: "", filters: {} })}
+            >
                 Redefinir
             </Button>
-            <Button variant="secondary">
+            <Button
+                variant="secondary"
+                on:click={() => dispatch("submit", { query, filters })}
+            >
                 Pesquisar
             </Button>
         </div>

@@ -66,6 +66,7 @@ export default function BookDialog({ updateTarget, onClose, onSubmit }) {
             setCategoryAdd(false);
         }else if(event.key === "Escape") {
             setCategoryAdd(false);
+            setNewCategory("");
         }
     }
 

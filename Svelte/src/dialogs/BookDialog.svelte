@@ -5,32 +5,36 @@
     import Select from "../components/form_components/Select.svelte";
     import DatePicker from "../components/form_components/DatePicker.svelte";
     import TextArea from "../components/form_components/TextArea.svelte";
+    import { createBookFields } from "../stores/book_fields_store";
 
     const NEW_CATEGORY_LABEL = "Nova categoria";
     const dispatch = createEventDispatcher();
 
     export let updateTarget = undefined;
 
-    let bookCategories = ['a'];
+    let { categories } = createBookFields();
     let selectedCategories = [];
     let addCategory = false;
     let newCategory = "";
 
     function handleCategoryAdd(event) {
         if(event.key === "Enter") {
-            if(newCategory && !bookCategories.includes(newCategory)) {
-                bookCategories = [...bookCategories, newCategory];
-                selectedCategories = [...selectedCategories, newCategory];
+            if(newCategory && newCategory !== "") {
+                categories.appendCategory(newCategory);
+                if(!selectedCategories.includes(newCategory)) {
+                    selectedCategories = [...selectedCategories, newCategory];
+                }
             }
             newCategory = "";
             addCategory = false;
         }else if(event.key === "Escape") {
             addCategory = false;
+            newCategory = "";
         }
     }
 
     $: isUpdateDialog = !!updateTarget;
-    $: categoryOptions = [...bookCategories, NEW_CATEGORY_LABEL];
+    $: categoryOptions = [...$categories.fieldData, NEW_CATEGORY_LABEL];
     $: if(selectedCategories.includes(NEW_CATEGORY_LABEL)) {
         selectedCategories = selectedCategories.filter((category) => category !== NEW_CATEGORY_LABEL);
         addCategory = true;

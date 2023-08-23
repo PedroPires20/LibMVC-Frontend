@@ -31,8 +31,11 @@ export function createBookFields() {
 
     function appendCategory(newCategory) {
         availableFields.categories.update((categoryValues) => {
-            if(!categoryValues.includes(newCategory)) {
-                return [...categoryValues, newCategory];
+            if(!categoryValues.fieldData.includes(newCategory)) {
+                return {
+                    ...categoryValues,
+                    fieldData: [ ...categoryValues.fieldData, newCategory ]
+                };
             }
             return categoryValues;
         });

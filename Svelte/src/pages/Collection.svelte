@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
     import CollectionInputs from "../components/CollectionInputs.svelte";
     import TableStatus from "../components/table_components/TableStatus.svelte";
     import TableCard from "../components/table_components/TableCard.svelte";
@@ -10,7 +11,19 @@
     import addIcon from "../assets/add_icon.svg";
     import { createBooks } from "../stores/book_store";
 
-    let selectedBooks = createBooks();
+    let { loadStatus, selectedBooks, queryBooks } = createBooks();
+
+    onMount(queryBooks);
+
+    function getStatusMessage(loadStatus) {
+        if(loadStatus.loading) {
+            return "Carregando dados do acervo...";
+        }
+        if(loadStatus.error) {
+            return "Ocorreu um erro ao recuperar os dados do acervo. Por favor, tente novamente.";
+        }
+        return "Nenhum livro foi encontrado";
+    }
 </script>
 
 <style>
@@ -74,64 +87,54 @@
             </TableRow>
         </TableHeader>
         <TableBody>
-            {#await selectedBooks.queryBooks()}
+            {#if $loadStatus.loading || $loadStatus.error || !$selectedBooks?.length}
                 <TableStatus
-                    message="Carregando dados do acervo..."
-                    loading
+                    loading={$loadStatus.loading}
+                    error={$loadStatus.error}
+                    message={getStatusMessage($loadStatus)}
                 />
-            {:then}
-                {#if $selectedBooks.length > 0}
-                    {#each $selectedBooks as book}
-                        <TableRow>
-                            <TableCell>
-                                {book.isbn}
-                            </TableCell>
-                            <TableCell minWidth="15rem" wrap>
-                                {book.title}
-                            </TableCell>
-                            <TableCell wrap>
-                                {book.author}
-                            </TableCell>
-                            <TableCell minWidth="12rem" wrap>
-                                {book.categories}
-                            </TableCell>
-                            <TableCell>
-                                {book.publisher}
-                            </TableCell>
-                            <TableCell>
-                                {book.edition}
-                            </TableCell>
-                            <TableCell>
-                                {book.format}
-                            </TableCell>
-                            <TableCell>
-                                {book.date}
-                            </TableCell>
-                            <TableCell>
-                                {book.pages}
-                            </TableCell>
-                            <TableCell>
-                                {book.copies}
-                            </TableCell>
-                            <TableCell minWidth="20rem" wrap>
-                                {book.description}
-                            </TableCell>
-                            <TableCell>
-                                {book.location}
-                            </TableCell>
-                        </TableRow>
-                    {/each}
-                {:else}
-                    <TableStatus
-                        message="Nenhum livro foi encontrado"
-                    />
-                {/if}
-            {:catch}
-                <TableStatus
-                    message="Ocorreu um erro ao recuperar os dados do acervo. Por favor, tente novamente."
-                    error
-                />
-            {/await}
+            {:else}
+                {#each $selectedBooks as book}
+                    <TableRow>
+                        <TableCell>
+                            {book.isbn}
+                        </TableCell>
+                        <TableCell minWidth="15rem" wrap>
+                            {book.title}
+                        </TableCell>
+                        <TableCell wrap>
+                            {book.author}
+                        </TableCell>
+                        <TableCell minWidth="12rem" wrap>
+                            {book.categories}
+                        </TableCell>
+                        <TableCell>
+                            {book.publisher}
+                        </TableCell>
+                        <TableCell>
+                            {book.edition}
+                        </TableCell>
+                        <TableCell>
+                            {book.format}
+                        </TableCell>
+                        <TableCell>
+                            {book.date}
+                        </TableCell>
+                        <TableCell>
+                            {book.pages}
+                        </TableCell>
+                        <TableCell>
+                            {book.copies}
+                        </TableCell>
+                        <TableCell minWidth="20rem" wrap>
+                            {book.description}
+                        </TableCell>
+                        <TableCell>
+                            {book.location}
+                        </TableCell>
+                    </TableRow>
+                {/each}
+            {/if}
         </TableBody>
     </TableCard>
 </main>

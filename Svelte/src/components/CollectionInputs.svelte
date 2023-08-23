@@ -3,7 +3,11 @@
     import SearchBox from "./SearchBox.svelte";
     import Select from "./form_components/Select.svelte";
     import Button from "./Button.svelte";
-    import { createBookFields } from "../stores/book_fields_store";
+
+    export let author = [];
+    export let categories = [];
+    export let publisher = [];
+    export let format = [];
 
     const dispatch = createEventDispatcher();
     const FIELD_LOADING_MESSAGE = "Carregando...";
@@ -18,9 +22,6 @@
         }
         return field.fieldData;
     }   
-
-
-    let { author, categories, publisher, format, refreshBookFields } = createBookFields();
 
     let query = "";
     let filters = {

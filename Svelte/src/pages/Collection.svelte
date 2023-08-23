@@ -10,8 +10,10 @@
     import Button from "../components/Button.svelte";
     import addIcon from "../assets/add_icon.svg";
     import { createBooks } from "../stores/book_store";
+    import { createBookFields } from "../stores/book_fields_store";
 
     let { loadStatus, selectedBooks, queryBooks } = createBooks();
+    let { refreshBookFields, ...bookFields } = createBookFields();
 
     onMount(queryBooks);
 
@@ -68,7 +70,7 @@
             </div>
         </Button>
     </div>
-    <CollectionInputs/>
+    <CollectionInputs {...bookFields}/>
     <TableCard>
         <TableHeader>
             <TableRow>

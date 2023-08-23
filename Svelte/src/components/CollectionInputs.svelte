@@ -3,8 +3,24 @@
     import SearchBox from "./SearchBox.svelte";
     import Select from "./form_components/Select.svelte";
     import Button from "./Button.svelte";
+    import { createBookFields } from "../stores/book_fields_store";
 
     const dispatch = createEventDispatcher();
+    const FIELD_LOADING_MESSAGE = "Carregando...";
+    const FIELD_LOADING_ERROR = "Ocorreu um erro ao carregar as opções do filtro";
+
+    function getOptionsFromField(field) {
+        if(field.loading) {
+            return [FIELD_LOADING_MESSAGE];
+        }
+        if(field.error) {
+            return [FIELD_LOADING_ERROR];
+        }
+        return field.fieldData;
+    }   
+
+
+    let { author, categories, publisher, format, refreshBookFields } = createBookFields();
 
     let query = "";
     let filters = {
@@ -84,6 +100,7 @@
                 name="author"
                 label="Autor"
                 placeholder="Todos"
+                options={getOptionsFromField($author)}
                 bind:value={filters.author}
             />
         </div>
@@ -93,6 +110,7 @@
                 label="Categoria"
                 placeholder="Todas"
                 multiple
+                options={getOptionsFromField($categories)}
                 bind:value={filters.categories}
             />
         </div>
@@ -101,6 +119,7 @@
                 name="publisher"
                 label="Editora"
                 placeholder="Todas"
+                options={getOptionsFromField($publisher)}
                 bind:value={filters.publisher}
             />
         </div>
@@ -109,6 +128,7 @@
                 name="format"
                 label="Formato"
                 placeholder="Todos"
+                options={getOptionsFromField($format)}
                 bind:value={filters.format}
             />
         </div>

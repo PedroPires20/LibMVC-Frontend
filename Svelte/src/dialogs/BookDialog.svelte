@@ -7,13 +7,26 @@
     import TextArea from "../components/form_components/TextArea.svelte";
     import { createBookFields } from "../stores/book_fields_store";
 
+    const DEFAULT_BOOK_DATA = {
+        isbn: "",
+        title: "",
+        author: "",
+        categories: "",
+        publisher: "",
+        edition: "",
+        format: "",
+        date: "",
+        pages: "",
+        copies: "",
+        description: "",
+        location: ""
+    };
     const NEW_CATEGORY_LABEL = "Nova categoria";
     const dispatch = createEventDispatcher();
 
     export let updateTarget = undefined;
 
     let { categories } = createBookFields();
-    let selectedCategories = [];
     let addCategory = false;
     let newCategory = "";
 
@@ -21,8 +34,8 @@
         if(event.key === "Enter") {
             if(newCategory && newCategory !== "") {
                 categories.appendCategory(newCategory);
-                if(!selectedCategories.includes(newCategory)) {
-                    selectedCategories = [...selectedCategories, newCategory];
+                if(!bookData.categories.includes(newCategory)) {
+                    bookData.categories = [...bookData.categories, newCategory];
                 }
             }
             newCategory = "";
@@ -33,10 +46,21 @@
         }
     }
 
+    function handleFormSubmit(event) {
+        const formElement = event.target;
+        if(!formElement.checkValidity()) {
+            const firstInvalidInput = formElement.querySelector(":invalid");
+            firstInvalidInput && firstInvalidInput.focus();
+        }else {
+            dispatch("formsubmit", bookData);
+        }
+    }
+
     $: isUpdateDialog = !!updateTarget;
+    $: bookData = updateTarget?.toFormData() || DEFAULT_BOOK_DATA;
     $: categoryOptions = [...$categories.fieldData, NEW_CATEGORY_LABEL];
-    $: if(selectedCategories.includes(NEW_CATEGORY_LABEL)) {
-        selectedCategories = selectedCategories.filter((category) => category !== NEW_CATEGORY_LABEL);
+    $: if(bookData.categories.includes(NEW_CATEGORY_LABEL)) {
+        bookData.categories = bookData.categories.filter((category) => category !== NEW_CATEGORY_LABEL);
         addCategory = true;
     }
 </script>
@@ -94,13 +118,18 @@
             {(isUpdateDialog) ? "Edite, abaixo, as informações desejadas e confirme suas alterações"
                 : "Preencha as informações abaixo para cadastrar um novo livro"}
         </p>
-        <form name="book-dialog-form" novalidate on:submit|preventDefault>
+        <form
+            name="book-dialog-form"
+            novalidate
+            on:submit|preventDefault={(event) => handleFormSubmit(event)}
+        >
             <Input
                 name="isbn"
                 type="text"
                 label="ISBN"
                 supportingText="Entre o ISBN do livro"
                 required
+                bind:value={bookData.isbn}
             />
             <Input
                 name="title"
@@ -108,6 +137,7 @@
                 label="Título"
                 supportingText="Entre o título do livro"
                 required
+                bind:value={bookData.title}
             />
             <Input
                 name="author"
@@ -115,6 +145,7 @@
                 label="Autor(es)"
                 supportingText="Entre o(s) autor(es) do livro"
                 required
+                bind:value={bookData.author}
             />
             {#if addCategory}
                 <Input
@@ -134,7 +165,7 @@
                     options={categoryOptions}
                     formVariant
                     multiple
-                    bind:value={selectedCategories}
+                    bind:value={bookData.categories}
                 />
             {/if}
             <Input
@@ -142,24 +173,28 @@
                 type="text"
                 label="Editora"
                 supportingText="Entre a editora do livro"
+                bind:value={bookData.publisher}
             />
             <Input
                 name="edition"
                 type="text"
                 label="Edição"
                 supportingText="Entre a edição do livro"
+                bind:value={bookData.edition}
             />
             <Input
                 name="format"
                 type="text"
                 label="Formato"
                 supportingText="Entre o formato do livro"
+                bind:value={bookData.format}
             />
             <DatePicker
                 name="date"
                 label="Data de publicação"
                 supportingText="Selecione a data de publicação do livro"
                 formVariant
+                bind:value={bookData.date}
             />
             <Input
                 name="pages"
@@ -168,6 +203,7 @@
                 supportingText="Entre o número de páginas do livro"
                 minValue="1"
                 required
+                bind:value={bookData.pages}
             />
             <Input
                 name="copies"
@@ -176,17 +212,20 @@
                 supportingText="Entre o número de cópias disponíveis do livro"
                 minValue="1"
                 required
+                bind:value={bookData.copies}
             />
             <TextArea
                 name="description"
                 label="Descrição"
                 supportingText="Entre uma breve descrição para o livro"
+                bind:value={bookData.description}
             />
             <Input
                 name="location"
                 type="text"
                 label="Localização"
                 supportingText="Entre a localização do livro no acervo"
+                bind:value={bookData.location}
             />
             <div class="buttons">
                 <button

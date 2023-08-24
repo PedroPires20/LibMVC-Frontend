@@ -27,9 +27,22 @@ export function createBooks() {
         }
     }
 
+    async function createBook(formData) {
+        let newBook = Book.fromFormData(formData);
+        try {
+            let createdId = await api.createBook(newBook.toRequestBody());
+            selectedBooks.update((books) => [...books, Book.fromFormData(formData, createdId)]);
+        }catch(exception) {
+            console.error("Error creating book: " + exception);
+            return { error: true, errorMessage: exception?.message };
+        }
+        return { error: false };
+    }
+
     return {
         loadStatus: { subscribe: loadStatus.subscribe },
         selectedBooks: { subscribe: selectedBooks.subscribe },
-        queryBooks
+        queryBooks,
+        createBook
     };
 }

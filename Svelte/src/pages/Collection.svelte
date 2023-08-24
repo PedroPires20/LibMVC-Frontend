@@ -7,13 +7,17 @@
     import TableBody from "../components/table_components/TableBody.svelte";
     import TableRow from "../components/table_components/TableRow.svelte";
     import TableCell from "../components/table_components/TableCell.svelte";
+    import BookDialog from "../dialogs/BookDialog.svelte";
     import Button from "../components/Button.svelte";
     import addIcon from "../assets/add_icon.svg";
     import { createBooks } from "../stores/book_store";
     import { createBookFields } from "../stores/book_fields_store";
 
-    let { loadStatus, selectedBooks, queryBooks } = createBooks();
+    let { loadStatus, selectedBooks, queryBooks, createBook } = createBooks();
     let { refreshBookFields, ...bookFields } = createBookFields();
+
+    let showBookDialog = false;
+    let saveStatus = { saving: false, error: false };
 
     onMount(queryBooks);
 
@@ -25,6 +29,22 @@
             return "Ocorreu um erro ao recuperar os dados do acervo. Por favor, tente novamente.";
         }
         return "Nenhum livro foi encontrado";
+    }
+    
+    async function handleBookFormSubmit(event) {
+        const formData = event.detail;
+        saveStatus.saving = true;
+        let result = await createBook(formData);
+        if(result.error) {
+            saveStatus = {
+                saving: false,
+                error: true,
+                errorMessage: result.errorMessage
+            };
+        }else {
+            showBookDialog = false;
+            saveStatus = { saving: false, error: false };
+        }
     }
 </script>
 
@@ -63,7 +83,7 @@
 <main class="page-container">
     <div class="header">
         <h2>Acervo</h2>
-        <Button>
+        <Button on:click={() => showBookDialog = true}>
             <div class="add-button">
                 <img src={addIcon} alt="adicionar"/>
                 <span>Novo livro</span>
@@ -139,4 +159,11 @@
             {/if}
         </TableBody>
     </TableCard>
+    {#if showBookDialog}
+        <BookDialog
+            {saveStatus}
+            on:dialogclose={() => showBookDialog = false}
+            on:formsubmit={handleBookFormSubmit}
+        />
+    {/if}
 </main>

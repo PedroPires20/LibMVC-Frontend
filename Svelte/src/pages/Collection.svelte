@@ -9,17 +9,27 @@
     import TableCell from "../components/table_components/TableCell.svelte";
     import ContextMenu from "../components/ContextMenu.svelte";
     import BookDialog from "../dialogs/BookDialog.svelte";
+    import DialogBox from "../components/DialogBox.svelte";
+    import StateDialog from "../dialogs/StateDialog.svelte";
     import Button from "../components/Button.svelte";
     import addIcon from "../assets/add_icon.svg";
     import { createBooks } from "../stores/book_store";
     import { createBookFields } from "../stores/book_fields_store";
 
-    let { loadStatus, selectedBooks, queryBooks, createBook, updateBook } = createBooks();
+    let {
+        loadStatus,
+        selectedBooks,
+        queryBooks,
+        createBook,
+        updateBook,
+        deleteBook
+    } = createBooks();
     let { refreshBookFields, ...bookFields } = createBookFields();
 
     let showContextMenu = false;
     let contextMenuPosition = { x: 0, y: 0, targetIndex: null };
     let showBookDialog = false;
+    let showDeleteDialog = false;
     let saveStatus = { saving: false, error: false };
 
     onMount(queryBooks);
@@ -34,6 +44,32 @@
         return "Nenhum livro foi encontrado";
     }
 
+    function getDeleteStateDialogProps(saveStatus) {
+        if(saveStatus.error) {
+            return {
+                variant: "error",
+                heading: "Erro",
+                message: "Ocorreu um erro ao salvar as alterações no sistema.",
+                detailsSummary: saveStatus.errorMessage && "Detalhes do erro",
+                detailsContent: saveStatus.errorMessage,
+                buttonLabels: ["Ok"]
+            };
+        }
+        if(saveStatus.saving) {
+            return {
+                variant: "load",
+                heading: "Salvando",
+                message: "As alterações estão sendo processadas pelo sistema"
+            };
+        }
+        return {
+            variant: "delete",
+            heading: "Apagar Livro?",
+            message: `Deseja remover o livro "${$selectedBooks[contextMenuPosition.targetIndex].title}" do acervo?\nUma vez excluído, as informações desse livro não poderão ser recuperadas!`,
+            buttonLabels: ["Sim", "Não"]
+        };
+    }
+
     function handleRowClick(event, targetIndex) {
         const { top, left, width, height } = event.target.getBoundingClientRect();
         contextMenuPosition = { x: left, y: top + height, targetIndex };
@@ -46,6 +82,9 @@
         if(option === 0) {
             showContextMenu = false;
             showBookDialog = true;
+        }else if(option === 1) {
+            showContextMenu = false;
+            showDeleteDialog = true;
         }else {
             showContextMenu = false;
             contextMenuPosition.targetIndex = null;
@@ -70,7 +109,28 @@
         }else {
             showBookDialog = false;
             saveStatus = { saving: false, error: false };
+            contextMenuPosition.targetIndex = null;
         }
+    }
+
+    async function handleDeleteDialogClose(event) {
+        const action = event.detail;
+        if(action === 0 && !saveStatus.error && contextMenuPosition.targetIndex) {
+            saveStatus.saving = true;
+            let result = await deleteBook(contextMenuPosition.targetIndex);
+            if(result.error) {
+                saveStatus = {
+                    saving: false,
+                    error: true,
+                    errorMessage: result.errorMessage
+                };
+                contextMenuPosition.targetIndex = null;
+                return;
+            }
+        }
+        showDeleteDialog = false;
+        saveStatus = { saving: false, error: false };
+        contextMenuPosition.targetIndex = null;
     }
 </script>
 
@@ -198,5 +258,13 @@
             on:dialogclose={() => showBookDialog = false}
             on:formsubmit={handleBookFormSubmit}
         />
+    {/if}
+    {#if showDeleteDialog}
+        <DialogBox>
+            <StateDialog
+                {...getDeleteStateDialogProps(saveStatus)}
+                on:dialogclose={handleDeleteDialogClose}
+            />
+        </DialogBox>
     {/if}
 </main>

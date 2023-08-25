@@ -60,11 +60,28 @@ export function createBooks() {
         return { error: false };
     }
 
+    async function deleteBook(index) {
+        let currentlySelectedBooks;
+        selectedBooks.subscribe((books) => currentlySelectedBooks = books)();
+        try {
+            await api.deleteBook(currentlySelectedBooks[index].id);
+            selectedBooks.update((books) => [
+                ...books.slice(0, index),
+                ...books.slice(index + 1)
+            ]);
+        }catch(exception) {
+            console.error("Error deleting books: " + exception);
+            return { error: true, errorMessage: exception?.message };
+        }
+        return { error: false };
+    }
+
     return {
         loadStatus: { subscribe: loadStatus.subscribe },
         selectedBooks: { subscribe: selectedBooks.subscribe },
         queryBooks,
         createBook,
-        updateBook
+        updateBook,
+        deleteBook
     };
 }

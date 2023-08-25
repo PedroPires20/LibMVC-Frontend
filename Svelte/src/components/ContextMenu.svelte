@@ -75,7 +75,7 @@
     class="menu-container"
     role="menu"
     tabindex="0"
-    style="top: {position && position.y}; left: {position && position.x}"
+    style="top: {position && position.y}px; left: {position && position.x}px"
     bind:this={menuContainerElement}
 >
     <div class="option">

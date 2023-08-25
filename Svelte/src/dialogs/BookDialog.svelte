@@ -1,5 +1,5 @@
 <script>
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import DialogBox from "../components/DialogBox.svelte";
     import StateDialog from "./StateDialog.svelte";
     import Input from "../components/form_components/Input.svelte";
@@ -31,6 +31,13 @@
     let { categories } = createBookFields();
     let addCategory = false;
     let newCategory = "";
+    let bookData = DEFAULT_BOOK_DATA;
+
+    onMount(() => {
+        if(updateTarget) {
+            bookData = updateTarget.toFormData();
+        }
+    })
 
     function handleCategoryAdd(event) {
         if(event.key === "Enter") {
@@ -59,7 +66,6 @@
     }
 
     $: isUpdateDialog = !!updateTarget;
-    $: bookData = updateTarget?.toFormData() || DEFAULT_BOOK_DATA;
     $: categoryOptions = [...$categories.fieldData, NEW_CATEGORY_LABEL];
     $: if(bookData.categories.includes(NEW_CATEGORY_LABEL)) {
         bookData.categories = bookData.categories.filter((category) => category !== NEW_CATEGORY_LABEL);

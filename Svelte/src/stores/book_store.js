@@ -39,10 +39,32 @@ export function createBooks() {
         return { error: false };
     }
 
+    async function updateBook(index, formData) {
+        let currentlySelectedBooks;
+        selectedBooks.subscribe((books) => currentlySelectedBooks = books)();
+        let updatedBook = Book.fromFormData(formData, currentlySelectedBooks[index].id, index);
+        let diff = currentlySelectedBooks[index].getFieldsDiff(updatedBook);
+        if(!!diff) {
+            try {
+                await api.updateBook(updatedBook.id, diff);
+                selectedBooks.update((books) => [
+                    ...books.slice(0, index),
+                    updatedBook,
+                    ...books.slice(index + 1)
+                ]);
+            }catch(exception) {
+                console.error("Error updating book: " + exception);
+                return { error: true, errorMessage: exception?.message };
+            }
+        }
+        return { error: false };
+    }
+
     return {
         loadStatus: { subscribe: loadStatus.subscribe },
         selectedBooks: { subscribe: selectedBooks.subscribe },
         queryBooks,
-        createBook
+        createBook,
+        updateBook
     };
 }

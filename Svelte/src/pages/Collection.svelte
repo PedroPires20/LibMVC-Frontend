@@ -7,15 +7,18 @@
     import TableBody from "../components/table_components/TableBody.svelte";
     import TableRow from "../components/table_components/TableRow.svelte";
     import TableCell from "../components/table_components/TableCell.svelte";
+    import ContextMenu from "../components/ContextMenu.svelte";
     import BookDialog from "../dialogs/BookDialog.svelte";
     import Button from "../components/Button.svelte";
     import addIcon from "../assets/add_icon.svg";
     import { createBooks } from "../stores/book_store";
     import { createBookFields } from "../stores/book_fields_store";
 
-    let { loadStatus, selectedBooks, queryBooks, createBook } = createBooks();
+    let { loadStatus, selectedBooks, queryBooks, createBook, updateBook } = createBooks();
     let { refreshBookFields, ...bookFields } = createBookFields();
 
+    let showContextMenu = false;
+    let contextMenuPosition = { x: 0, y: 0, targetIndex: null };
     let showBookDialog = false;
     let saveStatus = { saving: false, error: false };
 
@@ -30,11 +33,34 @@
         }
         return "Nenhum livro foi encontrado";
     }
+
+    function handleRowClick(event, targetIndex) {
+        const { top, left, width, height } = event.target.getBoundingClientRect();
+        contextMenuPosition = { x: left, y: top + height, targetIndex };
+        showContextMenu = true;
+        event.stopPropagation();
+    }
+
+    function handleContextMenuClose(event) {
+        const option = event.detail?.option;
+        if(option === 0) {
+            showContextMenu = false;
+            showBookDialog = true;
+        }else {
+            showContextMenu = false;
+            contextMenuPosition.targetIndex = null;
+        }
+    }
     
     async function handleBookFormSubmit(event) {
         const formData = event.detail;
         saveStatus.saving = true;
-        let result = await createBook(formData);
+        let result;
+        if(contextMenuPosition.targetIndex) {
+            result = await updateBook(contextMenuPosition.targetIndex, formData);
+        }else {
+            result = await createBook(formData);
+        }
         if(result.error) {
             saveStatus = {
                 saving: false,
@@ -116,8 +142,8 @@
                     message={getStatusMessage($loadStatus)}
                 />
             {:else}
-                {#each $selectedBooks as book}
-                    <TableRow>
+                {#each $selectedBooks as book, index}
+                    <TableRow on:click={(event) => handleRowClick(event, index)}>
                         <TableCell>
                             {book.isbn}
                         </TableCell>
@@ -159,9 +185,16 @@
             {/if}
         </TableBody>
     </TableCard>
+    {#if showContextMenu}
+        <ContextMenu
+            position={contextMenuPosition}
+            on:menuclose={handleContextMenuClose}
+        />
+    {/if}
     {#if showBookDialog}
         <BookDialog
             {saveStatus}
+            updateTarget={$selectedBooks[contextMenuPosition.targetIndex]}
             on:dialogclose={() => showBookDialog = false}
             on:formsubmit={handleBookFormSubmit}
         />

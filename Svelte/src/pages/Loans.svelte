@@ -7,6 +7,9 @@
     import TableRow from "../components/table_components/TableRow.svelte";
     import TableCell from "../components/table_components/TableCell.svelte";
     import addIcon from "../assets/add_icon.svg";
+    import { createLoanFields } from "../stores/loan_fields_store";
+
+    let { refreshLoanFields, ...loanFields } = createLoanFields();
 </script>
 
 <style>
@@ -51,7 +54,7 @@
             </div>
         </Button>
     </div>
-    <LoanInputs/>
+    <LoanInputs {...loanFields}/>
     <TableCard>
         <TableHeader>
             <TableRow>

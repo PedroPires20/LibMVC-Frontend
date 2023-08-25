@@ -2,6 +2,22 @@
     import Select from "./form_components/Select.svelte";
     import DatePicker from "./form_components/DatePicker.svelte";
     import Button from "./Button.svelte";
+
+    export let reader = [];
+    export let bookTitle = [];
+
+    const FIELD_LOADING_MESSAGE = "Carregando...";
+    const FIELD_LOADING_ERROR = "Ocorreu um erro ao carregar as opções do filtro";
+
+    function getOptionsFromField(field) {
+        if(field.loading) {
+            return [FIELD_LOADING_MESSAGE];
+        }
+        if(field.error) {
+            return [FIELD_LOADING_ERROR];
+        }
+        return field.fieldData;
+    }   
 </script>
 
 <style>
@@ -51,6 +67,7 @@
                 name="reader"
                 label="Leitor"
                 placeholder="Todos"
+                options={getOptionsFromField($reader)}
             />
         </div>
         <div class="input-container">
@@ -58,6 +75,7 @@
                 name="bookTitle"
                 label="Obra"
                 placeholder="Todas"
+                options={getOptionsFromField($bookTitle)}
             />
         </div>
         <div class="input-container">

@@ -136,7 +136,11 @@
         <div class="buttons-container">
             <Button
                 variant="secondary"
-                on:click={() => dispatch("submit", { query: "", filters: {} })}
+                on:click={() => {
+                    query = "";
+                    filters = {};
+                    dispatch("submit", { query, filters });
+                }}
             >
                 Redefinir
             </Button>

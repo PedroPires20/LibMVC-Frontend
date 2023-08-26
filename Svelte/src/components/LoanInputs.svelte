@@ -130,14 +130,14 @@
                 variant="secondary"
                 on:click={() => {
                     filters = {};
-                    dispatch("submit", filters);
+                    dispatch("submit", { filters });
                 }}
             >
                 Redefinir
             </Button>
             <Button
                 variant="secondary"
-                on:click={() => dispatch("submit", filters)}
+                on:click={() => dispatch("submit", { filters })}
             >
                 Aplicar  
             </Button>

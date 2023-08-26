@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
 import NetworkClient from "@common/utils/network_client";
 import Book from "@common/models/book";
-import { objectEquals } from "@common/utils/utils";
+import { objectEquals, removeEmptyFilters } from "@common/utils/utils";
 
 
 export function createBooks() {
@@ -12,14 +12,15 @@ export function createBooks() {
     const selectedBooks = writable([]);
 
     async function queryBooks(queryText = "", filters = {}) {
-        if(queryText !== previousQuery && !objectEquals(filters, previousFilters)) {
+        let newFilters = removeEmptyFilters(filters);
+        if(queryText !== previousQuery || !objectEquals(newFilters, previousFilters)) {
             try {
                 loadStatus.set({ loading: true, error: false });
-                let booksData = await api.searchBooks(queryText, filters, { title: 1 });
+                let booksData = await api.searchBooks(queryText, newFilters, { title: 1 });
                 selectedBooks.set(booksData.map((bookData, index) => new Book(bookData, index)));
                 loadStatus.set({ loading: false, error: false });
                 previousQuery = queryText;
-                previousFilters = filters;
+                previousFilters = newFilters;
             }catch(exception) {
                 console.error("Error loading books: " + exception);
                 loadStatus.set({ loading: false, error: true, errorMessage: exception.message });

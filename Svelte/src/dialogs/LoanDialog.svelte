@@ -10,13 +10,37 @@
     const dispatch = createEventDispatcher();
     const FIELD_LOADING_MESSAGE = "Carregando...";
     const FIELD_LOADING_ERROR = "Ocorreu um erro ao carregar as opções do filtro";
+    const DEFAULT_LOAN_DATA = {
+        reader: "",
+        phone: "",
+        bookId: "",
+        startDate: "",
+        duration: "",
+        renew: false
+    };
 
     export let updateTarget = undefined;
 
     let { loadStatus, selectedBooks, queryBooks } = createBooks();
+    let loanData = DEFAULT_LOAN_DATA;
     let bookOptions;
 
-    onMount(queryBooks);
+    onMount(() => {
+        if(updateTarget) {
+            loanData = updateTarget.toFormData();
+        }
+        queryBooks();
+    });
+
+    function handleFormSubmit(event) {
+        const formElement = event.target;
+        if(!formElement.checkValidity()) {
+            const firstInvalidInput = formElement.querySelector(":invalid");
+            firstInvalidInput && firstInvalidInput.focus();
+        }else {
+            dispatch("formsubmit", loanData);
+        }
+    }
 
     $: isUpdateDialog = !!updateTarget;
     $: {
@@ -89,22 +113,28 @@
             {(isUpdateDialog) ? "Edite, abaixo, as informações desejadas e confirme suas alterações"
                 : "Preencha as informações abaixo para cadastrar um novo empréstimo no sistema"}
         </p>
-        <form name="loan-dialog-form" novalidate on:submit|preventDefault>
+        <form
+            name="loan-dialog-form"
+            novalidate
+            on:submit|preventDefault={handleFormSubmit}
+        >
             <Input
                 name="reader"
                 type="text"
                 label="Leitor"
                 supportingText="Entre o nome do leitor"
                 required
+                bind:value={loanData.reader}
             />
             <Input
                 name="phone"
                 type="text"
                 label="Telefone"
                 supportingText="Entre o telefone de contato do leitor"
-                validationPattern="\(\d{2,5}\)\s*9?\d{4}-?\d{4}"
+                validationPattern={"\\(\\d{2,5}\\)\\s*9?\\d{4}-?\\d{4}"}
                 errorMessage="Por favor, entre um número de telefone válido"
                 required
+                bind:value={loanData.phone}
             />
             <Select
                 name="bookId"
@@ -116,12 +146,14 @@
                 disabled={$loadStatus.loading || $loadStatus.error}
                 formVariant
                 required
+                bind:value={loanData.bookId}
             />
             <DatePicker
                 name="startDate"
                 label="Data de início"
                 formVariant
                 required
+                bind:value={loanData.startDate}
             />
             <Input
                 name="duration"
@@ -130,11 +162,13 @@
                 supportingText="Entre a duração do empréstimo (em dias)"
                 minValue="1"
                 required
+                bind:value={loanData.duration}
             />
             <Checkbox
                 name="renew"
                 label="Renovação"
                 supportingText="Marque essa opção se estiver registrando a renovação de um empréstimo anterior"
+                bind:value={loanData.renew}
             />
             <div class="buttons">
                 <button

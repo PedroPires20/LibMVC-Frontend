@@ -1,11 +1,13 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import Select from "./form_components/Select.svelte";
     import DatePicker from "./form_components/DatePicker.svelte";
     import Button from "./Button.svelte";
 
     export let reader = [];
     export let bookTitle = [];
-
+    
+    const dispatch = createEventDispatcher();
     const FIELD_LOADING_MESSAGE = "Carregando...";
     const FIELD_LOADING_ERROR = "Ocorreu um erro ao carregar as opções do filtro";
 
@@ -17,7 +19,16 @@
             return [FIELD_LOADING_ERROR];
         }
         return field.fieldData;
-    }   
+    }
+    
+    let filters = {
+        reader: "",
+        bookTitle: "",
+        startDate: "",
+        endDate: "",
+        late: "",
+        renew: ""
+    };
 </script>
 
 <style>
@@ -68,6 +79,7 @@
                 label="Leitor"
                 placeholder="Todos"
                 options={getOptionsFromField($reader)}
+                bind:value={filters.reader}
             />
         </div>
         <div class="input-container">
@@ -76,18 +88,21 @@
                 label="Obra"
                 placeholder="Todas"
                 options={getOptionsFromField($bookTitle)}
+                bind:value={filters.bookTitle}
             />
         </div>
         <div class="input-container">
             <DatePicker
                 name="startDate"
                 label="Data empréstimo"
+                bind:value={filters.startDate}
             />
         </div>
         <div class="input-container">
             <DatePicker
                 name="endDate"
                 label="Data devolução"
+                bind:value={filters.endDate}
             />
         </div>
         <div class="input-container">
@@ -97,6 +112,7 @@
                 placeholder="Todos"
                 options={["Sim", "Não"]}
                 optionValues={[true, false]}
+                bind:value={filters.late}
             />
         </div>
         <div class="input-container">
@@ -106,13 +122,23 @@
                 placeholder="Todos"
                 options={["Sim", "Não"]}
                 optionValues={[true, false]}
+                bind:value={filters.renew}
             />
         </div>
         <div class="buttons-container">
-            <Button variant="secondary">
+            <Button
+                variant="secondary"
+                on:click={() => {
+                    filters = {};
+                    dispatch("submit", filters);
+                }}
+            >
                 Redefinir
             </Button>
-            <Button variant="secondary">
+            <Button
+                variant="secondary"
+                on:click={() => dispatch("submit", filters)}
+            >
                 Aplicar  
             </Button>
         </div>

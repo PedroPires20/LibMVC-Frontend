@@ -1,16 +1,33 @@
 <script>
-    import { createEventDispatcher } from "svelte";
+    import { createEventDispatcher, onMount } from "svelte";
     import DialogBox from "../components/DialogBox.svelte";
     import Input from "../components/form_components/Input.svelte";
     import Checkbox from "../components/form_components/Checkbox.svelte";
     import Select from "../components/form_components/Select.svelte";
     import DatePicker from "../components/form_components/DatePicker.svelte";
+    import { createBooks } from "../stores/book_store";
 
     const dispatch = createEventDispatcher();
+    const FIELD_LOADING_MESSAGE = "Carregando...";
+    const FIELD_LOADING_ERROR = "Ocorreu um erro ao carregar as opções do filtro";
 
     export let updateTarget = undefined;
 
+    let { loadStatus, selectedBooks, queryBooks } = createBooks();
+    let bookOptions;
+
+    onMount(queryBooks);
+
     $: isUpdateDialog = !!updateTarget;
+    $: {
+        if($loadStatus.loading) {
+            bookOptions = [FIELD_LOADING_MESSAGE];
+        }else if($loadStatus.error) {
+            bookOptions = [FIELD_LOADING_ERROR];
+        }else {
+            bookOptions = $selectedBooks.map((book) => book.title);
+        }
+    }
 </script>
 
 <style>
@@ -94,6 +111,9 @@
                 label="Livro"
                 placeholder="Selecione o livro a ser emprestado"
                 errorMessage="Por favor, selecione um livro"
+                options={bookOptions}
+                optionValues={$selectedBooks.map((book) => book.id)}
+                disabled={$loadStatus.loading || $loadStatus.error}
                 formVariant
                 required
             />

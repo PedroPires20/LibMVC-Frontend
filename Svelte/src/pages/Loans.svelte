@@ -1,4 +1,5 @@
 <script>
+    import { onMount } from "svelte";
     import Button from "../components/Button.svelte";
     import LoanInputs from "../components/LoanInputs.svelte";
     import TableCard from "../components/table_components/TableCard.svelte";
@@ -6,10 +7,25 @@
     import TableBody from "../components/table_components/TableBody.svelte";
     import TableRow from "../components/table_components/TableRow.svelte";
     import TableCell from "../components/table_components/TableCell.svelte";
+    import TableStatus from "../components/table_components/TableStatus.svelte";
     import addIcon from "../assets/add_icon.svg";
+    import { createLoans } from "../stores/loan_store";
     import { createLoanFields } from "../stores/loan_fields_store";
 
+    let { loadStatus, selectedLoans, fetchLoans }  = createLoans();
     let { refreshLoanFields, ...loanFields } = createLoanFields();
+
+    onMount(fetchLoans);
+
+    function getStatusMessage(loadStatus) {
+        if(loadStatus.loading) {
+            return "Carregando dados dos empréstimos...";
+        }
+        if(loadStatus.error) {
+            return "Ocorreu um erro ao recuperar os dados dos empréstimos. Por favor, tente novamente.";
+        }
+        return "Nenhum empréstimo foi encontrado";
+    }
 </script>
 
 <style>
@@ -54,7 +70,13 @@
             </div>
         </Button>
     </div>
-    <LoanInputs {...loanFields}/>
+    <LoanInputs
+        {...loanFields}
+        on:submit={(event) => {
+            const { filters } = event.detail;
+            fetchLoans(filters);
+        }}
+    />
     <TableCard>
         <TableHeader>
             <TableRow>
@@ -70,33 +92,45 @@
             </TableRow>
         </TableHeader>
         <TableBody>
-            <TableCell>
-                Alice
-            </TableCell>
-            <TableCell>
-                (38) 1111-1111
-            </TableCell>
-            <TableCell minWidth="15rem" wrap>
-                Refatoração: Aperfeiçoando o Design de Códigos Existentes
-            </TableCell>
-            <TableCell>
-                22/05/2023
-            </TableCell>
-            <TableCell>
-                10
-            </TableCell>
-            <TableCell>
-                01/06/2023
-            </TableCell>
-            <TableCell>
-                -78
-            </TableCell>
-            <TableCell>
-                Sim
-            </TableCell>
-            <TableCell>
-                Sim
-            </TableCell>
+            {#if $loadStatus.loading || $loadStatus.error || !$selectedLoans?.length}
+                <TableStatus
+                    loading={$loadStatus.loading}
+                    error={$loadStatus.error}
+                    message={getStatusMessage($loadStatus)}
+                />
+            {:else}
+                {#each $selectedLoans as loan}
+                    <TableRow>
+                        <TableCell>
+                            {loan.reader}
+                        </TableCell>
+                        <TableCell>
+                            {loan.phone}
+                        </TableCell>
+                        <TableCell minWidth="15rem" wrap>
+                            {loan.bookTitle}
+                        </TableCell>
+                        <TableCell>
+                            {loan.startDate}
+                        </TableCell>
+                        <TableCell>
+                            {loan.duration}
+                        </TableCell>
+                        <TableCell>
+                            {loan.endDate}
+                        </TableCell>
+                        <TableCell>
+                            {loan.daysRemaining}
+                        </TableCell>
+                        <TableCell>
+                            {loan.late}
+                        </TableCell>
+                        <TableCell>
+                            {loan.renew}
+                        </TableCell>
+                    </TableRow>
+                {/each}
+            {/if}
         </TableBody>
     </TableCard>
 </main>

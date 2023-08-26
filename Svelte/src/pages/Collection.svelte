@@ -176,7 +176,13 @@
             </div>
         </Button>
     </div>
-    <CollectionInputs {...bookFields}/>
+    <CollectionInputs
+        {...bookFields}
+        on:submit={(event) => {
+            const { query, filters } = event.detail;
+            queryBooks(query, filters);
+        }}
+    />
     <TableCard>
         <TableHeader>
             <TableRow>

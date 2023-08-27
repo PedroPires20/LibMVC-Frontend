@@ -64,11 +64,28 @@ export function createLoans() {
         return { error: false };
     }
 
+    async function deleteLoan(index) {
+        let currentlySelectedLoans;
+        selectedLoans.subscribe((loans) => currentlySelectedLoans = loans)();
+        try {
+            await api.deleteLoan(currentlySelectedLoans[index].id);
+            selectedLoans.update((loans) => [
+                ...loans.slice(0, index),
+                ...loans.slice(index + 1)
+            ]);
+        }catch(exception) {
+            console.log("Error finalizing loan: " + exception);
+            return { error: true, errorMessage: exception?.message };
+        }
+        return { error: false };
+    }
+
     return {
         loadStatus: { subscribe: loadStatus.subscribe },
         selectedLoans: { subscribe: selectedLoans.subscribe },
         fetchLoans,
         createLoan,
-        updateLoan
+        updateLoan,
+        deleteLoan
     };
 }

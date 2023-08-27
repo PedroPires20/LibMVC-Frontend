@@ -14,7 +14,13 @@
     import { createLoans } from "../stores/loan_store";
     import { createLoanFields } from "../stores/loan_fields_store";
 
-    let { loadStatus, selectedLoans, fetchLoans, createLoan }  = createLoans();
+    let {
+        loadStatus,
+        selectedLoans,
+        fetchLoans,
+        createLoan,
+        updateLoan
+    }  = createLoans();
     let { refreshLoanFields, ...loanFields } = createLoanFields();
     
     let showContextMenu = false;
@@ -42,15 +48,24 @@
     }
 
     function handleContextMenuClose(event) {
+        const option = event.detail?.option;
+        if(option === 0) {
+            showLoanDialog = true;
+        }else {
+            contextMenuPosition.targetIndex = null;
+        }
         showContextMenu = false;
-        contextMenuPosition.targetIndex = null;
     }
 
     async function handleLoanFormSubmit(event) {
         const formData = event.detail;
         saveStatus.saving = true;
         let result;
-        result = await createLoan(formData);
+        if(contextMenuPosition.targetIndex) {
+            result = await updateLoan(contextMenuPosition.targetIndex, formData);
+        }else {
+            result = await createLoan(formData);
+        }
         if(result.error) {
             saveStatus = {
                 saving: false,
@@ -60,6 +75,7 @@
         }else {
             showLoanDialog = false;
             saveStatus = { saving: false, error: false };
+            contextMenuPosition.targetIndex = null;
         }
     }
 </script>
@@ -179,6 +195,7 @@
     {#if showLoanDialog}
         <LoanDialog
             {saveStatus}
+            updateTarget={$selectedLoans[contextMenuPosition.targetIndex]}
             on:formsubmit={handleLoanFormSubmit}
             on:dialogclose={() => showLoanDialog = false}
         />

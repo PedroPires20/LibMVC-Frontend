@@ -31,9 +31,22 @@ export function createLoans() {
         }
     }
 
+    async function createLoan(formData) {
+        let newLoan = Loan.fromFormData(formData);
+        try {
+            let createdId = await api.createLoan(newLoan.toRequestBody());
+            selectedLoans.update((loans) => [...loans, Loan.fromFormData(formData, createdId)]);
+        }catch(exception) {
+            console.error("Error creating loan: " + exception);
+            return { error: true, errorMessage: exception?.message };
+        }
+        return { error: false };
+    }
+
     return {
         loadStatus: { subscribe: loadStatus.subscribe },
         selectedLoans: { subscribe: selectedLoans.subscribe },
-        fetchLoans
+        fetchLoans,
+        createLoan
     };
 }

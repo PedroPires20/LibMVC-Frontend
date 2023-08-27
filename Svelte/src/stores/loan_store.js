@@ -43,10 +43,32 @@ export function createLoans() {
         return { error: false };
     }
 
+    async function updateLoan(index, formData) {
+        let currentlySelectedLoans;
+        selectedLoans.subscribe((loans) => currentlySelectedLoans = loans)();
+        let updatedLoan = Loan.fromFormData(formData, currentlySelectedLoans[index].id, index);
+        let diff = currentlySelectedLoans[index].getFieldsDiff(updatedLoan);
+        if(!!diff) {
+            try {
+                await api.updateLoan(updatedLoan.id, diff);
+                selectedLoans.update((loans) => [
+                    ...loans.slice(0, index),
+                    updatedLoan,
+                    ...loans.slice(index + 1)
+                ]);
+            }catch(exception) {
+                console.error("Error updating loan: " + exception);
+                return { error: true, errorMessage: exception?.message };
+            }
+        }
+        return { error: false };
+    }
+
     return {
         loadStatus: { subscribe: loadStatus.subscribe },
         selectedLoans: { subscribe: selectedLoans.subscribe },
         fetchLoans,
-        createLoan
+        createLoan,
+        updateLoan
     };
 }

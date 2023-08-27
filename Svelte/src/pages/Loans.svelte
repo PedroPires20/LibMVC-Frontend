@@ -9,12 +9,16 @@
     import TableCell from "../components/table_components/TableCell.svelte";
     import TableStatus from "../components/table_components/TableStatus.svelte";
     import LoanDialog from "../dialogs/LoanDialog.svelte";
+    import ContextMenu from "../components/ContextMenu.svelte";
     import addIcon from "../assets/add_icon.svg";
     import { createLoans } from "../stores/loan_store";
     import { createLoanFields } from "../stores/loan_fields_store";
 
     let { loadStatus, selectedLoans, fetchLoans, createLoan }  = createLoans();
     let { refreshLoanFields, ...loanFields } = createLoanFields();
+    
+    let showContextMenu = false;
+    let contextMenuPosition = { x: 0, y: 0, targetIndex: null };
     let showLoanDialog = false;
     let saveStatus = { saving: false, error: false };
 
@@ -28,6 +32,18 @@
             return "Ocorreu um erro ao recuperar os dados dos empréstimos. Por favor, tente novamente.";
         }
         return "Nenhum empréstimo foi encontrado";
+    }
+
+    function handleRowClick(event, targetIndex) {
+        const { top, left, width, height } = event.target.getBoundingClientRect();
+        contextMenuPosition = { x: left, y: top + height, targetIndex };
+        showContextMenu = true;
+        event.stopPropagation();
+    }
+
+    function handleContextMenuClose(event) {
+        showContextMenu = false;
+        contextMenuPosition.targetIndex = null;
     }
 
     async function handleLoanFormSubmit(event) {
@@ -119,8 +135,8 @@
                     message={getStatusMessage($loadStatus)}
                 />
             {:else}
-                {#each $selectedLoans as loan}
-                    <TableRow>
+                {#each $selectedLoans as loan, index}
+                    <TableRow on:click={(event) => handleRowClick(event, index)}>
                         <TableCell>
                             {loan.reader}
                         </TableCell>
@@ -153,6 +169,13 @@
             {/if}
         </TableBody>
     </TableCard>
+    {#if showContextMenu}
+        <ContextMenu
+            position={contextMenuPosition}
+            loanVariant
+            on:menuclose={handleContextMenuClose}
+        />
+    {/if}
     {#if showLoanDialog}
         <LoanDialog
             {saveStatus}

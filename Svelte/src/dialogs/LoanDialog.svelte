@@ -1,6 +1,7 @@
 <script>
     import { createEventDispatcher, onMount } from "svelte";
     import DialogBox from "../components/DialogBox.svelte";
+    import StateDialog from "./StateDialog.svelte";
     import Input from "../components/form_components/Input.svelte";
     import Checkbox from "../components/form_components/Checkbox.svelte";
     import Select from "../components/form_components/Select.svelte";
@@ -20,6 +21,7 @@
     };
 
     export let updateTarget = undefined;
+    export let saveStatus = { saving: false, error: false };
 
     let { loadStatus, selectedBooks, queryBooks } = createBooks();
     let loanData = DEFAULT_LOAN_DATA;
@@ -107,80 +109,91 @@
 </style>
 
 <DialogBox>
-    <div class="container">
-        <h3>{(isUpdateDialog) ? "Editar empréstimo" : "Novo empréstimo"}</h3>
-        <p>
-            {(isUpdateDialog) ? "Edite, abaixo, as informações desejadas e confirme suas alterações"
-                : "Preencha as informações abaixo para cadastrar um novo empréstimo no sistema"}
-        </p>
-        <form
-            name="loan-dialog-form"
-            novalidate
-            on:submit|preventDefault={handleFormSubmit}
-        >
-            <Input
-                name="reader"
-                type="text"
-                label="Leitor"
-                supportingText="Entre o nome do leitor"
-                required
-                bind:value={loanData.reader}
-            />
-            <Input
-                name="phone"
-                type="text"
-                label="Telefone"
-                supportingText="Entre o telefone de contato do leitor"
-                validationPattern={"\\(\\d{2,5}\\)\\s*9?\\d{4}-?\\d{4}"}
-                errorMessage="Por favor, entre um número de telefone válido"
-                required
-                bind:value={loanData.phone}
-            />
-            <Select
-                name="bookId"
-                label="Livro"
-                placeholder="Selecione o livro a ser emprestado"
-                errorMessage="Por favor, selecione um livro"
-                options={bookOptions}
-                optionValues={$selectedBooks.map((book) => book.id)}
-                disabled={$loadStatus.loading || $loadStatus.error}
-                formVariant
-                required
-                bind:value={loanData.bookId}
-            />
-            <DatePicker
-                name="startDate"
-                label="Data de início"
-                formVariant
-                required
-                bind:value={loanData.startDate}
-            />
-            <Input
-                name="duration"
-                type="number"
-                label="Duração"
-                supportingText="Entre a duração do empréstimo (em dias)"
-                minValue="1"
-                required
-                bind:value={loanData.duration}
-            />
-            <Checkbox
-                name="renew"
-                label="Renovação"
-                supportingText="Marque essa opção se estiver registrando a renovação de um empréstimo anterior"
-                bind:value={loanData.renew}
-            />
-            <div class="buttons">
-                <button
-                    class="click-ripple-effect-light"
-                    on:click|preventDefault={() => dispatch("dialogclose")}
-                >
-                    Cancelar
-                </button>
-                <button class="click-ripple-effect-light">
-                    Confirmar
-                </button>
-            </div>
-        </form>
-    </div>
+    {#if !saveStatus.saving && !saveStatus.error}
+        <div class="container">
+            <h3>{(isUpdateDialog) ? "Editar empréstimo" : "Novo empréstimo"}</h3>
+            <p>
+                {(isUpdateDialog) ? "Edite, abaixo, as informações desejadas e confirme suas alterações"
+                    : "Preencha as informações abaixo para cadastrar um novo empréstimo no sistema"}
+            </p>
+            <form
+                name="loan-dialog-form"
+                novalidate
+                on:submit|preventDefault={handleFormSubmit}
+            >
+                <Input
+                    name="reader"
+                    type="text"
+                    label="Leitor"
+                    supportingText="Entre o nome do leitor"
+                    required
+                    bind:value={loanData.reader}
+                />
+                <Input
+                    name="phone"
+                    type="text"
+                    label="Telefone"
+                    supportingText="Entre o telefone de contato do leitor"
+                    validationPattern={"\\(\\d{2,5}\\)\\s*9?\\d{4}-?\\d{4}"}
+                    errorMessage="Por favor, entre um número de telefone válido"
+                    required
+                    bind:value={loanData.phone}
+                />
+                <Select
+                    name="bookId"
+                    label="Livro"
+                    placeholder="Selecione o livro a ser emprestado"
+                    errorMessage="Por favor, selecione um livro"
+                    options={bookOptions}
+                    optionValues={$selectedBooks.map((book) => book.id)}
+                    disabled={$loadStatus.loading || $loadStatus.error}
+                    formVariant
+                    required
+                    bind:value={loanData.bookId}
+                />
+                <DatePicker
+                    name="startDate"
+                    label="Data de início"
+                    formVariant
+                    required
+                    bind:value={loanData.startDate}
+                />
+                <Input
+                    name="duration"
+                    type="number"
+                    label="Duração"
+                    supportingText="Entre a duração do empréstimo (em dias)"
+                    minValue="1"
+                    required
+                    bind:value={loanData.duration}
+                />
+                <Checkbox
+                    name="renew"
+                    label="Renovação"
+                    supportingText="Marque essa opção se estiver registrando a renovação de um empréstimo anterior"
+                    bind:value={loanData.renew}
+                />
+                <div class="buttons">
+                    <button
+                        class="click-ripple-effect-light"
+                        on:click|preventDefault={() => dispatch("dialogclose")}
+                    >
+                        Cancelar
+                    </button>
+                    <button class="click-ripple-effect-light">
+                        Confirmar
+                    </button>
+                </div>
+            </form>
+        </div>
+    {:else}
+        <StateDialog
+            variant={(saveStatus.error) ? "error" : "load"}
+            heading={(saveStatus.error) ? "Erro" : "Salvando"}
+            message={(saveStatus.error) ? "Ocorreu um erro ao salvar as alterações no sistema." : "As alterações estão sendo processadas pelo sistema"}
+            detailsSummary={(saveStatus.errorMessage && saveStatus.errorMessage !== "") && "Detalhes do erro"}
+            detailsContent={saveStatus.errorMessage}
+            on:dialogclose
+        />
+    {/if}
 </DialogBox>

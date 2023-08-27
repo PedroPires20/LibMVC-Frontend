@@ -8,12 +8,15 @@
     import TableRow from "../components/table_components/TableRow.svelte";
     import TableCell from "../components/table_components/TableCell.svelte";
     import TableStatus from "../components/table_components/TableStatus.svelte";
+    import LoanDialog from "../dialogs/LoanDialog.svelte";
     import addIcon from "../assets/add_icon.svg";
     import { createLoans } from "../stores/loan_store";
     import { createLoanFields } from "../stores/loan_fields_store";
 
-    let { loadStatus, selectedLoans, fetchLoans }  = createLoans();
+    let { loadStatus, selectedLoans, fetchLoans, createLoan }  = createLoans();
     let { refreshLoanFields, ...loanFields } = createLoanFields();
+    let showLoanDialog = false;
+    let saveStatus = { saving: false, error: false };
 
     onMount(fetchLoans);
 
@@ -25,6 +28,23 @@
             return "Ocorreu um erro ao recuperar os dados dos empréstimos. Por favor, tente novamente.";
         }
         return "Nenhum empréstimo foi encontrado";
+    }
+
+    async function handleLoanFormSubmit(event) {
+        const formData = event.detail;
+        saveStatus.saving = true;
+        let result;
+        result = await createLoan(formData);
+        if(result.error) {
+            saveStatus = {
+                saving: false,
+                error: true,
+                errorMessage: result.errorMessage
+            };
+        }else {
+            showLoanDialog = false;
+            saveStatus = { saving: false, error: false };
+        }
     }
 </script>
 
@@ -63,7 +83,7 @@
 <main class="page-container">
     <div class="header">
         <h2>Empréstimos</h2>
-        <Button>
+        <Button on:click={() => showLoanDialog = true}>
             <div class="add-button">
                 <img src={addIcon} alt="novo"/>
                 <span>Novo empréstimo</span>
@@ -133,4 +153,11 @@
             {/if}
         </TableBody>
     </TableCard>
+    {#if showLoanDialog}
+        <LoanDialog
+            {saveStatus}
+            on:formsubmit={handleLoanFormSubmit}
+            on:dialogclose={() => showLoanDialog = false}
+        />
+    {/if}
 </main>

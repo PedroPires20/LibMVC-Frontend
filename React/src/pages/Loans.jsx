@@ -177,16 +177,16 @@ export default function Loans() {
                         />
                     ) : (
                         <StateDialog
-                        variant={(loanFinishStatus.error) ? "error" : "load"}
-                        heading={(loanFinishStatus.error) ? "Erro" : "Salvando"}
-                        message={(loanFinishStatus.error) ? "Ocorreu um erro ao salvar as alterações no sistema." : "As alterações estão sendo processadas pelo sistema"}
-                        detailsSummary={(loanFinishStatus.errorMessage && loanFinishStatus.errorMessage !== "") && "Detalhes do erro"}
-                        detailsContent={loanFinishStatus.errorMessage}
-                        onClose={() => {
-                            setShowFinishDialog(false);
-                            setLoanFinishStatus({ processing: false, error: false });
-                        }}
-                    />  
+                            variant={(loanFinishStatus.error) ? "error" : "load"}
+                            heading={(loanFinishStatus.error) ? "Erro" : "Salvando"}
+                            message={(loanFinishStatus.error) ? "Ocorreu um erro ao salvar as alterações no sistema." : "As alterações estão sendo processadas pelo sistema"}
+                            detailsSummary={(loanFinishStatus.errorMessage && loanFinishStatus.errorMessage !== "") && "Detalhes do erro"}
+                            detailsContent={loanFinishStatus.errorMessage}
+                            onClose={() => {
+                                setShowFinishDialog(false);
+                                setLoanFinishStatus({ processing: false, error: false });
+                            }}
+                        />  
                     )}
                 </DialogBox>
             )}

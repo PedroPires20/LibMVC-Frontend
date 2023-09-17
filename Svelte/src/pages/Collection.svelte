@@ -100,6 +100,7 @@
         }else {
             result = await createBook(formData);
         }
+        refreshBookFields();
         if(result.error) {
             saveStatus = {
                 saving: false,
@@ -128,6 +129,7 @@
                 return;
             }
         }
+        refreshBookFields();
         showDeleteDialog = false;
         saveStatus = { saving: false, error: false };
         contextMenuPosition.targetIndex = null;
@@ -261,8 +263,11 @@
         <BookDialog
             {saveStatus}
             updateTarget={$selectedBooks[contextMenuPosition.targetIndex]}
-            on:dialogclose={() => showBookDialog = false}
             on:formsubmit={handleBookFormSubmit}
+            on:dialogclose={() => {
+                showBookDialog = false;
+                saveStatus = { saving: false, error: false };
+            }}
         />
     {/if}
     {#if showDeleteDialog}

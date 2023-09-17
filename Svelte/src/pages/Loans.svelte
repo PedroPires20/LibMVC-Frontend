@@ -98,6 +98,7 @@
         }else {
             result = await createLoan(formData);
         }
+        refreshLoanFields();
         if(result.error) {
             saveStatus = {
                 saving: false,
@@ -126,6 +127,7 @@
                 return;
             }
         }
+        refreshLoanFields();
         showDeleteDialog = false;
         saveStatus = { saving: false, error: false };
         contextMenuPosition.targetIndex = null;
@@ -249,7 +251,10 @@
             {saveStatus}
             updateTarget={$selectedLoans[contextMenuPosition.targetIndex]}
             on:formsubmit={handleLoanFormSubmit}
-            on:dialogclose={() => showLoanDialog = false}
+            on:dialogclose={() => {
+                showLoanDialog = false;
+                saveStatus = { saving: false, error: false };
+            }}
         />
     {/if}
     {#if showDeleteDialog}

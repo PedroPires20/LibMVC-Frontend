@@ -23,7 +23,7 @@ export class LoansComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._loansService.fetchLoans();
+    this._loansService.fetchLoans({}, true);
   }
 
   handleRowClick(event: MouseEvent, index: number) {

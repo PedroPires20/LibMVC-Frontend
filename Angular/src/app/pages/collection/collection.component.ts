@@ -23,7 +23,7 @@ export class CollectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._bookService.fetchBooks();
+    this._bookService.fetchBooks("", {}, true);
   }
 
   handleRowClick(event: MouseEvent, index: number) {

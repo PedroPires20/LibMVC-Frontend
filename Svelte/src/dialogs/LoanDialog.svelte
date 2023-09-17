@@ -40,6 +40,8 @@
             const firstInvalidInput = formElement.querySelector(":invalid");
             firstInvalidInput && firstInvalidInput.focus();
         }else {
+            let selectedBook = $selectedBooks.find((book) => book.id === loanData.bookId);
+            loanData.bookTitle = selectedBook?.title;
             dispatch("formsubmit", loanData);
         }
     }

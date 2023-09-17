@@ -45,7 +45,7 @@ export function createBooks() {
         selectedBooks.subscribe((books) => currentlySelectedBooks = books)();
         let updatedBook = Book.fromFormData(formData, currentlySelectedBooks[index].id, index);
         let diff = currentlySelectedBooks[index].getFieldsDiff(updatedBook);
-        if(!!diff) {
+        if(Object.keys(diff).length > 0) {
             try {
                 await api.updateBook(updatedBook.id, diff);
                 selectedBooks.update((books) => [

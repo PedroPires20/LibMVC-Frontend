@@ -48,7 +48,7 @@ export function createLoans() {
         selectedLoans.subscribe((loans) => currentlySelectedLoans = loans)();
         let updatedLoan = Loan.fromFormData(formData, currentlySelectedLoans[index].id, index);
         let diff = currentlySelectedLoans[index].getFieldsDiff(updatedLoan);
-        if(!!diff) {
+        if(Object.keys(diff).length > 0) {
             try {
                 await api.updateLoan(updatedLoan.id, diff);
                 selectedLoans.update((loans) => [

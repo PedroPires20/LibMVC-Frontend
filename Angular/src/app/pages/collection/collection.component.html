@@ -1,7 +1,10 @@
 <div class="page-container">
     <div class="header">
         <h2>Acervo</h2>
-        <app-button (click)="showBookDialog = true">
+        <app-button
+            [disabled]="booksLoading || errorLoading"
+            (click)="showBookDialog = true"
+        >
             <div class="add-button">
                 <img src="assets/add_icon.svg" alt="adicionar"/>
                 <span>Novo livro</span>

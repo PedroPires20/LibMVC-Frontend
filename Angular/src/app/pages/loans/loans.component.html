@@ -1,8 +1,11 @@
 <div class="page-container">
     <div class="header">
         <h2>Empréstimos</h2>
-        <app-button>
-            <div class="add-button" (click)="showLoanDialog = true">
+        <app-button
+            [disabled]="loansLoading || errorLoading"
+            (click)="showLoanDialog = true"
+        >
+            <div class="add-button">
                 <img src="assets/add_icon.svg" alt="novo"/>
                 <span>Novo empréstimo</span>
             </div>

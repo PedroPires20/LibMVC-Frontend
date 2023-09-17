@@ -52,7 +52,7 @@ export class LoansService {
   async updateLoan(loanIndex: number, newData: any) {
     let updatedLoan = Loan.fromFormData(newData, this.selectedLoans[loanIndex].id, loanIndex);
     let diff = this.selectedLoans[loanIndex].getFieldsDiff(updatedLoan);
-    if(!!diff) {
+    if(Object.keys(diff).length > 0) {
       try {
         await this._api.updateLoan(updatedLoan.id, updatedLoan.toRequestBody());
         this.selectedLoans[loanIndex] = updatedLoan;

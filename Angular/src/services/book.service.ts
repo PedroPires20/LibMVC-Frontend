@@ -50,7 +50,7 @@ export class BookService {
   async updateBook(bookIndex: number, newData: any) {
     let updatedBook = Book.fromFormData(newData, this._selectedBooks[bookIndex].id, bookIndex);
     let diff = this._selectedBooks[bookIndex].getFieldsDiff(updatedBook);
-    if(!!diff) {
+    if(Object.keys(diff).length > 0) {
       try {
         await this._api.updateBook(updatedBook.id, updatedBook.toRequestBody());
         this._selectedBooks[bookIndex] = updatedBook;

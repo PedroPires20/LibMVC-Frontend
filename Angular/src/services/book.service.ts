@@ -17,9 +17,9 @@ export class BookService {
     this._bookFieldsService = bookFieldsService;
   }
 
-  async fetchBooks(query = "", filters: any = {}) {
+  async fetchBooks(query = "", filters: any = {}, forceRefresh: boolean = false) {
     const currentFilters = removeEmptyFilters(filters);
-    if(this._shouldRefetchBooks(query, currentFilters)) {
+    if(forceRefresh || this._shouldRefetchBooks(query, currentFilters)) {
       this._status = "loading";
       try {
         let booksData = await this._api.searchBooks(query, currentFilters, { title: 1 });

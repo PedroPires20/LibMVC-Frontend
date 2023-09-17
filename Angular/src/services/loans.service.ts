@@ -17,9 +17,9 @@ export class LoansService {
     this._loanFieldsService = loanFieldsService;
   }
 
-  async fetchLoans(filters: any = {}) {
+  async fetchLoans(filters: any = {}, forceRefresh: boolean = false) {
     const currentFilters = removeEmptyFilters(filters);
-    if(!objectEquals(this._previousFilters, currentFilters) || this.status === "error") {
+    if(forceRefresh || !objectEquals(this._previousFilters, currentFilters) || this.status === "error") {
       this._status = "loading";
       try {
         let loansData = await this._api.fetchLoans(

@@ -171,7 +171,10 @@
 <main class="page-container">
     <div class="header">
         <h2>Acervo</h2>
-        <Button on:click={() => showBookDialog = true}>
+        <Button
+            disabled={$loadStatus.loading || $loadStatus.error}
+            on:click={() => showBookDialog = true}
+        >
             <div class="add-button">
                 <img src={addIcon} alt="adicionar"/>
                 <span>Novo livro</span>

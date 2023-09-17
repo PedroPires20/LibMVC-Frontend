@@ -169,7 +169,10 @@
 <main class="page-container">
     <div class="header">
         <h2>Empréstimos</h2>
-        <Button on:click={() => showLoanDialog = true}>
+        <Button
+            disabled={$loadStatus.loading || $loadStatus.error}
+            on:click={() => showLoanDialog = true}
+        >
             <div class="add-button">
                 <img src={addIcon} alt="novo"/>
                 <span>Novo empréstimo</span>

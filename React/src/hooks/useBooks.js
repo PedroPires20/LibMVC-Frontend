@@ -51,7 +51,7 @@ export function useBooks() {
     async function updateBook(index, newData) {
         let updatedBook = Book.fromFormData(newData, books[index].id, index);
         let diff = books[index].getFieldsDiff(updatedBook);
-        if(!!diff) {
+        if(Object.keys(diff).length > 0) {
             try {
                 await api.updateBook(books[index].id, diff);
                 setBooks([
@@ -63,8 +63,8 @@ export function useBooks() {
                 console.error("Error updating book: " + exception);
                 return { error: true, errorMessage: exception.message };
             }
-            return { error: false };
         }
+        return { error: false };
     }
 
     async function deleteBook(index) {

@@ -48,16 +48,18 @@ export function useLoans() {
     async function updateLoan(index, formData) {
         let updatedLoan = Loan.fromFormData(formData, loans[index].id, index);
         let diff = loans[index].getFieldsDiff(updatedLoan);
-        try {
-            await api.updateLoan(updatedLoan.id, diff);
-            setLoans([
-                ...loans.slice(0, index),
-                updatedLoan,
-                ...loans.slice(index + 1)
-            ]);
-        }catch(exception) {
-            console.error("Error updating loan: " + exception.message);
-            return { error: true, errorMessage: exception.message };
+        if(Object.keys(diff).length > 0) {
+            try {
+                await api.updateLoan(updatedLoan.id, diff);
+                setLoans([
+                    ...loans.slice(0, index),
+                    updatedLoan,
+                    ...loans.slice(index + 1)
+                ]);
+            }catch(exception) {
+                console.error("Error updating loan: " + exception.message);
+                return { error: true, errorMessage: exception.message };
+            }
         }
         return { error: false };
     }

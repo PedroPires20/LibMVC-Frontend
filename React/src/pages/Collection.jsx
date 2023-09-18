@@ -6,9 +6,9 @@ import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../compo
 import TableStatus from "../components/table_status/TableStatus";
 import CollectionInputs from "../components/collection_inputs/CollectionInputs";
 import ContextMenu from "../components/context_menu/ContextMenu";
-import BookDialog from "../dialogs/BookDialog";
+import BookDialog from "../dialogs/book_dialog/BookDialog";
 import DialogBox from "../components/dialog_box/DialogBox";
-import StateDialog from "../dialogs/StateDialog";
+import StateDialog from "../dialogs/state_dialog/StateDialog";
 import addIcon from "./assets/add_icon.svg";
 import "./Collection.css";
 
@@ -73,7 +73,7 @@ export default function Collection() {
     }
 
     return (
-        <div className={`collection-page${(showContextMenu) ? " collection-page-menu" : ""}`}>
+        <main className={`collection-page${(showContextMenu) ? " collection-page-menu" : ""}`}>
             <div className="collection-header">
                 <h2>Acervo</h2>
                 <Button
@@ -204,6 +204,6 @@ export default function Collection() {
                     )}
                 </DialogBox>
             )}
-        </div>
+        </main>
     )
 }

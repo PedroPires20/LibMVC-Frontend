@@ -1,8 +1,8 @@
 import { React } from "react";
-import Spinner from "../components/spinner/Spinner";
-import successIcon from "./resources/success_icon.svg";
-import deleteIcon from "./resources/delete_icon.svg";
-import errorIcon from "./resources/error_icon.svg";
+import Spinner from "../../components/spinner/Spinner";
+import successIcon from "./assets/success_icon.svg";
+import deleteIcon from "./assets/delete_icon.svg";
+import errorIcon from "./assets/error_icon.svg";
 import "./StateDialog.css";
 
 

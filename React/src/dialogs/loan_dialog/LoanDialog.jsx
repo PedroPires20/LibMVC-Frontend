@@ -1,11 +1,11 @@
 import { React, useState } from "react";
-import { useBooks } from "../hooks/useBooks";
-import DialogBox from "../components/dialog_box/DialogBox";
-import Input from "../components/input/Input";
-import Checkbox from "../components/checkbox/Checkbox";
-import Select from "../components/select/Select";
-import DatePicker from "../components/date_picker/DatePicker";
-import StateDialog from "./StateDialog";
+import { useBooks } from "../../hooks/useBooks";
+import DialogBox from "../../components/dialog_box/DialogBox";
+import Input from "../../components/input/Input";
+import Checkbox from "../../components/checkbox/Checkbox";
+import Select from "../../components/select/Select";
+import DatePicker from "../../components/date_picker/DatePicker";
+import StateDialog from "../state_dialog/StateDialog";
 import "./LoanDialog.css";
 
 const FIELD_LOADING_MESSAGE = "Carregando...";

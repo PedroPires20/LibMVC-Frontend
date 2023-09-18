@@ -1,11 +1,11 @@
 import { React, useState } from "react";
-import { useBookFields } from "../hooks/useBookFields";
-import DialogBox from "../components/dialog_box/DialogBox";
-import Input from "../components/input/Input";
-import TextArea from "../components/textarea/TextArea";
-import Select from "../components/select/Select";
-import DatePicker from "../components/date_picker/DatePicker";
-import StateDialog from "./StateDialog";
+import { useBookFields } from "../../hooks/useBookFields";
+import DialogBox from "../../components/dialog_box/DialogBox";
+import Input from "../../components/input/Input";
+import TextArea from "../../components/textarea/TextArea";
+import Select from "../../components/select/Select";
+import DatePicker from "../../components/date_picker/DatePicker";
+import StateDialog from "../state_dialog/StateDialog";
 import "./BookDialog.css";
 
 const DEFAULT_BOOK_DATA = {

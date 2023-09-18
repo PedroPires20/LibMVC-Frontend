@@ -6,9 +6,9 @@ import { TableCard, TableHeader, TableRow, TableCell, TableData } from "../compo
 import TableStatus from "../components/table_status/TableStatus";
 import LoanInputs from "../components/loan_inputs/LoanInputs";
 import ContextMenu from "../components/context_menu/ContextMenu";
-import LoanDialog from "../dialogs/LoanDialog";
+import LoanDialog from "../dialogs/loan_dialog/LoanDialog";
 import DialogBox from "../components/dialog_box/DialogBox";
-import StateDialog from "../dialogs/StateDialog";
+import StateDialog from "../dialogs/state_dialog/StateDialog";
 import addIcon from "./assets/add_icon.svg";
 import "./Loans.css";
 
@@ -73,7 +73,7 @@ export default function Loans() {
     }
     
     return (
-        <div className={`loans-page${(showContextMenu) ? " loans-page-menu" : ""}`}>
+        <main className={`loans-page${(showContextMenu) ? " loans-page-menu" : ""}`}>
             <div className="loans-header">
                 <h2>Empréstimos</h2>
                 <Button
@@ -190,6 +190,6 @@ export default function Loans() {
                     )}
                 </DialogBox>
             )}
-        </div>
+        </main>
     )
 }

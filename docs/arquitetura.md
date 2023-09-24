@@ -51,6 +51,18 @@ correspondente a essa camada pode ser visto abaixo.
 
 ![Diagrama UML Cliente de rede](Diagrama_Network.png)
 
+Os métodos implementados na classe `NetworkClient` correspondem às operações
+disponibilizadas pela API e, consequentemente a um *endpoint* desta. Esses
+métodos recebem, como parâmetro, as informações necessárias para realizar a
+requisição (quando aplicável) e, internamente, as mapeiam para parâmetros GET ou
+para um documento JSON (i.e. o corpo da requisição), a depender do tipo de
+requisição realizada. Caso a requisição seja processada com sucesso, esses
+métodos retornam objetos JavaScript correspondentes ao documento JSON recebido
+como resposta e, em caso de erro, uma das exceções customizadas é levantada —
+mais especificamente, a exceção `NetworkError`, em caso de erro de comunicação
+com o servidor e `HTTPError`, caso uma resposta de erro seja recebida do
+servidor.
+
 ## Modelos
 
 Os modelos, por sua vez, herdam de uma classe abstrata `Model`, que implementa o
@@ -60,13 +72,13 @@ atual (instância da classe) com seus valores no objeto-alvo. Esse método é
 utilizado para atualizar os dados de forma mais eficiente quando o usuário
 realiza modificações no modelo. Os métodos abstratos `toRequestBody()` e
 `toFormData()` são responsáveis por retornar objetos contendo os dados da
-instância atual no formato esperado pelas requisições da API ou pelos
-formulários HTML. Cada modelo (i.e. classe concreta que herda a classe `Model`)
-também implementa um método estático `fromFormData()`, que retorna uma instância
-do modelo obtida a partir de um objeto de entrada que contém os dados no formato
-gerado pelos componentes de entrada dos formulários HTML. O diagrama UML
-correspondente à hierarquia de classe dos modelos do *frontend* pode ser visto a
-seguir:
+instância atual no formato esperado pelas requisições da API e pelos formulários
+HTML, respectivamente. Cada modelo (i.e. classe concreta que herda a classe
+`Model`) também implementa um método estático `fromFormData()`, que retorna uma
+instância do modelo obtida a partir de um objeto de entrada que contém os dados
+no formato gerado pelos componentes de entrada dos formulários HTML. O diagrama
+UML correspondente à hierarquia de classe dos modelos do *frontend* pode ser
+visto a seguir:
 
 ![Diagrama UML Modelos](Diagrama_Modelos.png)
 
@@ -77,7 +89,7 @@ gerados/modificados pelos formulários HTML; o formato imposto pela API (i.e. a
 estrutura do JSON utilizado como entrada para as operações) e o formato de
 exibição na interface. Em sua maior parte, as classes (concretas) de modelos do
 *frontend* se comportam como uma espécie de *data class*, armazenando os dados
-relativos à entidade que representa em um formato estruturado, porém, as regras
+relativos à entidade que representa em um formato estruturado. As regras
 de formatação dos dados para a exibição no frontend, como tratamento de valores
 nulos, conversões de tipo, formatação de datas, etc., são implementadas por meio
 de *getters*, associados a cada um dos campos do objeto, que podem apenas

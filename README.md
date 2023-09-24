@@ -64,7 +64,7 @@ acervo, dos empréstimos e o meu lateral podem ser vistas a seguir:
 
 ![Menu](docs/Menu.png)
 
-A criação/edição de livros e empréstimos, por sua vez, é utilizando um
+A criação/edição de livros e empréstimos, por sua vez, é feita utilizando um
 formulário, contido em uma caixa de diálogo. Esse formulário é submetido para o
 servidor do *backend* para realizar a operação desejada no sistema (i.e. a
 criação ou edição de um livro/empréstimo). Esses diálogos podem ser vistos nas
@@ -125,9 +125,9 @@ implementações, por sua vez, pode ser acessado por meio desse
 
 Como o objetivo deste trabalho é a análise comparativa da implementação de uma
 mesma aplicação utilizando diferentes tecnologias para o desenvolvimento da
-interface gráfica (*frontend*), múltiplas implementações do sistema
-**SimpleLibrary** serão feitas, variando apenas o *framework* utilizado. Cada
-implementação realizada será hospedada neste repositório, em um diretório
+interface gráfica (*frontend*), três implementações do sistema
+**SimpleLibrary** foram feitas, variando apenas o *framework* utilizado. Cada
+implementação realizada está hospedada neste repositório, em um diretório
 próprio. Detalhes específicos sobre a arquitetura e o processo de instalação e
 execução para cada uma das implementações realizadas, bem como seus respectivos
 o códigos fontes podem ser acessados mais facilmente utilizando os links
@@ -135,3 +135,4 @@ listados abaixo:
 
 - [Implementação em React](React/README.md)
 - [Implementação em Angular](Angular/README.md)
+- [Implementação em Svelte](Svelte/README.md)

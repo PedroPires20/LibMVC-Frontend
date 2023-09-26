@@ -12,7 +12,7 @@ React e Angular).
 ## Visão geral
 
 O diagrama a seguir apresenta uma visão geral da arquitetura da implementação em
-Svelte, incluindo os componentes, suas camadas (denotadas pelas cores) e a
+Svelte, incluindo os componentes, suas camadas (denotadas pelas cores) e as
 relações de dependência (representadas por setas):
 
 ![Diagrama da arquitetura (implementação em Svelte)](Diagrama_arquitetura.png)
@@ -197,7 +197,7 @@ os campos que se diferem entre essas duas instâncias e seu valor na instância
 recebida como parâmetro. Esse método é chamado a partir da instância armazenada
 no vetor de itens selecionados e seu resultado — que já está em formato
 apropriado para uso nas requisições da API — é fornecido como um segundo
-parâmetro ao método do cliente de rede que realiza a chamada da API e, após
+parâmetro ao método do cliente de rede que realiza a chamada da API. Após
 receber uma resposta de sucesso, o livro/empréstimo do índice recebido é
 substituído pela instância atualizada, gerada a partir dos dados do formulário.
 Essas funções também retornam um objeto com os mesmos campos das funções de

@@ -83,7 +83,17 @@ funções auxiliares (utilizadas apenas internamente), definem e exportam as
 funções responsáveis por retornar *stores* customizadas associadas às entidades
 da aplicação (i.e. livros e empréstimos). Esses módulos são análogos aos *custom
 hooks*, da implementação baseada em React, e aos serviços, utilizados pela
-implementação feita em Angular.
+implementação feita em Angular. Mais especificamente, foram implementadas as
+*custom stores* retornadas pelas funções `createBooks` e `createLoans`,
+associadas aos livros e empréstimos, respectivamente. Além destas, também foram
+implementadas as *custom stores* retornadas pelas funções `createBookFields` e
+`createLoanFields`, responsáveis por carregar e gerenciar os dados de todos os
+valores únicos registrados para alguns campos selecionados dos livros e
+empréstimos, respectivamente (como os títulos de todos os livros e os nomes de
+todos os leitores registrados no sistema, por exemplo). Esses dados são
+utilizados em alguns locais específicos da interface, como os seletores dos
+filtros e os formulários de criação de empréstimos (que lista os livros
+disponíveis) e de livros (que lista as categorias de livros já cadastradas).
 
 As funções `createBookFields` e `createLoanFields` retornam uma *store* na forma
 de um objeto JavaScript cujas chaves são os nomes dos campos associados aos
